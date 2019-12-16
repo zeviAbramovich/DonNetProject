@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E70B3F13-CF02-4628-A4E6-47B96F6B1430}</ProjectGuid>
+    <ProjectGuid>{399082FF-10C8-4B3C-B4E0-81785EE6710F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>UI</RootNamespace>
     <AssemblyName>UI</AssemblyName>
@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="myUi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

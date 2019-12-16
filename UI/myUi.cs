@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BE;
+using BL;
 
-namespace BE
+namespace UI
 {
-    public class myBe
+    class myUi
     {
+        static void Main(string[] args)
+        {
+        }
     }
 }
