@@ -16,7 +16,17 @@ namespace BE
         public String MailAddress { get; set; }
         public BankAccount HostBankAccount { get; set; }
         public bool CollectionClearance { get; set; }
-
+        //temporary ctor
+        public Host(String key, String pname, String fname, String pnum, String mail, BankAccount bank, bool b)
+        {
+            HostKey = key;
+            PrivateName = pname;
+            FamilyName = fname;
+            PhoneNumber = pnum;
+            MailAddress = mail;
+            HostBankAccount = bank;
+            CollectionClearance = b;
+        }
 
         public override string ToString()
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
+using DS;
 
 namespace DAL
 {
@@ -22,5 +23,6 @@ namespace DAL
         List<HostingUnit> GetAllHostingUnit();
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
+        List<branches> GetAllBranches();
     }
 }

@@ -29,6 +29,14 @@ namespace BE
             HostingUnitKey = Configuration.serialHostingUnit++;
         }
 
+        public HostingUnit( string _name, Host _Host)
+        {
+            Diary = new bool[12, 31];
+            HostingUnitKey = Configuration.serialHostingUnit++;
+            HostingUnitName = _name;
+            Owner = _Host;
+        }
+
         public override string ToString()
         {
             return this.TostringProperties();

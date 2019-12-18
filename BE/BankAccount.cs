@@ -15,6 +15,16 @@ namespace BE
         public String BranchAddress { get; set; }
         public String BranchCity { get; set; }
         public int BankAccountNumber { get; set; }
+
+        public BankAccount(int _BankNumber, int _BranchNumber, int _BankAccountNum)
+        {
+            BankNumber = _BankNumber;
+            BranchNumber = _BranchNumber;
+            BankAccountNumber = _BankAccountNum;
+            var BankName = from item in branches
+                           where item
+        }
+
         public override string ToString()
         {
             return this.TostringProperties();

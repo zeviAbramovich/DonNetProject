@@ -25,4 +25,5 @@ namespace BE
     {
         Necessary, Possible, notInterested
     }
+
 }

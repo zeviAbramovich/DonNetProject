@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84199789-8645-4759-846F-2A5452C5731F}</ProjectGuid>
+    <ProjectGuid>{7F8E6B58-65F9-40A0-9C67-641A0333938A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BE</RootNamespace>
-    <AssemblyName>BE</AssemblyName>
+    <RootNamespace>DS</RootNamespace>
+    <AssemblyName>DS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,20 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Branche.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="enums.cs" />
-    <Compile Include="Host.cs" />
-    <Compile Include="GuestRequest.cs" />
-    <Compile Include="BankAccount.cs" />
-    <Compile Include="HostingUnit.cs" />
-    <Compile Include="Order.cs" />
+    <Compile Include="DataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Utilities\Utilities.csproj">
-      <Project>{81e7d3b5-0592-428c-a16b-4acdae92e69f}</Project>
-      <Name>Utilities</Name>
+    <ProjectReference Include="..\BE\BE.csproj">
+      <Project>{84199789-8645-4759-846f-2a5452c5731f}</Project>
+      <Name>BE</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
