@@ -12,7 +12,7 @@ namespace BE
     public class HostingUnit
     {
         public int HostingUnitKey { get; private set; }
-        public String Owner { get; set; }
+        public Host Owner { get; set; }
         public String HostingUnitName { get; set; }
         [XmlIgnore]
         public bool[,] Diary { get; private set; }
@@ -22,7 +22,6 @@ namespace BE
             get { return Diary.Flatten(); }
             set { Diary = value.Expand(4); }
         }
-
 
         public HostingUnit()
         {

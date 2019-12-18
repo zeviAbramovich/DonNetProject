@@ -23,6 +23,6 @@ namespace BE
 
     public enum Requirements
     {
-        Necessary, Possible, NotNecessary
+        Necessary, Possible, notInterested
     }
 }
