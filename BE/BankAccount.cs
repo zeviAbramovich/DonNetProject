@@ -21,8 +21,8 @@ namespace BE
             BankNumber = _BankNumber;
             BranchNumber = _BranchNumber;
             BankAccountNumber = _BankAccountNum;
-            var BankName = from item in branches
-                           where item
+            BankName = from item in branches
+                           
         }
 
         public override string ToString()

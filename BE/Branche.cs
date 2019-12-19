@@ -13,15 +13,14 @@ namespace BE
         public int BranchNumber { get; set; }
         public String BranchAddress { get; set; }
         public String BranchCity { get; set; }
+
+        public Branche(int bank_num, string bank_name, int brunch_num, string branch_address, string branch_city)
+        {
+            BankNumber = bank_num;
+            BankName = bank_name;
+            BranchNumber = brunch_num;
+            BranchAddress = branch_address;
+            BranchCity = branch_city;
+        }
     }
-    static List<Branche> branches => new List<Branche> {
-         new List<Branche> { new Branche { BankName = "hapoalim", BankNumber = 10, BranchAddress = "rabi akiva", BranchCity = "Bney Brak", BranchNumber = 655 },
-        new Branche { BankName = "leumi", BankNumber = 9, BranchAddress = "rabi akiva", BranchCity = "Bney Brak", BranchNumber = 865 },
-        new Branche{ BankName = "hapoalim", BankNumber = 10, BranchAddress = "Hashomer", BranchCity = "Bney Brak", BranchNumber = 69 }
-        };
-         }
-
-
-
-
-
+}
