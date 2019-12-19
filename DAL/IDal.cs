@@ -23,6 +23,6 @@ namespace DAL
         List<HostingUnit> GetAllHostingUnit();
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
-        List<Branche> GetAllBranches();
+        List<Branche> GetAllBranches();        
     }
 }

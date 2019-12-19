@@ -16,13 +16,14 @@ namespace BE
         public String BranchCity { get; set; }
         public int BankAccountNumber { get; set; }
 
-        public BankAccount(int _BankNumber, int _BranchNumber, int _BankAccountNum)
+        public BankAccount(int _BankNumber, String _BankName, int _BranchNumber, String _BranchAddress, String _BranchCity, int _BankAccountNum)
         {
             BankNumber = _BankNumber;
+            BankName = _BankName;
             BranchNumber = _BranchNumber;
+            BranchAddress = _BranchAddress;
+            BranchCity = _BranchCity;
             BankAccountNumber = _BankAccountNum;
-            BankName = from item in branches
-                           
         }
 
         public override string ToString()
