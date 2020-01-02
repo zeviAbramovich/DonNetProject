@@ -9,13 +9,57 @@ namespace DS
 {
     public class DataSource
     {
-        public static List<HostingUnit> hostingUnits = new List<HostingUnit>
+        public static List<HostingUnit> hostsList = new List<HostingUnit>()
         {
-            new HostingUnit("Nof hagalil",new Host("1234","zeev","Ab","050241","zevi3190@gmail.com",new BankAccount(12,"Hapoalim",111,"Rabi akiva","Bney brak",235800),false)),
-            new HostingUnit("Villa",new Host("1234","zeev","Ab","050241","zevi3190@gmail.com",new BankAccount(12,"Hapoalim",222,"Hashomer","Bney brak",244779),false)),
-            new HostingUnit("Primium",new Host("1234","zeev","Ab","050241","zevi3190@gmail.com",new BankAccount(12,"Hapoalim",333,"Herzel","Bney brak",335665),false))
+                new HostingUnit()
+                {
+                  HostingUnitName = "Plaza",HostingUnitKey = Configuration.serialHostingUnit++,
+                    Owner = new Host()
+                    {
+                          HostId = 313583460,
+                          PrivateName = "Zeev",
+                          FamilyName = "Abra",
+                          MailAddress = "zevi3190@gmail.com",
+                          PhoneNumber = 0502418419,
+                          CollectionClearance = false,
+                          HostBankAccount = new BankAccount()
+                             {
+                                 BranchNumber = 111,
+                                 BranchCity = "Bney brak",
+                                 BranchAddress = "Rabi akiva",
+                                 BankName = "Hapoalim",
+                                 BankNumber = 10,
+                                 BankAccountNumber = 235800
+                             }
+                    }
+                },
+
+                 new HostingUnit()
+                 {
+
+                     HostingUnitName = "nirvana",HostingUnitKey = Configuration.serialHostingUnit,
+                     Owner = new Host()
+                     {
+                        HostId = 313583460,
+                        PrivateName = "Zeev",
+                        FamilyName = "Abra",
+                        MailAddress = "zevi3190@gmail.com",
+                        PhoneNumber = 0502418419,
+                        CollectionClearance = false,
+                        HostBankAccount = new BankAccount()
+                        {
+                            BranchNumber = 111,
+                            BranchCity = "Bney brak",
+                            BranchAddress = "Rabi akiva",
+                            BankName = "Hapoalim",
+                            BankNumber = 10,
+                            BankAccountNumber = 235800
+                        }
+                     }
+                 }
         };
-        public static List<Order> orders;
-        public static List<GuestRequest> guestRequests;
+        public static List<Order> orders = new List<Order> { };
+        public static List<GuestRequest> guestRequests = new List<GuestRequest> { };
     }
 }
+

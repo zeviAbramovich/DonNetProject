@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public enum Status
+    public enum StatusOrder
     {
-        NotYetApproved, MailSent, CloseByClient, CloseByApp, Approved
+        NotYetApproved, MailSent, CustomerUnresponsiveness, CustomerResponsiveness 
+    }
+
+    public enum StatusGuest
+    {
+        Open, ClosesBySite, Expired
     }
 
     public enum Area
@@ -25,5 +30,4 @@ namespace BE
     {
         Necessary, Possible, notInterested
     }
-
 }

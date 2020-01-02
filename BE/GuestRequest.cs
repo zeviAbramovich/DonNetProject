@@ -9,11 +9,11 @@ namespace BE
 {
     public class GuestRequest
     {
-        public int GuestRequestKey { get; private set; }
+        public long GuestRequestKey { get;  set; }
         public String PrivateName { get; set; }
         public String FamilyName { get; set; }
         public String MailAddress { get; set; }
-        public Status Status { get; set; }
+        public StatusGuest Status { get; set; }
         public DateTime RegistrationDate { get; set; }
         public DateTime EntryDate { get; set; }
         public DateTime ReleaseDate { get; set; }
@@ -26,11 +26,6 @@ namespace BE
         public Requirements Jacuzzi { get; set; }
         public Requirements Garden { get; set; }
         public Requirements ChildrensAttractions { get; set; }
-
-        public GuestRequest()
-        {
-            GuestRequestKey = Configuration.serialGuestRequest++;
-        }
 
         public override string ToString()
         {

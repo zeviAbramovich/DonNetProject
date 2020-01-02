@@ -14,13 +14,13 @@ namespace BE
         public String BranchAddress { get; set; }
         public String BranchCity { get; set; }
 
-        public Branche(int bank_num, string bank_name, int brunch_num, string branch_address, string branch_city)
-        {
-            BankNumber = bank_num;
-            BankName = bank_name;
-            BranchNumber = brunch_num;
-            BranchAddress = branch_address;
-            BranchCity = branch_city;
-        }
+        //public Branche(int bank_num, string bank_name, int brunch_num, string branch_address, string branch_city)
+        //{
+        //    BankNumber = bank_num;
+        //    BankName = bank_name;
+        //    BranchNumber = brunch_num;
+        //    BranchAddress = branch_address;
+        //    BranchCity = branch_city;
+        //}
     }
 }

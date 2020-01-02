@@ -9,10 +9,10 @@ namespace BE
 {
     public class Order
     {
-        public String HostingUnitKey { get; set; }
-        public String GuestRequestKey { get; set; }
-        public int OrderKey { get; set; }
-        public Status Status { get; set; }
+        public long HostingUnitKey { get; set; }
+        public long GuestRequestKey { get; set; }
+        public long OrderKey { get; set; }
+        public StatusOrder Status { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime OrderDate { get; set; }        
 
