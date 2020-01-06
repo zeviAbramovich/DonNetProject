@@ -12,7 +12,7 @@ namespace DAL
     public interface IDal
     {
         void AddRequest(GuestRequest t);
-        void DeleteGuest(GuestRequest guest);
+       // void DeleteGuest(GuestRequest guest);
         void UpdateRequest(GuestRequest t);
 
         void AddHostingUnit(HostingUnit t);
@@ -20,7 +20,7 @@ namespace DAL
         void UpdateHostingUnit(HostingUnit t);
 
         void AddOrder(Order o);
-        void DeleteOrder(Order o);
+     //   void DeleteOrder(Order o);
         void UpdateOrder(Order o);
 
         void UpdateHost(Host host);

@@ -8,98 +8,88 @@ using DS;
 
 namespace DAL
 {
+    //בעיקרון יכולתי להשתמש רק בגטרים של יחידה בודדת או הזמנה בודדת ולא להשתמש בכל השאילתות
+    //,אבל זו היתה דרישתכם ובאמת אצל דן ביטלו את הדרישה הזו
     class Dal_imp : IDal
     {
-        public void AddHostingUnit(HostingUnit t)
+        public void AddHostingUnit(HostingUnit unit)
         {
-            var v = from a in DataSource.hostsList
-                    where t.HostingUnitKey == a.HostingUnitKey
-                    select a;
-            foreach (var item in v)
-                return;//catch try, beacose have a unit with same key 
-            if (t.HostingUnitKey == 0)
+            if (unit.HostingUnitKey == 0)
             {
-                HostingUnit hostingUnit = t.Clone();
+                HostingUnit hostingUnit = unit.Clone();//על פי נספח 1
                 hostingUnit.HostingUnitKey = Configuration.serialHostingUnit++;
                 hostingUnit.Diary = new bool[12, 31];
                 DataSource.hostsList.Add(hostingUnit);
                 return;
             }
-            HostingUnit unit = t.Clone();
-            DataSource.hostsList.Add(unit);
-            return;
+            UpdateHostingUnit(unit);
         }
 
-        public void AddOrder(Order o)
+        public void AddOrder(Order order)
         {
-            var v = from a in DataSource.orders
-                    where o.OrderKey == a.OrderKey
-                    select a;
-            foreach (var item in v)
-                return;//try catch           
-            Order order = o.Clone();
-            order.OrderKey = Configuration.serialOrder++;
-            DS.DataSource.orders.Add(order);
-            return;
-        }
-
-        public void AddRequest(GuestRequest t)
-        {
-            var v = from a in DataSource.guestRequests
-                    where a.GuestRequestKey == t.GuestRequestKey
-                    select a;
-            foreach (var item in v)
-                return;//try catch 
-            if (t.GuestRequestKey == 0)
+            if (order.OrderKey == 0)
             {
-                GuestRequest guestRequest = t.Clone();
+                Order order1 = order.Clone();
+                order1.OrderKey = Configuration.serialOrder++;
+                DataSource.orders.Add(order1);
+                return;
+            }
+            UpdateOrder(order);
+        }
+
+        public void AddRequest(GuestRequest guest)
+        {
+            if (guest.GuestRequestKey == 0)
+            {
+                GuestRequest guestRequest = guest.Clone();
                 guestRequest.GuestRequestKey = Configuration.serialGuestRequest++;
                 DataSource.guestRequests.Add(guestRequest);
                 return;
             }
-            GuestRequest request = t.Clone();
-            DataSource.guestRequests.Add(request);
-            return;
+            UpdateRequest(guest);
         }
 
-        public void DeleteHostingUnit(HostingUnit t)
+        public void DeleteHostingUnit(HostingUnit unit)
         {
-            foreach (var item in DataSource.hostsList)
+            HostingUnit unit1 = new HostingUnit();
+            try
             {
-                if (item.HostingUnitKey == t.HostingUnitKey)
-                {
-                    DataSource.hostsList.Remove(item);
-                    return;
-                }
-                return;//try catch
+                 unit1 = GetHostingUnit(unit.HostingUnitKey);
             }
+            catch (Exception)
+            {
+                throw;//לא נמצא היחידה למחוק אותה
+            }        
+                DataSource.hostsList.Remove(unit1);
+                return;                      
         }
 
-        public void DeleteOrder(Order o)
-        {
-            foreach (var item in DataSource.orders)
-            {
-                if (item.OrderKey == o.OrderKey)
-                {
-                    DataSource.orders.Remove(item);
-                    return;
-                }
-                return;//try catch
-            }
-        }
 
-        public void DeleteGuest(GuestRequest guest)
-        {
-            foreach (var item in DataSource.guestRequests)
-            {
-                if (item.GuestRequestKey == guest.GuestRequestKey)
-                {
-                    DataSource.guestRequests.Remove(item);
-                    return;
-                }
-                return;//try catch, not find request.
-            }
-        }
+        //public void DeleteOrder(Order o)
+        //{
+        //    foreach (var item in DataSource.orders)
+        //    {
+        //        if (item.OrderKey == o.OrderKey)
+        //        {
+        //            DataSource.orders.Remove(item);
+        //            return;
+        //        }
+        //        return;//try catch
+        //    }
+        //}
+
+        //public void DeleteGuest(GuestRequest guest)
+        //{
+        //    foreach (var item in DataSource.guestRequests)
+        //    {
+        //        if (item.GuestRequestKey == guest.GuestRequestKey)
+        //        {
+        //            DataSource.guestRequests.Remove(item);
+        //            return;
+        //        }
+        //        return;//try catch, not find request.
+        //    }
+        //}
 
         public List<Branche> GetAllBranches()
         {
@@ -167,12 +157,19 @@ namespace DAL
         public HostingUnit GetHostingUnit(long key)
         {
             HostingUnit unit = new HostingUnit();
-            var v = from a in DataSource.hostsList
+            var v = from a in GetAllHostingUnit()
                     where a.HostingUnitKey == key
                     select a;
             foreach (var item in v)
+                unit = item.Clone();   
+            try
             {
-                unit = item.Clone();
+                if (unit == null)
+                    throw new System.IndexOutOfRangeException();//TODO 
+            }
+            catch (Exception)
+            {
+                throw;
             }
             return unit;
         }
@@ -180,12 +177,19 @@ namespace DAL
         public Order GetOrder(long key)
         {
             Order order = new Order();
-            var v = from a in DataSource.orders
+            var v = from a in GetAllOrders()
                     where a.OrderKey == key
                     select a;
             foreach (var item in v)
+                order = item.Clone();         
+            try
             {
-                order = item.Clone();
+                if (order == null)
+                    throw new System.IndexOutOfRangeException();//TODO לא נמצאה יחידה  
+            }
+            catch (Exception)
+            {
+                throw;
             }
             return order;
         }
@@ -193,53 +197,81 @@ namespace DAL
         public GuestRequest GetGuestRequest(long key)
         {
             GuestRequest guest = new GuestRequest();
-            var v = from a in DataSource.guestRequests
+            var v = from a in GetAllGuestRequest()
                     where a.GuestRequestKey == key
                     select a;
-            foreach (var item in v)            
-                guest = item.Clone();           
+            foreach (var item in v)
+                guest = item.Clone();
+            try
+            {
+                if (guest == null)
+                    throw new System.IndexOutOfRangeException();
+            }                                          
+            catch (Exception)
+            {
+                throw;
+            }
             return guest;
         }
 
         public void UpdateHostingUnit(HostingUnit unit)
         {
-            var v = from a in DataSource.hostsList
-                    where a.HostingUnitKey == unit.HostingUnitKey
+            HostingUnit hosting = new HostingUnit();
+            try
+            {
+                 hosting = GetHostingUnit(unit.HostingUnitKey);
+            }
+            catch (Exception)
+            {
+                throw;//לא נמצא יחידה לעדכן
+            }
+                DeleteHostingUnit(hosting);                
+                DataSource.hostsList.Add(hosting);
+                return;            
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            Order order1 = new Order();
+            try
+            {
+                 order1 = GetOrder(order.OrderKey);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+                order1.Status = order.Status;
+                return;                       
+        }
+
+        public void UpdateRequest(GuestRequest guestRequest)
+        {
+            GuestRequest guestRequest1 = new GuestRequest();
+            try
+            {
+                guestRequest1 = GetGuestRequest(guestRequest.GuestRequestKey);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            var v = from a in GetAllOrders()
+                    where a.GuestRequestKey == guestRequest.GuestRequestKey
                     select a;
             foreach (var item in v)
             {
-                DeleteHostingUnit(item);
-                AddHostingUnit(unit);//add is doing clone...
-                return;
-            }
-            return;//try catch
-        }
-
-        public void UpdateOrder(Order o)
-        {
-            var v = from a in DataSource.orders
-                    where o.OrderKey == a.OrderKey
+                item.Status = StatusOrder.RequestChanged;
+                UpdateOrder(item);
+            }            
+            var z = from a in DataSource.guestRequests
+                    where a.GuestRequestKey == guestRequest1.GuestRequestKey
                     select a;
-            foreach (var item in v)
+            foreach (var item in z)
             {
-                item.Status = o.Status;
-                return;
+                item.Status = StatusGuest.Expired;               
             }
-            return;//try catch, this order not exist.
-        }
-
-        public void UpdateRequest(GuestRequest t)
-        {
-            var v = from a in DataSource.guestRequests
-                    where a.GuestRequestKey == t.GuestRequestKey
-                    select a;
-            foreach (var item in DataSource.guestRequests)
-            {
-                DeleteGuest(item);
-                AddRequest(t);//add is doing clone...
-                return;
-            }
-            return;//try catch
+            AddRequest(guestRequest1);
         }
 
         public void UpdateHost(Host host)
@@ -270,3 +302,4 @@ namespace DAL
         }
     }
 }
+

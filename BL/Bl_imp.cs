@@ -14,6 +14,15 @@ namespace BL
     {
         public IDal dal = FactoryMethode.GetDal();
 
+        #region helpingFunction
+
+        public static bool ValidateMail(string emailAddress)
+        {
+            var regex = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
+            bool isValid = Regex.IsMatch(emailAddress, regex, RegexOptions.IgnoreCase);
+            return isValid;
+        }
+
         public bool IsAllLetters(string s)
         {
             return (Regex.IsMatch(s, @"^[א-ת]+$"));
@@ -29,15 +38,26 @@ namespace BL
             return true;
         }
 
+        public bool CheckAvailableDateByDateAndSumDays(HostingUnit unit, DateTime date, int VacationDays)
+        {
+            for (int i = 0; i < VacationDays; i++)
+            {
+                if (unit.Diary[date.Month, date.Day])
+                    return false;
+                date.AddDays(1);
+            }
+            return true;
+        }
+
         public void CreateOrder(GuestRequest guest)
         {
             int count = 0;
             if (guest.Status != StatusGuest.Open)
                 return;//TODO try catch,thr order not open.
             List<HostingUnit> hostings = GetAllHostingUnit();
-            var v = from a in hostings                  
+            var v = from a in hostings
                     where a.Area == guest.Area
-                    where a.HostingType == guest.HostingType                   
+                    where a.HostingType == guest.HostingType
                     select a;
             foreach (var item in v)
             {
@@ -77,6 +97,10 @@ namespace BL
                 return;//TODO try catch have not match.
         }
 
+        #endregion
+
+        #region AddDeleteUpdate       
+
         public void AddHostingUnit(HostingUnit t)
         {
             if (t.HostingUnitName == "" || !(IsAllLetters(t.HostingUnitName)))
@@ -89,7 +113,7 @@ namespace BL
                 return;//try catch, miss mail.
             if (t.Owner.HostBankAccount.BankAccountNumber == 0 || t.Owner.HostBankAccount.BankNumber == 0 || t.Owner.HostBankAccount.BranchNumber == 0)
                 return;//try catch, miss or account or branch noumber or bank noumber.
-            dal.AddHostingUnit(t);
+            AddHostingUnit(t);
             return;
         }
 
@@ -107,7 +131,7 @@ namespace BL
         {
             if (t.EntryDate >= t.ReleaseDate)
                 return;//try catch,the date not proper.
-            if (t.MailAddress == ""||!(t.MailAddress.Contains("@")))
+            if (t.MailAddress == "" || !(t.MailAddress.Contains("@")))
                 return;//try catch,miss mail or not all letters
             if (t.PrivateName == "" || !(IsAllLetters(t.PrivateName)) || t.FamilyName == "" || !(IsAllLetters(t.FamilyName)))
                 return;//try catch, has problem in the name
@@ -182,7 +206,7 @@ namespace BL
         {
             HostingUnit unit = GetUnit(o.HostingUnitKey);
             Order order = GetOrder(o.OrderKey);
-            GuestRequest guestRequest = GetGuestRequest(o.GuestRequestKey);        
+            GuestRequest guestRequest = GetGuestRequest(o.GuestRequestKey);
             if (!unit.Owner.CollectionClearance)
                 return;//TODO try catch, אין אישור גביה
             if (order.Status == StatusOrder.CustomerUnresponsiveness || order.Status == StatusOrder.CustomerResponsiveness)
@@ -208,7 +232,7 @@ namespace BL
                     foreach (var item in v)
                     {
                         item.Status = StatusOrder.CustomerUnresponsiveness;
-                        dal.UpdateOrder(item);
+                        UpdateOrder(item);
                     }
                     return;
                 }
@@ -236,11 +260,14 @@ namespace BL
             return;
         }
 
+        #endregion
+
+        #region getters 
+
         public List<GuestRequest> AllGuestRequest(Delegate d, List<GuestRequest> l)
         {
             throw new NotImplementedException();
         }
-
 
         public HostingUnit GetUnit(long key)
         {
@@ -268,7 +295,7 @@ namespace BL
 
         public List<GuestRequest> GetAllGuestRequest()
         {
-            List<GuestRequest> guestRequests = dal.GetAllGuestRequest();
+            List<GuestRequest> guestRequests = GetAllGuestRequest();
             return guestRequests;
         }
 
@@ -284,35 +311,114 @@ namespace BL
             return orders;
         }
 
+        public List<GuestRequest> GetAllGuestRequestByArea(Area area)
+        {
+            List<GuestRequest> guestRequests = new List<GuestRequest>();
+            var v = from item in GetAllGuestRequest()
+                    group item by item.Area into areasInGroup                    
+                    select new { area = areasInGroup };                   
+            foreach (var group in v)
+            {               
+                foreach (var ar in group.area)                
+                    guestRequests.Add(ar);                
+            }
+            return guestRequests;
+        }
+
+        public List<GuestRequest> GetAllGuestRequestByNumRelax(int num)
+        {
+            List<GuestRequest> guestRequests = new List<GuestRequest>();
+            var v = from a in GetAllGuestRequest()
+                    group a by a.Adults + a.Children == num;
+            foreach (var item in v)
+            {
+                guestRequests.Add(item);
+            }
+            return guestRequests;
+        }
+
+        public List<HostingUnit> GetAllHostingUnitByArea(Area area)
+        {
+            List<HostingUnit> hostingUnits = new List<HostingUnit>();
+            var v = from a in GetAllHostingUnit()
+                    group a by a.Area == area;
+            foreach (var item in v)
+            {
+                hostingUnits.Add(item);
+            }
+            return hostingUnits;
+        }
+
+        public List<Host> GetAllHostByNumHostingUnit()
+        {
+
+        }
+
+        #endregion
+
+        #region SpecialDemands
+
         public int NumOrdersOfGuest(GuestRequest guestRequest)
         {
-            throw new NotImplementedException();
+            int count = 0;
+            var v = from a in GetAllOrders()
+                    where a.GuestRequestKey == guestRequest.GuestRequestKey                    
+                    select a;
+            foreach (var item in v)            
+                count++;
+            return count;
         }
 
         public int NumOrdersOfHostingUnit(HostingUnit hostingUnit)
         {
-            throw new NotImplementedException();
+            int count = 0;
+            var v = from a in GetAllOrders()
+                    where a.HostingUnitKey == hostingUnit.HostingUnitKey
+                    where a.Status == StatusOrder.CustomerResponsiveness
+                    select a;
+            foreach (var item in v)
+                count++;
+            return count;
         }
 
-        public List<Order> OrderFromSeveralDaysOrMore(int numDays)
+        public List<Order> OrderFromNumDaysOrMore(int numDays)
         {
-            throw new NotImplementedException();
+            List<Order> orders = new List<Order>();
+            var v = from a in GetAllOrders()
+                    let temp = SumDays(a.CreateDate)
+                    where temp >= numDays
+                    select a;
+            foreach (var item in v)           
+                orders.Add(item);
+            //if (orders.Count == 0)
+            //try caych
+            return orders;
         }
 
         public int SumDays(DateTime dateTime)
         {
-            throw new NotImplementedException();
+            DateTime date = DateTime.Now;
+            return SumDays(dateTime, date);
         }
 
         public int SumDays(DateTime dateTime1, DateTime dateTime2)
         {
-            throw new NotImplementedException();
+            TimeSpan time = dateTime2 - dateTime1;
+            return time.Days; 
         }
 
-        public List<HostingUnit> UnitsAvailable(DateTime dateTime, int Vacation_Days)
+        public List<HostingUnit> UnitsAvailable(DateTime dateTime, int VacationDays)
         {
-            throw new NotImplementedException();
+            List<HostingUnit> units = new List<HostingUnit>();
+            var v = from a in GetAllHostingUnit()                 
+                    where CheckAvailableDateByDateAndSumDays(a, dateTime, VacationDays) == true
+                    select a;
+            foreach (var item in v)            
+                units.Add(item);
+            //if (units.Count == 0)
+            //    try catch
+            return units;
         }
-
+        #endregion
     }
 }

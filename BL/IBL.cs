@@ -11,6 +11,8 @@ namespace BL
     public interface IBL
     {
         bool CheckAvailableDate(HostingUnit unit, GuestRequest guest);
+        bool IsAllLetters(string s);
+        bool CheckAvailableDateByDateAndSumDays(HostingUnit unit, DateTime date, int VacationDays);
 
         void AddRequest(GuestRequest t);
         void DeleteGuest(GuestRequest guest);
@@ -36,11 +38,15 @@ namespace BL
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
+        List<GuestRequest> GetAllGuestRequestByArea(Area area);
+        List<GuestRequest> GetAllGuestRequestByNumRelax(int num);
+        List<HostingUnit> GetAllHostingUnitByArea(Area area);
+        List<Host> GetAllHostByNumHostingUnit();
 
         List<HostingUnit> UnitsAvailable(DateTime dateTime, int Vacation_Days);
         int SumDays(DateTime dateTime);
         int SumDays(DateTime dateTime1, DateTime dateTime2);
-        List<Order> OrderFromSeveralDaysOrMore(int numDays);
+        List<Order> OrderFromNumDaysOrMore(int numDays);
         int NumOrdersOfGuest(GuestRequest guestRequest);
         int NumOrdersOfHostingUnit(HostingUnit hostingUnit);
         List<GuestRequest> AllGuestRequest(Delegate d, List<GuestRequest> l);
