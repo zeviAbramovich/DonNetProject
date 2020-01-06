@@ -10,8 +10,7 @@ namespace BE
 {
     class MyExceptions
     {
-    
-
+   
 
 
 
