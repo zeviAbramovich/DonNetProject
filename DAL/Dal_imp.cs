@@ -12,6 +12,7 @@ namespace DAL
     //,אבל זו היתה דרישתכם ובאמת אצל דן ביטלו את הדרישה הזו
     class Dal_imp : IDal
     {
+        #region AddDeleteAndUpdate
         public void AddHostingUnit(HostingUnit unit)
         {
             if (unit.HostingUnitKey == 0)
@@ -54,43 +55,105 @@ namespace DAL
             HostingUnit unit1 = new HostingUnit();
             try
             {
-                 unit1 = GetHostingUnit(unit.HostingUnitKey);
+                unit1 = GetHostingUnit(unit.HostingUnitKey);
+            }
+            catch (MissingMemberException ms)
+            {
+                throw ms;
+            }
+            DataSource.hostsList.Remove(unit1);
+            return;
+        }
+
+        public void UpdateHostingUnit(HostingUnit unit)
+        {
+            HostingUnit hosting = new HostingUnit();
+            try
+            {
+                hosting = GetHostingUnit(unit.HostingUnitKey);
             }
             catch (Exception)
             {
-                throw;//לא נמצא היחידה למחוק אותה
-            }        
-                DataSource.hostsList.Remove(unit1);
-                return;                      
+                throw;//לא נמצא יחידה לעדכן
+            }
+            DeleteHostingUnit(hosting);
+            DataSource.hostsList.Add(hosting);
+            return;
         }
 
+        public void UpdateOrder(Order order)
+        {
+            Order order1 = new Order();
+            try
+            {
+                order1 = GetOrder(order.OrderKey);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            order1.Status = order.Status;
+            return;
+        }
 
-        //public void DeleteOrder(Order o)
-        //{
-        //    foreach (var item in DataSource.orders)
-        //    {
-        //        if (item.OrderKey == o.OrderKey)
-        //        {
-        //            DataSource.orders.Remove(item);
-        //            return;
-        //        }
-        //        return;//try catch
-        //    }
-        //}
+        public void UpdateRequest(GuestRequest guestRequest)
+        {
+            GuestRequest guestRequest1 = new GuestRequest();
+            try
+            {
+                guestRequest1 = GetGuestRequest(guestRequest.GuestRequestKey);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            var v = from a in GetAllOrders()
+                    where a.GuestRequestKey == guestRequest.GuestRequestKey
+                    select a;
+            foreach (var item in v)// משנה לכל ההזמנות שקשורות לבקשה את הסטטוס לסגור כי הזמנה השתנתה
+            {
+                item.Status = StatusOrder.RequestChanged;
+                UpdateOrder(item);
+            }
+            var z = from a in DataSource.guestRequests
+                    where a.GuestRequestKey == guestRequest1.GuestRequestKey
+                    select a;
+            foreach (var item in z)
+            {
+                item.Status = StatusGuest.Expired;   //סוגר לבקשה את הסטטוס לנסגר כי יש בקשה חדשה            
+            }
+            AddRequest(guestRequest1);//מעדכן מה שרציתי
+        }
 
-        //public void DeleteGuest(GuestRequest guest)
-        //{
-        //    foreach (var item in DataSource.guestRequests)
-        //    {
-        //        if (item.GuestRequestKey == guest.GuestRequestKey)
-        //        {
-        //            DataSource.guestRequests.Remove(item);
-        //            return;
-        //        }
-        //        return;//try catch, not find request.
-        //    }
-        //}
+        public void UpdateHost(Host host)
+        {
+            var v = from item in DataSource.hostsList
+                    where host.HostId == item.Owner.HostId
+                    select item;
+            foreach (var item in v)
+            {
+                item.Owner = new Host
+                {
+                    FamilyName = host.FamilyName,
+                    MailAddress = host.MailAddress,
+                    PhoneNumber = host.PhoneNumber,
+                    PrivateName = host.PrivateName,
+                    HostBankAccount = new BankAccount
+                    {
+                        BankAccountNumber = host.HostBankAccount.BankAccountNumber,
+                        BankName = host.HostBankAccount.BankName,
+                        BankNumber = host.HostBankAccount.BankNumber,
+                        BranchCity = host.HostBankAccount.BranchCity,
+                        BranchAddress = host.HostBankAccount.BranchAddress,
+                        BranchNumber = host.HostBankAccount.BranchNumber
+                    }
+                };
+            }
+            return;
+        }
+        #endregion
 
+        #region getters
         public List<Branche> GetAllBranches()
         {
             List<Branche> branches = new List<Branche>
@@ -161,15 +224,15 @@ namespace DAL
                     where a.HostingUnitKey == key
                     select a;
             foreach (var item in v)
-                unit = item.Clone();   
+                unit = item.Clone();
             try
             {
                 if (unit == null)
-                    throw new System.IndexOutOfRangeException();//TODO 
+                    throw new MissingMemberException("did not find unit");
             }
-            catch (Exception)
+            catch (MissingMemberException ms)
             {
-                throw;
+                throw ms;
             }
             return unit;
         }
@@ -181,13 +244,13 @@ namespace DAL
                     where a.OrderKey == key
                     select a;
             foreach (var item in v)
-                order = item.Clone();         
+                order = item.Clone();
             try
             {
                 if (order == null)
-                    throw new System.IndexOutOfRangeException();//TODO לא נמצאה יחידה  
+                    throw new MissingMemberException("did not find order");
             }
-            catch (Exception)
+            catch (MissingMemberException)
             {
                 throw;
             }
@@ -205,101 +268,16 @@ namespace DAL
             try
             {
                 if (guest == null)
-                    throw new System.IndexOutOfRangeException();
-            }                                          
-            catch (Exception)
+                    throw new MissingMemberException("did not find guest request");
+            }
+            catch (MissingMemberException)
             {
                 throw;
             }
             return guest;
         }
 
-        public void UpdateHostingUnit(HostingUnit unit)
-        {
-            HostingUnit hosting = new HostingUnit();
-            try
-            {
-                 hosting = GetHostingUnit(unit.HostingUnitKey);
-            }
-            catch (Exception)
-            {
-                throw;//לא נמצא יחידה לעדכן
-            }
-                DeleteHostingUnit(hosting);                
-                DataSource.hostsList.Add(hosting);
-                return;            
-        }
-
-        public void UpdateOrder(Order order)
-        {
-            Order order1 = new Order();
-            try
-            {
-                 order1 = GetOrder(order.OrderKey);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-                order1.Status = order.Status;
-                return;                       
-        }
-
-        public void UpdateRequest(GuestRequest guestRequest)
-        {
-            GuestRequest guestRequest1 = new GuestRequest();
-            try
-            {
-                guestRequest1 = GetGuestRequest(guestRequest.GuestRequestKey);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            var v = from a in GetAllOrders()
-                    where a.GuestRequestKey == guestRequest.GuestRequestKey
-                    select a;
-            foreach (var item in v)
-            {
-                item.Status = StatusOrder.RequestChanged;
-                UpdateOrder(item);
-            }            
-            var z = from a in DataSource.guestRequests
-                    where a.GuestRequestKey == guestRequest1.GuestRequestKey
-                    select a;
-            foreach (var item in z)
-            {
-                item.Status = StatusGuest.Expired;               
-            }
-            AddRequest(guestRequest1);
-        }
-
-        public void UpdateHost(Host host)
-        {
-            var v = from item in DataSource.hostsList
-                    where host.HostId == item.Owner.HostId
-                    select item;
-            foreach (var item in v)
-            {
-                item.Owner = new Host
-                {
-                    FamilyName = host.FamilyName,
-                    MailAddress = host.MailAddress,
-                    PhoneNumber = host.PhoneNumber,
-                    PrivateName = host.PrivateName,
-                    HostBankAccount = new BankAccount
-                    {
-                        BankAccountNumber = host.HostBankAccount.BankAccountNumber,
-                        BankName = host.HostBankAccount.BankName,
-                        BankNumber = host.HostBankAccount.BankNumber,
-                        BranchCity = host.HostBankAccount.BranchCity,
-                        BranchAddress = host.HostBankAccount.BranchAddress,
-                        BranchNumber = host.HostBankAccount.BranchNumber
-                    }
-                };
-            }
-            return;
-        }
+        #endregion
     }
 }
 

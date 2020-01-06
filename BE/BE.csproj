@@ -48,6 +48,7 @@
     <Compile Include="GuestRequest.cs" />
     <Compile Include="BankAccount.cs" />
     <Compile Include="HostingUnit.cs" />
+    <Compile Include="MyExeption.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
