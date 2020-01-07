@@ -12,7 +12,7 @@ namespace BL
 {
     class Bl_imp : IBL
     {
-        public IDal dal = FactoryMethode.GetDal();
+        public IDal dal = DAL.FactoryMethode.GetDal();
 
         #region helpingFunction
 
@@ -69,26 +69,26 @@ namespace BL
                     continue;
                 if (guest.Pool == Requirements.Necessary && item.Pool == false)
                     continue;
-                if (guest.Pool == Requirements.notInterested && item.Pool == true)
+                if (guest.Pool == Requirements.not_Interested && item.Pool == true)
                     continue;
                 if (guest.Jacuzzi == Requirements.Necessary && item.Jacuzzi == false)
                     continue;
-                if (guest.Jacuzzi == Requirements.notInterested && item.Jacuzzi == true)
+                if (guest.Jacuzzi == Requirements.not_Interested && item.Jacuzzi == true)
                     continue;
                 if (guest.Garden == Requirements.Necessary && item.Garden == false)
                     continue;
-                if (guest.Garden == Requirements.notInterested && item.Garden == true)
+                if (guest.Garden == Requirements.not_Interested && item.Garden == true)
                     continue;
                 if (guest.ChildrensAttractions == Requirements.Necessary && item.ChildrensAttractions == false)
                     continue;
-                if (guest.ChildrensAttractions == Requirements.notInterested && item.ChildrensAttractions == true)
+                if (guest.ChildrensAttractions == Requirements.not_Interested && item.ChildrensAttractions == true)
                     continue;
                 Order order = new Order()
                 {
                     GuestRequestKey = guest.GuestRequestKey,
                     HostingUnitKey = item.HostingUnitKey,
                     CreateDate = DateTime.Now,
-                    Status = StatusOrder.NotYetApproved
+                    Status = StatusOrder.Not_Yet_Approved
                 };
                 count++;
                 AddOrder(order);
@@ -119,22 +119,22 @@ namespace BL
 
         public void AddOrder(Order o)
         {
-            if (o.Status == StatusOrder.NotYetApproved)
+            if (o.Status == StatusOrder.Not_Yet_Approved)
             {
                 dal.AddOrder(o);
                 return;
             }
-            return;//try catch, error in status of the order
+            return;//TODO try catch, error in status of the order
         }
 
         public void AddRequest(GuestRequest t)
         {
             if (t.EntryDate >= t.ReleaseDate)
-                return;//try catch,the date not proper.
+                return;//TODO try catch,the date not proper.
             if (t.MailAddress == "" || !(t.MailAddress.Contains("@")))
-                return;//try catch,miss mail or not all letters
+                return;//TODO try catch,miss mail or not all letters
             if (t.PrivateName == "" || !(IsAllLetters(t.PrivateName)) || t.FamilyName == "" || !(IsAllLetters(t.FamilyName)))
-                return;//try catch, has problem in the name
+                return;//TODO try catch, has problem in the name
             t.Status = StatusGuest.Open;
             dal.AddRequest(t);
             return;
@@ -147,7 +147,7 @@ namespace BL
                 DeleteGuest(guest);
                 return;
             }
-            return;//try catch, the guest is open.
+            return;//TODO try catch, the guest is open.
         }
 
         public void DeleteHostingUnit(HostingUnit unit)
@@ -155,7 +155,7 @@ namespace BL
             List<Order> orders = GetAllOrders();
             var v = from a in orders
                     where a.HostingUnitKey == unit.HostingUnitKey
-                    where a.Status == StatusOrder.MailSent
+                    where a.Status == StatusOrder.Mail_Sent
                     select a;
             foreach (var item in v)
             {
@@ -167,8 +167,8 @@ namespace BL
 
         public void DeleteOrder(Order o)
         {
-            //try catch,לא יכול למחוק , במצב של שליחת מייל
-            if (o.Status == StatusOrder.MailSent)
+            //TODO try catch,לא יכול למחוק , במצב של שליחת מייל
+            if (o.Status == StatusOrder.Mail_Sent)
                 throw new CannotDelete("Mail already sent to a client");
             DeleteOrder(o);
             return;
@@ -187,11 +187,11 @@ namespace BL
                 List<Order> orders = GetAllOrders();
                 var v = from a in orders
                         where a.HostingUnitKey == t.HostingUnitKey
-                        where a.Status == StatusOrder.MailSent
+                        where a.Status == StatusOrder.Mail_Sent
                         select a;
                 foreach (var item in v)
                 {
-                    throw new CannotUpdate("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString()"!");
+                    throw new CannotUpdate("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString()+"!");
                 }
                 try
                 {
@@ -221,17 +221,17 @@ namespace BL
                 throw new CannotUpdate("the Owner " + unit.Owner.PrivateName + " " + unit.Owner.FamilyName + " did not settle a payment agreement");
             //"כאשר סטטוס הזמנה משתנה לסגירת עסקה - לא ניתן לשנות יותר את הסטטוס שלה"
             //TODO צע"ג
-            if (order.Status == StatusOrder.CustomerUnresponsiveness || order.Status == StatusOrder.CustomerResponsiveness)
+            if (order.Status == StatusOrder.Customer_Unresponsiveness || order.Status == StatusOrder.Customer_Responsiveness)
                 throw new CannotUpdate("the Order number:" + order.OrderKey + " is closed");
-            if (o.Status != StatusOrder.NotYetApproved)
+            if (o.Status != StatusOrder.Not_Yet_Approved)
             {
                 dal.UpdateOrder(o);
-                if (o.Status == StatusOrder.MailSent)
+                if (o.Status == StatusOrder.Mail_Sent)
                     Console.WriteLine("mail sent\n");
-                if (o.Status == StatusOrder.CustomerResponsiveness)
+                if (o.Status == StatusOrder.Customer_Responsiveness)
                 {
                     double commission = Configuration.commision;
-                    guestRequest.Status = StatusGuest.ClosesBySite;
+                    guestRequest.Status = StatusGuest.Closes_By_Site;
                     UpdateRequest(guestRequest);
                     for (DateTime date = guestRequest.EntryDate; date < guestRequest.ReleaseDate; date.AddDays(1))
                         unit.Diary[date.Month, date.Day] = true;
@@ -239,11 +239,11 @@ namespace BL
                     List<Order> orders = dal.GetAllOrders();
                     var v = from a in orders
                             where a.GuestRequestKey == guestRequest.GuestRequestKey
-                            where a.Status != StatusOrder.CustomerResponsiveness
+                            where a.Status != StatusOrder.Customer_Responsiveness
                             select a;
                     foreach (var item in v)
                     {
-                        item.Status = StatusOrder.CustomerUnresponsiveness;
+                        item.Status = StatusOrder.Customer_Unresponsiveness;
                         UpdateOrder(item);
                     }
                     return;
@@ -263,7 +263,7 @@ namespace BL
                     select a;
             foreach (var item in v)
             {
-                item.Status = StatusOrder.CustomerUnresponsiveness;
+                item.Status = StatusOrder.Customer_Unresponsiveness;
                 UpdateOrder(item);
             }
             t.Status = StatusGuest.Expired;
@@ -337,34 +337,34 @@ namespace BL
             return guestRequests;
         }
 
-        public List<GuestRequest> GetAllGuestRequestByNumRelax(int num)
-        {
-            List<GuestRequest> guestRequests = new List<GuestRequest>();
-            var v = from a in GetAllGuestRequest()
-                    group a by a.Adults + a.Children == num;
-            foreach (var item in v)
-            {
-                guestRequests.Add(item);
-            }
-            return guestRequests;
-        }
+        //public List<GuestRequest> GetAllGuestRequestByNumRelax(int num)
+        //{
+        //    List<GuestRequest> guestRequests = new List<GuestRequest>();
+        //    var v = from a in GetAllGuestRequest()
+        //            group a by a.Adults + a.Children == num;
+        //    foreach (var item in v)
+        //    {
+        //        guestRequests.Add(item);
+        //    }
+        //    return guestRequests;
+        //}
 
-        public List<HostingUnit> GetAllHostingUnitByArea(Area area)
-        {
-            List<HostingUnit> hostingUnits = new List<HostingUnit>();
-            var v = from a in GetAllHostingUnit()
-                    group a by a.Area == area;
-            foreach (var item in v)
-            {
-                hostingUnits.Add(item);
-            }
-            return hostingUnits;
-        }
+        //public List<HostingUnit> GetAllHostingUnitByArea(Area area)
+        //{
+        //    List<HostingUnit> hostingUnits = new List<HostingUnit>();
+        //    var v = from a in GetAllHostingUnit()
+        //            group a by a.Area == area;
+        //    foreach (var item in v)
+        //    {
+        //        hostingUnits.Add(item);
+        //    }
+        //    return hostingUnits;
+        //}
 
-        public List<Host> GetAllHostByNumHostingUnit()
-        {
+        //public List<Host> GetAllHostByNumHostingUnit()
+        //{
 
-        }
+        //}
 
         #endregion
 
@@ -386,7 +386,7 @@ namespace BL
             int count = 0;
             var v = from a in GetAllOrders()
                     where a.HostingUnitKey == hostingUnit.HostingUnitKey
-                    where a.Status == StatusOrder.CustomerResponsiveness
+                    where a.Status == StatusOrder.Customer_Responsiveness
                     select a;
             foreach (var item in v)
                 count++;

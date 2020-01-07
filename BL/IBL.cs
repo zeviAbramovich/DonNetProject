@@ -38,10 +38,10 @@ namespace BL
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
-        List<GuestRequest> GetAllGuestRequestByArea(Area area);
-        List<GuestRequest> GetAllGuestRequestByNumRelax(int num);
-        List<HostingUnit> GetAllHostingUnitByArea(Area area);
-        List<Host> GetAllHostByNumHostingUnit();
+        //List<GuestRequest> GetAllGuestRequestByArea(Area area);
+        //List<GuestRequest> GetAllGuestRequestByNumRelax(int num);
+        //List<HostingUnit> GetAllHostingUnitByArea(Area area);
+        //List<Host> GetAllHostByNumHostingUnit();
 
         List<HostingUnit> UnitsAvailable(DateTime dateTime, int Vacation_Days);
         int SumDays(DateTime dateTime);

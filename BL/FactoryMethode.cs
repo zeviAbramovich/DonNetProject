@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BE;
-using BL;
 
-namespace UI
+namespace BL
 {
-    class myUi
+    public static class FactoryMethode
     {
-        static void Main(string[] args)
+        public static IBL GetBL()
         {
+            IBL BLImp = new Bl_imp();
+            return BLImp;
         }
     }
 }

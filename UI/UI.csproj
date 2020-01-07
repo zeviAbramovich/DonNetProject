@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="myUi.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="IUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\BL\BL.csproj">
       <Project>{2faf4988-4d60-42e2-8ed3-7d6920657e1f}</Project>
       <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{81E7D3B5-0592-428C-A16B-4ACDAE92E69F}</Project>
+      <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

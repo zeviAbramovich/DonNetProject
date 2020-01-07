@@ -112,7 +112,7 @@ namespace DAL
                     select a;
             foreach (var item in v)// משנה לכל ההזמנות שקשורות לבקשה את הסטטוס לסגור כי הזמנה השתנתה
             {
-                item.Status = StatusOrder.RequestChanged;
+                item.Status = StatusOrder.Request_Changed;
                 UpdateOrder(item);
             }
             var z = from a in DataSource.guestRequests

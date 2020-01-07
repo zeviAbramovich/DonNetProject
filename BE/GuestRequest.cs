@@ -9,23 +9,23 @@ namespace BE
 {
     public class GuestRequest
     {
-        public long GuestRequestKey { get;  set; }
-        public String PrivateName { get; set; }
-        public String FamilyName { get; set; }
-        public String MailAddress { get; set; }
-        public StatusGuest Status { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime ReleaseDate { get; set; }
-        public Area Area { get; set; }
-        public String SubArea { get; set; }
-        public HostingType HostingType { get; set; }
-        public int Adults { get; set; }
-        public int Children { get; set; }
-        public Requirements Pool { get; set; }
-        public Requirements Jacuzzi { get; set; }
-        public Requirements Garden { get; set; }
-        public Requirements ChildrensAttractions { get; set; }
+        public long GuestRequestKey                 { get; set ; }
+        public String       PrivateName             { get; set; }
+        public String       FamilyName              { get; set; }
+        public String       MailAddress             { get; set; }
+        public StatusGuest  Status                  { get; set; }
+        public DateTime     RegistrationDate         { get; set; }
+        public DateTime     EntryDate                { get; set; }
+        public DateTime     ReleaseDate               { get; set; }
+        public Area         Area                     { get; set; }
+        public String       SubArea                        { get; set; }
+        public HostingType  HostingType                { get; set; }
+        public int          Adults                 { get; set; }
+        public int          Children                  { get; set; }
+        public Requirements Pool                     { get; set; }
+        public Requirements Jacuzzi                  { get; set; }
+        public Requirements Garden                   { get; set; }
+        public Requirements ChildrensAttractions  { get; set; }
 
         public override string ToString()
         {
