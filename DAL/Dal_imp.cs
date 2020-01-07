@@ -72,9 +72,9 @@ namespace DAL
             {
                 hosting = GetHostingUnit(unit.HostingUnitKey);
             }
-            catch (Exception)
+            catch (MissingMemberException me)
             {
-                throw;//לא נמצא יחידה לעדכן
+                throw new CannotUpdate("Hosting Unit number " + unit.HostingUnitKey + " not found", me);
             }
             DeleteHostingUnit(hosting);
             DataSource.hostsList.Add(hosting);
@@ -103,9 +103,9 @@ namespace DAL
             {
                 guestRequest1 = GetGuestRequest(guestRequest.GuestRequestKey);
             }
-            catch (Exception)
+            catch (MissingMemberException ex)
             {
-                throw;
+                throw new MissingMemberException("There is no RequestKey "+ guestRequest.GuestRequestKey.ToString(), ex);
             }
             var v = from a in GetAllOrders()
                     where a.GuestRequestKey == guestRequest.GuestRequestKey

@@ -144,7 +144,7 @@ namespace BL
         {
             if (guest.Status != StatusGuest.Open)
             {
-                dal.DeleteGuest(guest);
+                DeleteGuest(guest);
                 return;
             }
             return;//try catch, the guest is open.
@@ -167,9 +167,10 @@ namespace BL
 
         public void DeleteOrder(Order o)
         {
+            //try catch,לא יכול למחוק , במצב של שליחת מייל
             if (o.Status == StatusOrder.MailSent)
-                return;//try catch,לא יכול למחוק , במצב של שליחת מייל 
-            dal.DeleteOrder(o);
+                throw new CannotDelete("Mail already sent to a client");
+            DeleteOrder(o);
             return;
         }
 
@@ -190,9 +191,17 @@ namespace BL
                         select a;
                 foreach (var item in v)
                 {
-                    return;//try catch, ישנה לפחות הזמנה אחת פתוחה ליחידה ואי אפשר לשנות את הרשאת חיוב 
+                    throw new CannotUpdate("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString()"!");
                 }
-                dal.UpdateHostingUnit(t);
+                try
+                {
+                    dal.UpdateHostingUnit(t);
+                }
+                catch (CannotUpdate me)
+                {
+                    throw me;
+                }
+                
                 return;
             }
             else
@@ -207,10 +216,13 @@ namespace BL
             HostingUnit unit = GetUnit(o.HostingUnitKey);
             Order order = GetOrder(o.OrderKey);
             GuestRequest guestRequest = GetGuestRequest(o.GuestRequestKey);
+            //"בעל יחידת אירוח יוכל לשלוח הזמנה ללקוח רק אם חתם על הרשאה"
             if (!unit.Owner.CollectionClearance)
-                return;//TODO try catch, אין אישור גביה
+                throw new CannotUpdate("the Owner " + unit.Owner.PrivateName + " " + unit.Owner.FamilyName + " did not settle a payment agreement");
+            //"כאשר סטטוס הזמנה משתנה לסגירת עסקה - לא ניתן לשנות יותר את הסטטוס שלה"
+            //TODO צע"ג
             if (order.Status == StatusOrder.CustomerUnresponsiveness || order.Status == StatusOrder.CustomerResponsiveness)
-                return;//try catch, לא יכול לבצע שינויים כי ההזמנה נסגרה
+                throw new CannotUpdate("the Order number:" + order.OrderKey + " is closed");
             if (o.Status != StatusOrder.NotYetApproved)
             {
                 dal.UpdateOrder(o);
@@ -238,13 +250,13 @@ namespace BL
                 }
                 return;
             }
-            return;//try catch,beacuse have not update.
+            return;//TODO ?? Zevi:try catch,beacuse have not update.
         }
 
         public void UpdateRequest(GuestRequest t)
         {
             if (t.Status != StatusGuest.Open)
-                return;//try catch,הזמנה לא תקפה או נסגרה עסקה
+                throw new CannotUpdate("Request number: "+t.GuestRequestKey.ToString()+" is closed!");
             List<Order> orders = GetAllOrders();
             var v = from a in orders
                     where a.GuestRequestKey == t.GuestRequestKey
