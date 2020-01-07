@@ -169,7 +169,7 @@ namespace BL
         {
             //TODO try catch,לא יכול למחוק , במצב של שליחת מייל
             if (o.Status == StatusOrder.Mail_Sent)
-                throw new CannotDelete("Mail already sent to a client");
+                throw new CannotDeleteException("Mail already sent to a client");
             DeleteOrder(o);
             return;
         }
@@ -191,13 +191,13 @@ namespace BL
                         select a;
                 foreach (var item in v)
                 {
-                    throw new CannotUpdate("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString()+"!");
+                    throw new CannotUpdateException("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString()+"!");
                 }
                 try
                 {
                     dal.UpdateHostingUnit(t);
                 }
-                catch (CannotUpdate me)
+                catch (CannotUpdateException me)
                 {
                     throw me;
                 }
@@ -218,11 +218,11 @@ namespace BL
             GuestRequest guestRequest = GetGuestRequest(o.GuestRequestKey);
             //"בעל יחידת אירוח יוכל לשלוח הזמנה ללקוח רק אם חתם על הרשאה"
             if (!unit.Owner.CollectionClearance)
-                throw new CannotUpdate("the Owner " + unit.Owner.PrivateName + " " + unit.Owner.FamilyName + " did not settle a payment agreement");
+                throw new CannotUpdateException("the Owner " + unit.Owner.PrivateName + " " + unit.Owner.FamilyName + " did not settle a payment agreement");
             //"כאשר סטטוס הזמנה משתנה לסגירת עסקה - לא ניתן לשנות יותר את הסטטוס שלה"
             //TODO צע"ג
             if (order.Status == StatusOrder.Customer_Unresponsiveness || order.Status == StatusOrder.Customer_Responsiveness)
-                throw new CannotUpdate("the Order number:" + order.OrderKey + " is closed");
+                throw new CannotUpdateException("the Order number:" + order.OrderKey + " is closed");
             if (o.Status != StatusOrder.Not_Yet_Approved)
             {
                 dal.UpdateOrder(o);
@@ -256,7 +256,7 @@ namespace BL
         public void UpdateRequest(GuestRequest t)
         {
             if (t.Status != StatusGuest.Open)
-                throw new CannotUpdate("Request number: "+t.GuestRequestKey.ToString()+" is closed!");
+                throw new CannotUpdateException("Request number: "+t.GuestRequestKey.ToString()+" is closed!");
             List<Order> orders = GetAllOrders();
             var v = from a in orders
                     where a.GuestRequestKey == t.GuestRequestKey

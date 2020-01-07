@@ -74,7 +74,7 @@ namespace DAL
             }
             catch (MissingMemberException me)
             {
-                throw new CannotUpdate("Hosting Unit number " + unit.HostingUnitKey + " not found", me);
+                throw new CannotUpdateException("Hosting Unit number " + unit.HostingUnitKey + " not found", me);
             }
             DeleteHostingUnit(hosting);
             DataSource.hostsList.Add(hosting);

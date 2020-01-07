@@ -10,30 +10,30 @@ namespace BE
 {
 
     [Serializable]
-    public class CannotUpdate : Exception
+    public class CannotUpdateException : Exception
     {
-        public CannotUpdate() : base() { }
-        public CannotUpdate(string message) : base(message) { }
-        public CannotUpdate(string message, Exception inner) : base(message, inner) { }
-        protected CannotUpdate(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public CannotUpdateException() : base() { }
+        public CannotUpdateException(string message) : base(message) { }
+        public CannotUpdateException(string message, Exception inner) : base(message, inner) { }
+        protected CannotUpdateException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 
     [Serializable]
-    public class IdAlreadyExsist : Exception
+    public class IdAlreadyExsistException : Exception
     {
-        public IdAlreadyExsist() : base() { }
-        public IdAlreadyExsist(string message) : base(message) { }
-        public IdAlreadyExsist(string message, Exception inner) : base(message, inner) { }
-        protected IdAlreadyExsist(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public IdAlreadyExsistException() : base() { }
+        public IdAlreadyExsistException(string message) : base(message) { }
+        public IdAlreadyExsistException(string message, Exception inner) : base(message, inner) { }
+        protected IdAlreadyExsistException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 
     [Serializable]
-    public class CannotDelete : Exception
+    public class CannotDeleteException : Exception
     {
-        public CannotDelete() : base() { }
-        public CannotDelete(string message) : base(message) { }
-        public CannotDelete(string message, Exception inner) : base(message, inner) { }
-        protected CannotDelete(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public CannotDeleteException() : base() { }
+        public CannotDeleteException(string message) : base(message) { }
+        public CannotDeleteException(string message, Exception inner) : base(message, inner) { }
+        protected CannotDeleteException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 
 }
