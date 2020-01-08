@@ -10,11 +10,9 @@ namespace UI
 {
     class IUI
     {
-        public IBL bl = FactoryMethode.GetBL();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
+        public IBL bl = BL.FactoryMethode.GetBL();
+        
+      
         static void Main(string[] args)
         {
             Console.WriteLine(Menu.GetMenu(Menu.OwnerMenu.AddHostingUnit));
@@ -122,14 +120,15 @@ namespace UI
                                 Console.WriteLine("You must enter a number!");
                             }
                             guestTemp.ChildrensAttractions = (Requirements)intTemp;
-                            BL.FactoryMethode.GetBL().AddRequest(guestTemp);
+                            
                             Console.WriteLine(guestTemp.ToString());
                             break;
                         case 2:
                             //delete request
                             //TODO אולי כדאי שהארגומנט יהיה מספר הבקשה. 
                             GuestRequest guestRequest = new GuestRequest();
-                            BL.FactoryMethode.GetBL().DeleteGuest(guestRequest);
+                            //BL.FactoryMethode.GetBL().DeleteGuest(guestRequest);
+                                ;
                             break;
                             
                     }

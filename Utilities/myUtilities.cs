@@ -72,6 +72,11 @@ namespace Utilities
             return isValid;
         }
 
+        public static bool IsAllLetters(string s)
+        {
+            return (Regex.IsMatch(s, @"^[א-ת]+$"));
+        }
+
     }
 }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL;
 
 namespace BL
 {
@@ -10,8 +11,8 @@ namespace BL
     {
         public static IBL GetBL()
         {
-            IBL BLImp = new Bl_imp();
-            return BLImp;
+            IBL BLimp = new Bl_imp();
+            return BLimp;
         }
     }
 }

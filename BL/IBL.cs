@@ -10,12 +10,12 @@ namespace BL
 {
     public interface IBL
     {
-        bool CheckAvailableDate(HostingUnit unit, GuestRequest guest);
-        bool IsAllLetters(string s);
+       // bool CheckAvailableDate(HostingUnit unit, GuestRequest guest);
+       // bool IsAllLetters(string s);
         bool CheckAvailableDateByDateAndSumDays(HostingUnit unit, DateTime date, int VacationDays);
 
         void AddRequest(GuestRequest t);
-        void DeleteGuest(GuestRequest guest);
+       // void DeleteGuest(GuestRequest guest);
         void UpdateRequest(GuestRequest t);
 
         void AddHostingUnit(HostingUnit t);

@@ -16,18 +16,6 @@ namespace BL
 
         #region helpingFunction
 
-        public static bool ValidateMail(string emailAddress)
-        {
-            var regex = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
-            bool isValid = Regex.IsMatch(emailAddress, regex, RegexOptions.IgnoreCase);
-            return isValid;
-        }
-
-        public bool IsAllLetters(string s)
-        {
-            return (Regex.IsMatch(s, @"^[א-ת]+$"));
-        }
-
         public bool CheckAvailableDate(HostingUnit unit, GuestRequest guest)
         {
             for (DateTime date = guest.EntryDate; date < guest.ReleaseDate; date.AddDays(1))
@@ -94,7 +82,7 @@ namespace BL
                 AddOrder(order);
             }
             if (count == 0)
-                return;//TODO try catch have not match.
+                return;//TODO try catch have not match.- זה לא חריגה...
         }
 
         #endregion
@@ -103,16 +91,16 @@ namespace BL
 
         public void AddHostingUnit(HostingUnit t)
         {
-            if (t.HostingUnitName == "" || !(IsAllLetters(t.HostingUnitName)))
-                return;//TODO try catch, or miss name  or not all lleters.
-            //if (!(t.Owner.CollectionClearance))
-            //    return; try catch, have not CollectionClearance
-            if (!(IsAllLetters(t.Owner.PrivateName)) || !(IsAllLetters(t.Owner.FamilyName)))
-                return;//try catch, not all the name is words
-            if (t.Owner.MailAddress == "")
-                return;//try catch, miss mail.
-            if (t.Owner.HostBankAccount.BankAccountNumber == 0 || t.Owner.HostBankAccount.BankNumber == 0 || t.Owner.HostBankAccount.BranchNumber == 0)
-                return;//try catch, miss or account or branch noumber or bank noumber.
+           // if (t.HostingUnitName == "" || !(IsAllLetters(t.HostingUnitName)))
+           //     return;//TODO try catch, or miss name  or not all lleters.
+           // //if (!(t.Owner.CollectionClearance))
+           // //    return; try catch, have not CollectionClearance
+           // if (!(IsAllLetters(t.Owner.PrivateName)) || !(IsAllLetters(t.Owner.FamilyName)))
+           //     return;//try catch, not all the name is words
+           // if (t.Owner.MailAddress == "")
+           //     return;//try catch, miss mail.
+           // if (t.Owner.HostBankAccount.BankAccountNumber == 0 || t.Owner.HostBankAccount.BankNumber == 0 || t.Owner.HostBankAccount.BranchNumber == 0)
+           //     return;//try catch, miss or account or branch noumber or bank noumber.
             AddHostingUnit(t);
             return;
         }
@@ -131,24 +119,24 @@ namespace BL
         {
             if (t.EntryDate >= t.ReleaseDate)
                 return;//TODO try catch,the date not proper.
-            if (t.MailAddress == "" || !(t.MailAddress.Contains("@")))
-                return;//TODO try catch,miss mail or not all letters
-            if (t.PrivateName == "" || !(IsAllLetters(t.PrivateName)) || t.FamilyName == "" || !(IsAllLetters(t.FamilyName)))
-                return;//TODO try catch, has problem in the name
+           // if (t.MailAddress == "" || !(t.MailAddress.Contains("@")))
+           //     return;//TODO try catch,miss mail or not all letters
+           // if (t.PrivateName == "" || !(IsAllLetters(t.PrivateName)) || t.FamilyName == "" || !(IsAllLetters(t.FamilyName)))
+           //     return;//TODO try catch, has problem in the name
             t.Status = StatusGuest.Open;
             dal.AddRequest(t);
             return;
         }
 
-        public void DeleteGuest(GuestRequest guest)
-        {
-            if (guest.Status != StatusGuest.Open)
-            {
-                DeleteGuest(guest);
-                return;
-            }
-            return;//TODO try catch, the guest is open.
-        }
+        //public void DeleteGuest(GuestRequest guest)
+        //{
+        //    if (guest.Status != StatusGuest.Open)
+        //    {
+        //        DeleteGuest(guest);
+        //        return;
+        //    }
+        //    return;//TODO try catch, the guest is open.
+        //}
 
         public void DeleteHostingUnit(HostingUnit unit)
         {
@@ -267,7 +255,7 @@ namespace BL
                 UpdateOrder(item);
             }
             t.Status = StatusGuest.Expired;
-            DeleteGuest(t);
+            //DeleteGuest(t);
             AddRequest(t);
             return;
         }
