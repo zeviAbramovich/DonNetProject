@@ -12,7 +12,6 @@ namespace UI
     {
         public IBL bl = BL.FactoryMethode.GetBL();
         
-      
         static void Main(string[] args)
         {
             Console.WriteLine(Menu.GetMenu(Menu.OwnerMenu.AddHostingUnit));
@@ -120,7 +119,7 @@ namespace UI
                                 Console.WriteLine("You must enter a number!");
                             }
                             guestTemp.ChildrensAttractions = (Requirements)intTemp;
-                            
+                            BL.FactoryMethode.GetBL().AddRequest(guestTemp);
                             Console.WriteLine(guestTemp.ToString());
                             break;
                         case 2:
