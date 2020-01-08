@@ -14,13 +14,12 @@ namespace UI
         
         static void Main(string[] args)
         {
-            Console.WriteLine(Menu.GetMenu(Menu.OwnerMenu.AddHostingUnit));
+            Console.WriteLine(Menu.GetMenu(Menu.OwnerMenu.AddHostingUnit));//client / owner
             int chois;
             while (Int32.TryParse(Console.ReadLine(), out chois) != true)
             {
                 Console.WriteLine("You have to choose a number!");
             }
-
             switch (chois)
             {
                 case 1:
@@ -37,13 +36,24 @@ namespace UI
                             string stringTemp = "";
                             int intTemp = 0;
                             DateTime dateTemp;
-                            GuestRequest guestTemp = new GuestRequest();
-                            guestTemp.GuestRequestKey = Configuration.serialGuestRequest++;
-                            Console.WriteLine("Please fill all details () :\n" + guestTemp.ToString());
+                            GuestRequest guestTemp = new GuestRequest(); 
+                            Console.WriteLine("Please fill all details () :\n");
                             Console.WriteLine("Private Name?");
-                            guestTemp.PrivateName = Console.ReadLine();
+                            stringTemp = Console.ReadLine();
+                            while (!Utilities.Tools.IsAllLetters(stringTemp))
+                            {
+                                Console.WriteLine("use only letters, please enter again");
+                                stringTemp = Console.ReadLine();
+                            }
+                            guestTemp.PrivateName = stringTemp;
                             Console.WriteLine("Family Name?");
-                            guestTemp.FamilyName = Console.ReadLine();
+                            stringTemp = Console.ReadLine();
+                            while (!Utilities.Tools.IsAllLetters(stringTemp))
+                            {
+                                Console.WriteLine("use only letters, please enter again");
+                                stringTemp = Console.ReadLine();
+                            }
+                            guestTemp.FamilyName = stringTemp;
                             Console.WriteLine("Your e-mail address?");
                             stringTemp = Console.ReadLine();
                             while (!Utilities.Tools.ValidateMail(stringTemp))
@@ -61,9 +71,10 @@ namespace UI
                                 Console.WriteLine("When you would like to come?(dd/mm/yyyy)");
                                 stringTemp = Console.ReadLine();
                             }
+                            guestTemp.EntryDate = dateTemp;
                             Console.WriteLine("When you would like to leave?(dd/mm/yyyy)");
                             stringTemp = Console.ReadLine();
-                            guestTemp.EntryDate = dateTemp;
+                            
                             while (!DateTime.TryParse(stringTemp, out dateTemp))
                             {
                                 Console.WriteLine("Incorect date...");
@@ -77,7 +88,8 @@ namespace UI
                             {
                                 Console.WriteLine("You must enter a number!");
                             }
-                            guestTemp.Area = (Area)intTemp; Console.WriteLine("where exactly?\n");
+                            guestTemp.Area = (Area)intTemp; 
+                            Console.WriteLine("where exactly?\n");
                             stringTemp = Console.ReadLine();
                             guestTemp.SubArea = stringTemp;
                             Console.WriteLine("What type of hosting? (1-4)\n" + Utilities.Tools.GetEnum(guestTemp.HostingType));
@@ -91,7 +103,7 @@ namespace UI
                             guestTemp.Adults = Int32.Parse(Console.ReadLine());//TODO catch
                             Console.WriteLine("How many childrens?");
                             guestTemp.Children = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("Do you want a Swiming Pool? (1-3)\n" + Utilities.Tools.GetEnum(guestTemp.Pool));
+                            Console.WriteLine("Do you want a Swimming Pool? (1-3)\n" + Utilities.Tools.GetEnum(guestTemp.Pool));
                             stringTemp = Console.ReadLine();
                             while (!Int32.TryParse(stringTemp, out intTemp))
                             {
@@ -119,14 +131,21 @@ namespace UI
                                 Console.WriteLine("You must enter a number!");
                             }
                             guestTemp.ChildrensAttractions = (Requirements)intTemp;
-                            BL.FactoryMethode.GetBL().AddRequest(guestTemp);
-                            Console.WriteLine(guestTemp.ToString());
+                            try
+                            {
+                                BL.FactoryMethode.GetBL().AddRequest(guestTemp);
+                            }
+                            catch (Exception)
+                            {
+                                //TODO
+                                throw;
+                            }
+                            Console.WriteLine(BL.FactoryMethode.GetBL().GetGuestRequest(10000000).ToString());
+                            Console.WriteLine("Your request added successfuly!");
+                            
                             break;
                         case 2:
-                            //delete request
-                            //TODO אולי כדאי שהארגומנט יהיה מספר הבקשה. 
-                            GuestRequest guestRequest = new GuestRequest();
-                            //BL.FactoryMethode.GetBL().DeleteGuest(guestRequest);
+                           
                                 ;
                             break;
                             

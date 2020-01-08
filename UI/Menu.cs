@@ -17,7 +17,7 @@ namespace UI
         }
         public enum ClientMenu
         {
-            AddRequest = 1, DeleteRequest, UpdateRequest
+            AddRequest = 1, UpdateRequest
         }
         public enum OwnerMenu
         {
@@ -25,7 +25,7 @@ namespace UI
         }
         public enum ExceptionMenu
         {
-            MainMenu, TryAgain
+            MainMenu=1, TryAgain
         }
         public static String GetMenu<T>(this T t)
         {
