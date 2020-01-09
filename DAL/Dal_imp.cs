@@ -13,7 +13,7 @@ namespace DAL
     class Dal_imp : IDal
     {
         #region AddDeleteAndUpdate
-        public void AddHostingUnit(HostingUnit unit)
+        public bool AddHostingUnit(HostingUnit unit)
         {
             if (unit.HostingUnitKey == 0)
             {
@@ -21,36 +21,63 @@ namespace DAL
                 hostingUnit.HostingUnitKey = Configuration.serialHostingUnit++;
                 hostingUnit.Diary = new bool[12, 31];
                 DataSource.hostsList.Add(hostingUnit);
-                return;
+                return true;
             }
-            UpdateHostingUnit(unit);
+            try
+            {
+                UpdateHostingUnit(unit);
+            }
+            catch ( CannotUpdateException cue)
+            {
+
+                throw new CannotAddException("the key must be empty or correct key for update", cue) ;
+            }
+            return true;
         }
 
-        public void AddOrder(Order order)
+        public bool AddOrder(Order order)
         {
             if (order.OrderKey == 0)
             {
                 Order order1 = order.Clone();
                 order1.OrderKey = Configuration.serialOrder++;
                 DataSource.orders.Add(order1);
-                return;
+                return true;
             }
-            UpdateOrder(order);
+            try
+            {
+                UpdateOrder(order);
+            }
+            catch (CannotUpdateException cue)
+            {
+
+                throw new CannotAddException("the key must be empty or correct key for update", cue);
+            }
+            return true;
         }
 
-        public void AddRequest(GuestRequest guest)
+        public bool AddRequest(GuestRequest guest)
         {
             if (guest.GuestRequestKey == 0)
             {
                 GuestRequest guestRequest = guest.Clone();
                 guestRequest.GuestRequestKey = Configuration.serialGuestRequest++;
                 DataSource.guestRequests.Add(guestRequest);
-                return;
+                return true;
             }
-            UpdateRequest(guest);
+            try
+            {
+                UpdateRequest(guest);
+            }
+            catch ( CannotUpdateException cue)
+            {
+
+                throw new CannotAddException("the key must be empty or correct key for update", cue);
+            }
+            return true;
         }
 
-        public void DeleteHostingUnit(HostingUnit unit)
+        public bool DeleteHostingUnit(HostingUnit unit)
         {
             HostingUnit unit1 = new HostingUnit();
             try
@@ -62,10 +89,10 @@ namespace DAL
                 throw ms;
             }
             DataSource.hostsList.Remove(unit1);
-            return;
+            return true;
         }
 
-        public void UpdateHostingUnit(HostingUnit unit)
+        public bool UpdateHostingUnit(HostingUnit unit)
         {
             HostingUnit hosting = new HostingUnit();
             try
@@ -78,25 +105,25 @@ namespace DAL
             }
             DeleteHostingUnit(hosting);
             DataSource.hostsList.Add(hosting);
-            return;
+            return true;
         }
 
-        public void UpdateOrder(Order order)
+        public bool UpdateOrder(Order order)
         {
             Order order1 = new Order();
             try
             {
                 order1 = GetOrder(order.OrderKey);
             }
-            catch (Exception)
+            catch (MissingMemberException me)
             {
-                throw;
+                throw new CannotUpdateException("Cannot update! order number "+order.OrderKey.ToString()+ "not exsist",me);
             }
             order1.Status = order.Status;
-            return;
+            return true;
         }
 
-        public void UpdateRequest(GuestRequest guestRequest)
+        public bool UpdateRequest(GuestRequest guestRequest)
         {
             GuestRequest guestRequest1 = new GuestRequest();
             try
@@ -112,7 +139,7 @@ namespace DAL
                     select a;
             foreach (var item in v)// משנה לכל ההזמנות שקשורות לבקשה את הסטטוס לסגור כי הזמנה השתנתה
             {
-                item.Status = StatusOrder.Request_Changed;
+                item.Status = StatusOrder.RequestChanged;
                 UpdateOrder(item);
             }
             var z = from a in DataSource.guestRequests
@@ -123,9 +150,10 @@ namespace DAL
                 item.Status = StatusGuest.Expired;   //סוגר לבקשה את הסטטוס לנסגר כי יש בקשה חדשה            
             }
             AddRequest(guestRequest1);//מעדכן מה שרציתי
+            return true;
         }
 
-        public void UpdateHost(Host host)
+        public bool UpdateHost(Host host)
         {
             var v = from item in DataSource.hostsList
                     where host.HostId == item.Owner.HostId
@@ -149,7 +177,7 @@ namespace DAL
                     }
                 };
             }
-            return;
+            return true;
         }
         #endregion
 
@@ -219,12 +247,8 @@ namespace DAL
 
         public HostingUnit GetHostingUnit(long key)
         {
-            HostingUnit unit = new HostingUnit();
-            var v = from a in GetAllHostingUnit()
-                    where a.HostingUnitKey == key
-                    select a;
-            foreach (var item in v)
-                unit = item.Clone();
+            HostingUnit tempUnit = DataSource.hostsList.FirstOrDefault(x => x.HostingUnitKey == key);
+            HostingUnit unit = tempUnit.Clone();
             try
             {
                 if (unit == null)
@@ -239,12 +263,8 @@ namespace DAL
 
         public Order GetOrder(long key)
         {
-            Order order = new Order();
-            var v = from a in GetAllOrders()
-                    where a.OrderKey == key
-                    select a;
-            foreach (var item in v)
-                order = item.Clone();
+            Order tempOrder = DataSource.orders.FirstOrDefault(x => x.OrderKey == key);
+            Order order = tempOrder.Clone();
             try
             {
                 if (order == null)
@@ -259,12 +279,8 @@ namespace DAL
 
         public GuestRequest GetGuestRequest(long key)
         {
-            GuestRequest guest = new GuestRequest();
-            var v = from a in GetAllGuestRequest()
-                    where a.GuestRequestKey == key
-                    select a;
-            foreach (var item in v)
-                guest = item.Clone();
+            GuestRequest tempRequest = DataSource.guestRequests.FirstOrDefault(x => x.GuestRequestKey == key);
+            GuestRequest guest = tempRequest.Clone();
             try
             {
                 if (guest == null)

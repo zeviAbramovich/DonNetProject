@@ -21,7 +21,7 @@ namespace UI
         }
         public enum OwnerMenu
         {
-            AddHostingUnit = 1, DeleteHostingUnit, UpdateHostingUnit, SignCollectionClearance, CheckYourBill
+            AddHostingUnit = 1, DeleteHostingUnit, UpdateHostingUnit, SignCollectionClearance, CheckYourBill, UpdateDetails
         }
         public enum ExceptionMenu
         {

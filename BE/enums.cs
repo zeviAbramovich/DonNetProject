@@ -8,12 +8,12 @@ namespace BE
 {
     public enum StatusOrder
     {
-        Not_Yet_Approved=1, Mail_Sent, Customer_Unresponsiveness, Customer_Responsiveness ,Request_Changed
+        NotYetApproved=1, MailSent, CustomerUnresponsiveness, CustomerResponsiveness ,RequestChanged
     }
 
     public enum StatusGuest
     {
-        Open=1, Closes_By_Site, Expired
+        Open=1, ClosesBySite, Expired
     }
 
     public enum Area 
@@ -23,12 +23,12 @@ namespace BE
 
     public enum HostingType
     {
-        Zimmer=1, Hotel, Camping, Renting_Room
+        Zimmer=1, Hotel, Camping, RentingRoom
     }
 
     public enum Requirements
     {
-        Necessary=1, Possible, not_Interested
+        Necessary=1, Possible, notInterested
     }
     
 }

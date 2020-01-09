@@ -10,25 +10,21 @@ namespace BL
 {
     public interface IBL
     {
-       // bool CheckAvailableDate(HostingUnit unit, GuestRequest guest);
-       // bool IsAllLetters(string s);
+        bool CheckAvailableDate(HostingUnit unit, GuestRequest guest);
         bool CheckAvailableDateByDateAndSumDays(HostingUnit unit, DateTime date, int VacationDays);
+        bool CreateOrder(GuestRequest guest);
 
-        void AddRequest(GuestRequest t);
-       // void DeleteGuest(GuestRequest guest);
-        void UpdateRequest(GuestRequest t);
+        bool AddRequest(GuestRequest request);
+        bool UpdateRequest(GuestRequest request);
 
-        void AddHostingUnit(HostingUnit t);
-        void DeleteHostingUnit(HostingUnit t);
-        void UpdateHostingUnit(HostingUnit t);
+        bool AddHostingUnit(HostingUnit unit);
+        bool DeleteHostingUnit(HostingUnit unit);
+        bool UpdateHostingUnit(HostingUnit unit);
 
-        void CreateOrder(GuestRequest guest);
+        bool AddOrder(Order order);
+        bool UpdateOrder(Order order);
 
-        void AddOrder(Order o);
-        void DeleteOrder(Order o);
-        void UpdateOrder(Order o);
-
-        void UpdateHost(Host host);
+        bool UpdateHost(Host host);
 
         HostingUnit GetUnit(long key);
         GuestRequest GetGuestRequest(long key);
@@ -38,12 +34,12 @@ namespace BL
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
-        //List<GuestRequest> GetAllGuestRequestByArea(Area area);
-        //List<GuestRequest> GetAllGuestRequestByNumRelax(int num);
-        //List<HostingUnit> GetAllHostingUnitByArea(Area area);
-        //List<Host> GetAllHostByNumHostingUnit();
+        //TODO grouping List<GuestRequest> GetAllGuestRequestByArea(Area area);
+        //TODO grouping List<GuestRequest> GetAllGuestRequestByNumRelax(int num);
+        //TODO grouping List<HostingUnit> GetAllHostingUnitByArea(Area area);
+        //TODO grouping List<Host> GetAllHostByNumHostingUnit();
 
-        List<HostingUnit> UnitsAvailable(DateTime dateTime, int Vacation_Days);
+        List<HostingUnit> UnitsAvailable(DateTime dateTime, int VacationDays);
         int SumDays(DateTime dateTime);
         int SumDays(DateTime dateTime1, DateTime dateTime2);
         List<Order> OrderFromNumDaysOrMore(int numDays);

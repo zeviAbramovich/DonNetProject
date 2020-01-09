@@ -37,4 +37,13 @@ namespace BE
         protected CannotDeleteException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 
+    [Serializable]
+    public class CannotAddException : Exception
+    {
+        public CannotAddException() : base() { }
+        public CannotAddException(string message) : base(message) { }
+        public CannotAddException(string message, Exception inner) : base(message, inner) { }
+        protected CannotAddException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    }
+
 }

@@ -11,19 +11,17 @@ namespace DAL
 {
     public interface IDal
     {
-        void AddRequest(GuestRequest t);
-       // void DeleteGuest(GuestRequest guest);
-        void UpdateRequest(GuestRequest t);
+        bool AddRequest(GuestRequest request);
+        bool UpdateRequest(GuestRequest request);
 
-        void AddHostingUnit(HostingUnit t);
-        void DeleteHostingUnit(HostingUnit t);
-        void UpdateHostingUnit(HostingUnit t);
+        bool AddHostingUnit(HostingUnit unit);
+        bool DeleteHostingUnit(HostingUnit unit);
+        bool UpdateHostingUnit(HostingUnit unit);
 
-        void AddOrder(Order o);
-     //   void DeleteOrder(Order o);
-        void UpdateOrder(Order o);
+        bool AddOrder(Order order);
+        bool UpdateOrder(Order order);
 
-        void UpdateHost(Host host);
+        bool UpdateHost(Host host);
 
         HostingUnit GetHostingUnit(long key);
         Order GetOrder(long key);
