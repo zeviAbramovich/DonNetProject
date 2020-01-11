@@ -9,7 +9,7 @@ namespace DS
 {
     public class DataSource
     {
-        public static List<HostingUnit> hostsList = new List<HostingUnit>()
+        public static List<HostingUnit> hostingUnitList = new List<HostingUnit>()
         {
                 new HostingUnit()
                 {

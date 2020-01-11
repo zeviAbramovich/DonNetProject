@@ -98,7 +98,7 @@ namespace BL
             }
             catch (CannotUpdateException cue)
             {
-                throw new CannotAddException("The key must be empty or with correct key for update ",cue);
+                throw new CannotAddException("The key must be empty or with correct key for update ", cue);
             }
             return true;
         }
@@ -114,8 +114,8 @@ namespace BL
 
 
                         return true;
-                    } ;
-                    
+                    };
+
                 }
             }
             catch (Exception)
@@ -126,16 +126,23 @@ namespace BL
             return;//TODO try catch, error in status of the order
         }
 
-        public void AddRequest(GuestRequest t)
+        public bool AddRequest(GuestRequest t)
         {
             if (t.EntryDate >= t.ReleaseDate)
-                return;//TODO try catch,the date not proper.        
+                throw new CannotAddException("the entry date is after the relasing date");
             t.Status = StatusGuest.Open;
-            dal.AddRequest(t);
-            return;
+            try
+            {
+                dal.AddRequest(t);
+            }
+            catch (CannotAddException cae)
+            {
+                throw cae;
+            }
+            return true;
         }
 
-        public void DeleteHostingUnit(HostingUnit unit)
+        public bool DeleteHostingUnit(HostingUnit unit)
         {
             List<Order> orders = GetAllOrders();
             var v = from a in orders
@@ -144,60 +151,66 @@ namespace BL
                     select a;
             foreach (var item in v)
             {
-                return;//TODO try catch, לא יכול למחוק יש לפחות הצעה אחת פתוחה
+                throw new CannotDeleteException("Cannot delete! There is at least one open order");
             }
             dal.DeleteHostingUnit(unit);
-            return;
+            return true;
         }
-
-        public void DeleteOrder(Order o)
+        /// <summary>
+        /// updete the host details
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns>
+        /// true or false
+        /// </returns>
+        public bool UpdateHost(Host host)
         {
-            //TODO try catch,לא יכול למחוק , במצב של שליחת מייל
-            if (o.Status == StatusOrder.MailSent)
-                throw new CannotDeleteException("Mail already sent to a client");
-            DeleteOrder(o);
-            return;
-        }
-
-        public void UpdateHost(Host host)
-        {
-            dal.UpdateHost(host);
-            return;
-        }
-
-        public void UpdateHostingUnit(HostingUnit t)
-        {
-            if (t.Owner.CollectionClearance == false)
+            try
             {
-                List<Order> orders = GetAllOrders();
-                var v = from a in orders
-                        where a.HostingUnitKey == t.HostingUnitKey
-                        where a.Status == StatusOrder.MailSent
-                        select a;
-                foreach (var item in v)
+                dal.UpdateHost(host);
+            }
+            catch (CannotUpdateException cue)
+            {
+                throw cue;
+            }
+            return true;
+        }
+
+        public bool UpdateHostingUnit(HostingUnit t)
+        {
+            try
+            {
+                if (t.Owner.CollectionClearance == false)
                 {
-                    throw new CannotUpdateException("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString() + "!");
-                }
-                try
-                {
+                    List<Order> orders = GetAllOrders();
+                    var v = from a in orders
+                            where a.HostingUnitKey == t.HostingUnitKey
+                            where a.Status == StatusOrder.MailSent
+                            select a;
+                    if (v != null)
+                        throw new CannotUpdateException("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString() + "!");
+
                     dal.UpdateHostingUnit(t);
-                }
-                catch (CannotUpdateException me)
-                {
-                    throw me;
-                }
 
-                return;
+                    return true;
+                }
+                else
+                {
+
+                    dal.UpdateHostingUnit(t);
+
+
+                    return true;
+                }
             }
-            else
+            catch (CannotUpdateException cue)
             {
-                dal.UpdateHostingUnit(t);
-                return;
+                throw cue;
             }
         }
-
         public void UpdateOrder(Order o)
         {
+
             HostingUnit unit = GetUnit(o.HostingUnitKey);
             Order order = GetOrder(o.OrderKey);
             GuestRequest guestRequest = GetGuestRequest(o.GuestRequestKey);

@@ -14,6 +14,7 @@ namespace UI
         
         static void Main(string[] args)
         {
+
             Console.WriteLine(Menu.GetMenu(Menu.OwnerMenu.AddHostingUnit));//client / owner
             int chois;
             while (Int32.TryParse(Console.ReadLine(), out chois) != true)

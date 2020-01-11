@@ -20,7 +20,7 @@ namespace DAL
                 HostingUnit hostingUnit = unit.Clone();//על פי נספח 1
                 hostingUnit.HostingUnitKey = Configuration.serialHostingUnit++;
                 hostingUnit.Diary = new bool[12, 31];
-                DataSource.hostsList.Add(hostingUnit);
+                DataSource.hostingUnitList.Add(hostingUnit);
                 return true;
             }
             try
@@ -88,7 +88,7 @@ namespace DAL
             {
                 throw ms;
             }
-            DataSource.hostsList.Remove(unit1);
+            DataSource.hostingUnitList.Remove(unit1);
             return true;
         }
 
@@ -104,7 +104,7 @@ namespace DAL
                 throw new CannotUpdateException("Hosting Unit number " + unit.HostingUnitKey + " not found", me);
             }
             DeleteHostingUnit(hosting);
-            DataSource.hostsList.Add(hosting);
+            DataSource.hostingUnitList.Add(hosting);
             return true;
         }
 
@@ -155,9 +155,11 @@ namespace DAL
 
         public bool UpdateHost(Host host)
         {
-            var v = from item in DataSource.hostsList
+            var v = from item in DataSource.hostingUnitList
                     where host.HostId == item.Owner.HostId
                     select item;
+            if (v == null)
+                throw new CannotUpdateException("Host ID not exsist");
             foreach (var item in v)
             {
                 item.Owner = new Host
@@ -232,7 +234,7 @@ namespace DAL
         public List<HostingUnit> GetAllHostingUnit()
         {
             List<HostingUnit> hostingUnits = new List<HostingUnit>();
-            foreach (var item in DataSource.hostsList)
+            foreach (var item in DataSource.hostingUnitList)
                 hostingUnits.Add(item.Clone());
             return hostingUnits;
         }
@@ -247,7 +249,7 @@ namespace DAL
 
         public HostingUnit GetHostingUnit(long key)
         {
-            HostingUnit tempUnit = DataSource.hostsList.FirstOrDefault(x => x.HostingUnitKey == key);
+            HostingUnit tempUnit = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == key);
             HostingUnit unit = tempUnit.Clone();
             try
             {
