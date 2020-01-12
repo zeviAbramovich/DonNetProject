@@ -74,7 +74,7 @@ namespace Utilities
 
         public static bool IsAllLetters(string s)
         {
-            return (Regex.IsMatch(s, @"^[א-ת]+$"));
+            return (Regex.IsMatch(s, @"^[א-תa-zA-Z]+$"));
         }
 
     }

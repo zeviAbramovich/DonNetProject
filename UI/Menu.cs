@@ -31,9 +31,10 @@ namespace UI
         {
             int count = 1;
             var stringBuilder = new StringBuilder();
+            Console.WriteLine("******"+ t.GetType().Name+"******");
             foreach (string menu in Enum.GetNames(typeof(T)))
             {
-                stringBuilder.Append(count.ToString()+". " + menu + "\n");
+                stringBuilder.Append(count.ToString()+". " + menu+"\n");
                 ++count;
             }
             return stringBuilder.ToString();

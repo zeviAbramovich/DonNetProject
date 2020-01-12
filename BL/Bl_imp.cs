@@ -41,7 +41,7 @@ namespace BL
         {
             int count = 0;
             if (guest.Status != StatusGuest.Open)
-                throw new CannotAddException("cannot add order beacuse has problem with the status of request");                       
+                throw new CannotAddException("cannot add order beacuse has problem with the status of request");
             var v = from a in GetAllHostingUnit()
                     where a.Area == guest.Area
                     where a.HostingType == guest.HostingType
@@ -175,24 +175,24 @@ namespace BL
         public bool UpdateHostingUnit(HostingUnit unit)
         {
             HostingUnit hostingUnit = new HostingUnit();
-                if (unit.Owner.CollectionClearance == false)
-                {
-                    List<Order> orders = GetAllOrders();
-                    var v = from a in orders
-                            where a.HostingUnitKey == unit.HostingUnitKey
-                            where a.Status == StatusOrder.MailSent
-                            select a;
-                    if (!v.Any())
-                        throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");
-                    dal.UpdateHostingUnit(unit);
-                    return true;
-                }
-                else
-                {
-                    dal.UpdateHostingUnit(unit);
-                    return true;
-                }
-                       
+            if (unit.Owner.CollectionClearance == false)
+            {
+                List<Order> orders = GetAllOrders();
+                var v = from a in orders
+                        where a.HostingUnitKey == unit.HostingUnitKey
+                        where a.Status == StatusOrder.MailSent
+                        select a;
+                if (!v.Any())
+                    throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");
+                dal.UpdateHostingUnit(unit);
+                return true;
+            }
+            else
+            {
+                dal.UpdateHostingUnit(unit);
+                return true;
+            }
+
         }
 
         public bool UpdateOrder(Order orderUpdate)
@@ -232,7 +232,7 @@ namespace BL
             }
             if (orderUpdate.Status == StatusOrder.CustomerResponsiveness)
             {
-                orderUpdate.commision = Configuration.commision * SumDays(request.EntryDate, request.ReleaseDate);               
+                orderUpdate.commision = Configuration.commision * SumDays(request.EntryDate, request.ReleaseDate);
                 orderUpdate.Status = StatusOrder.CustomerResponsiveness;
                 request.Status = StatusGuest.ClosesBySite;//מעדכן בקשה נסגרה כי הלקוח רצה
                 for (DateTime date = request.EntryDate; date < request.ReleaseDate; date.AddDays(1))
@@ -251,7 +251,7 @@ namespace BL
                 }
                 dal.UpdateOrder(orderUpdate);
                 return true;
-            }       
+            }
             return true;
         }
 
@@ -439,10 +439,10 @@ namespace BL
                     let temp = SumDays(a.CreateDate)
                     where temp >= numDays
                     select a;
-            if(!v.Any())
+            if (!v.Any())
                 Console.WriteLine("have not orders ");
             foreach (var item in v)
-                orders.Add(item);       
+                orders.Add(item);
             return orders;
         }
 
@@ -464,10 +464,10 @@ namespace BL
             var v = from a in GetAllHostingUnit()
                     where CheckAvailableDateByDateAndSumDays(a, dateTime, VacationDays) == true
                     select a;
-            if(!v.Any())
+            if (!v.Any())
                 Console.WriteLine("have not units available");
             foreach (var item in v)
-                units.Add(item);         
+                units.Add(item);
             return units;
         }
         #endregion

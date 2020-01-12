@@ -6,14 +6,23 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BE", "BE\BE.csproj", "{84199789-8645-4759-846F-2A5452C5731F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{EA6B2675-4E52-4484-A58D-ABF4B2C44F14}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81E7D3B5-0592-428C-A16B-4ACDAE92E69F} = {81E7D3B5-0592-428C-A16B-4ACDAE92E69F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{2FAF4988-4D60-42E2-8ED3-7D6920657E1F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81E7D3B5-0592-428C-A16B-4ACDAE92E69F} = {81E7D3B5-0592-428C-A16B-4ACDAE92E69F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{399082FF-10C8-4B3C-B4E0-81785EE6710F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{81E7D3B5-0592-428C-A16B-4ACDAE92E69F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS", "DS\DS.csproj", "{7F8E6B58-65F9-40A0-9C67-641A0333938A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81E7D3B5-0592-428C-A16B-4ACDAE92E69F} = {81E7D3B5-0592-428C-A16B-4ACDAE92E69F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
