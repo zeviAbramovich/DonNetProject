@@ -41,9 +41,8 @@ namespace BL
         {
             int count = 0;
             if (guest.Status != StatusGuest.Open)
-                return false;//TODO try catch,thr order not open.
-            List<HostingUnit> hostings = GetAllHostingUnit();
-            var v = from a in hostings
+                throw new CannotAddException("cannot add order beacuse has problem with the status of request");                       
+            var v = from a in GetAllHostingUnit()
                     where a.Area == guest.Area
                     where a.HostingType == guest.HostingType
                     select a;
@@ -82,7 +81,7 @@ namespace BL
                 AddOrder(order);
             }
             if (count == 0)
-                return false;
+                return false;//לא נמצאה יחידה העונה לבקשת הלקוח
             return true;
         }
 
@@ -105,35 +104,27 @@ namespace BL
 
         public bool AddOrder(Order order)
         {
+            if (order.Status != StatusOrder.NotYetApproved)
+                throw new CannotAddException("have problem with the status");
             try
             {
-                if (order.Status == StatusOrder.NotYetApproved)
-                {
-                    if (dal.AddOrder(order))
-                    {
-
-
-                        return true;
-                    };
-
-                }
+                dal.AddOrder(order);
             }
-            catch (Exception)
+            catch (CannotAddException cae)
             {
-
-                throw;
+                throw cae;
             }
-            return;//TODO try catch, error in status of the order
+            return true;
         }
 
-        public bool AddRequest(GuestRequest t)
+        public bool AddRequest(GuestRequest request)
         {
-            if (t.EntryDate >= t.ReleaseDate)
+            if (request.EntryDate >= request.ReleaseDate)
                 throw new CannotAddException("the entry date is after the relasing date");
-            t.Status = StatusGuest.Open;
+            request.Status = StatusGuest.Open;
             try
             {
-                dal.AddRequest(t);
+                dal.AddRequest(request);
             }
             catch (CannotAddException cae)
             {
@@ -149,15 +140,20 @@ namespace BL
                     where a.HostingUnitKey == unit.HostingUnitKey
                     where a.Status == StatusOrder.MailSent
                     select a;
-            foreach (var item in v)
-            {
+            if (v.Any())
                 throw new CannotDeleteException("Cannot delete! There is at least one open order");
+            try
+            {
+                dal.DeleteHostingUnit(unit);
             }
-            dal.DeleteHostingUnit(unit);
+            catch (MissingMemberException mme)
+            {
+                throw new CannotDeleteException("cannot delete beacuse ", mme);
+            }
             return true;
         }
         /// <summary>
-        /// updete the host details
+        /// updete the host details in all the units.
         /// </summary>
         /// <param name="host"></param>
         /// <returns>
@@ -169,131 +165,165 @@ namespace BL
             {
                 dal.UpdateHost(host);
             }
-            catch (CannotUpdateException cue)
+            catch (MissingMemberException cue)
             {
-                throw cue;
+                throw new CannotUpdateException("cannot update host beacuse ", cue);
             }
             return true;
         }
 
-        public bool UpdateHostingUnit(HostingUnit t)
+        public bool UpdateHostingUnit(HostingUnit unit)
         {
-            try
-            {
-                if (t.Owner.CollectionClearance == false)
+            HostingUnit hostingUnit = new HostingUnit();
+                if (unit.Owner.CollectionClearance == false)
                 {
                     List<Order> orders = GetAllOrders();
                     var v = from a in orders
-                            where a.HostingUnitKey == t.HostingUnitKey
+                            where a.HostingUnitKey == unit.HostingUnitKey
                             where a.Status == StatusOrder.MailSent
                             select a;
-                    if (v != null)
-                        throw new CannotUpdateException("Cannot remove Account debit authorization because " + item.OrderKey.ToString() + " status is " + item.Status.ToString() + "!");
-
-                    dal.UpdateHostingUnit(t);
-
+                    if (!v.Any())
+                        throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");
+                    dal.UpdateHostingUnit(unit);
                     return true;
                 }
                 else
                 {
-
-                    dal.UpdateHostingUnit(t);
-
-
+                    dal.UpdateHostingUnit(unit);
                     return true;
                 }
-            }
-            catch (CannotUpdateException cue)
-            {
-                throw cue;
-            }
+                       
         }
-        public void UpdateOrder(Order o)
-        {
 
-            HostingUnit unit = GetUnit(o.HostingUnitKey);
-            Order order = GetOrder(o.OrderKey);
-            GuestRequest guestRequest = GetGuestRequest(o.GuestRequestKey);
+        public bool UpdateOrder(Order orderUpdate)
+        {
+            HostingUnit unit = new HostingUnit();
+            Order order = new Order();
+            GuestRequest request = new GuestRequest();
+            try
+            {
+                unit = GetUnit(orderUpdate.HostingUnitKey);
+                order = GetOrder(orderUpdate.OrderKey);
+                request = GetGuestRequest(orderUpdate.GuestRequestKey);
+            }
+            catch (MissingMemberException mme)
+            {
+                throw new CannotUpdateException("cannot update order beacuse ", mme);
+            }
             //"בעל יחידת אירוח יוכל לשלוח הזמנה ללקוח רק אם חתם על הרשאה"
             if (!unit.Owner.CollectionClearance)
                 throw new CannotUpdateException("the Owner " + unit.Owner.PrivateName + " " + unit.Owner.FamilyName + " did not settle a payment agreement");
-            //"כאשר סטטוס הזמנה משתנה לסגירת עסקה - לא ניתן לשנות יותר את הסטטוס שלה"
-            //TODO צע"ג
-            if (order.Status == StatusOrder.CustomerUnresponsiveness || order.Status == StatusOrder.CustomerResponsiveness)
+            //"כאשר סטטוס הזמנה משתנה לסגירת עסקה - לא ניתן לשנות יותר את הסטטוס שלה"          
+            if (order.Status == StatusOrder.CustomerUnresponsiveness || order.Status == StatusOrder.CustomerResponsiveness || order.Status == StatusOrder.RequestChanged)
                 throw new CannotUpdateException("the Order number:" + order.OrderKey + " is closed");
-            if (o.Status != StatusOrder.NotYetApproved)
+
+            if (orderUpdate.Status == StatusOrder.CustomerUnresponsiveness || orderUpdate.Status == StatusOrder.RequestChanged)
             {
-                dal.UpdateOrder(o);
-                if (o.Status == StatusOrder.MailSent)
-                    Console.WriteLine("mail sent\n");
-                if (o.Status == StatusOrder.CustomerResponsiveness)
-                {
-                    double commission = Configuration.commision;
-                    guestRequest.Status = StatusGuest.ClosesBySite;
-                    UpdateRequest(guestRequest);
-                    for (DateTime date = guestRequest.EntryDate; date < guestRequest.ReleaseDate; date.AddDays(1))
-                        unit.Diary[date.Month, date.Day] = true;
-                    UpdateHostingUnit(unit);
-                    List<Order> orders = dal.GetAllOrders();
-                    var v = from a in orders
-                            where a.GuestRequestKey == guestRequest.GuestRequestKey
-                            where a.Status != StatusOrder.CustomerResponsiveness
-                            select a;
-                    foreach (var item in v)
-                    {
-                        item.Status = StatusOrder.CustomerUnresponsiveness;
-                        UpdateOrder(item);
-                    }
-                    return;
-                }
-                return;
+                order.Status = orderUpdate.Status;
+                dal.UpdateOrder(order);//לא עשיתי טרי קאטצ כי מצאתי את ההזמנה הזאת בתחילת הפונקציה
+                return true;
             }
-            return;//TODO ?? Zevi:try catch,beacuse have not update.
+            if (orderUpdate.Status == StatusOrder.MailSent)
+            {
+                orderUpdate.Status = StatusOrder.MailSent;
+                dal.UpdateOrder(orderUpdate);
+                Console.WriteLine("mail sent\n");
+                return true;
+            }
+            if (orderUpdate.Status == StatusOrder.CustomerResponsiveness)
+            {
+                orderUpdate.commision = Configuration.commision * SumDays(request.EntryDate, request.ReleaseDate);               
+                orderUpdate.Status = StatusOrder.CustomerResponsiveness;
+                request.Status = StatusGuest.ClosesBySite;//מעדכן בקשה נסגרה כי הלקוח רצה
+                for (DateTime date = request.EntryDate; date < request.ReleaseDate; date.AddDays(1))
+                    unit.Diary[date.Month, date.Day] = true;//מעדכן את המטריצה בימים שהלקוח רצה              
+                UpdateHostingUnit(unit);
+                UpdateRequest(request);
+                List<Order> orders = GetAllOrders();
+                var v = from a in orders
+                        where a.GuestRequestKey == request.GuestRequestKey
+                        where a.Status != StatusOrder.CustomerResponsiveness
+                        select a;
+                foreach (var item in v)
+                {
+                    item.Status = StatusOrder.RequestChanged;
+                    dal.UpdateOrder(item);
+                }
+                dal.UpdateOrder(orderUpdate);
+                return true;
+            }       
+            return true;
         }
 
-        public void UpdateRequest(GuestRequest t)
+        public bool UpdateRequest(GuestRequest request)
         {
-            if (t.Status != StatusGuest.Open)
-                throw new CannotUpdateException("Request number: " + t.GuestRequestKey.ToString() + " is closed!");
+            try
+            {
+                GuestRequest guestRequest = GetGuestRequest(request.GuestRequestKey);
+            }
+            catch (MissingMemberException mme)
+            {
+                throw new CannotUpdateException("cannot update request beacuse ", mme);
+            }
+            if (request.Status != StatusGuest.Open)
+                throw new CannotUpdateException("Request number: " + request.GuestRequestKey.ToString() + " is closed!");
             List<Order> orders = GetAllOrders();
             var v = from a in orders
-                    where a.GuestRequestKey == t.GuestRequestKey
+                    where a.GuestRequestKey == request.GuestRequestKey
                     select a;
             foreach (var item in v)
             {
                 item.Status = StatusOrder.CustomerUnresponsiveness;
                 UpdateOrder(item);
             }
-            t.Status = StatusGuest.Expired;
-            //DeleteGuest(t);
-            AddRequest(t);
-            return;
+            request.Status = StatusGuest.Expired;
+            AddRequest(request);
+            return true;
         }
 
         #endregion
 
         #region getters 
 
-        public List<GuestRequest> AllGuestRequest(Delegate d, List<GuestRequest> l)
-        {
-            throw new NotImplementedException();
-        }
-
         public HostingUnit GetUnit(long key)
         {
-            HostingUnit unit = dal.GetHostingUnit(key);
+            HostingUnit unit = new HostingUnit();
+            try
+            {
+                unit = dal.GetHostingUnit(key);
+            }
+            catch (MissingMemberException mme)
+            {
+                throw mme;
+            }
             return unit;
         }
 
         public GuestRequest GetGuestRequest(long key)
         {
-            GuestRequest request = dal.GetGuestRequest(key);
+            GuestRequest request = new GuestRequest();
+            try
+            {
+                request = dal.GetGuestRequest(key);
+            }
+            catch (MissingMemberException mme)
+            {
+                throw mme;
+            }
             return request;
         }
 
         public Order GetOrder(long key)
         {
-            Order order = dal.GetOrder(key);
+            Order order = new Order();
+            try
+            {
+                order = dal.GetOrder(key);
+            }
+            catch (MissingMemberException mme)
+            {
+                throw mme;
+            }
             return order;
         }
 
@@ -305,7 +335,7 @@ namespace BL
 
         public List<GuestRequest> GetAllGuestRequest()
         {
-            List<GuestRequest> guestRequests = GetAllGuestRequest();
+            List<GuestRequest> guestRequests = dal.GetAllGuestRequest();
             return guestRequests;
         }
 
@@ -321,19 +351,30 @@ namespace BL
             return orders;
         }
 
-        public List<GuestRequest> GetAllGuestRequestByArea(Area area)
+        public List<GuestRequest> GuestRequestCondition(delegateRequest requestCondition)
         {
             List<GuestRequest> guestRequests = new List<GuestRequest>();
-            var v = from item in GetAllGuestRequest()
-                    group item by item.Area into areasInGroup
-                    select new { area = areasInGroup };
-            foreach (var group in v)
+            foreach (var item in dal.GetAllGuestRequest())
             {
-                foreach (var ar in group.area)
-                    guestRequests.Add(ar);
+                if (requestCondition(item))
+                    guestRequests.Add(item);
             }
             return guestRequests;
         }
+
+        //public List<GuestRequest> GetAllGuestRequestByArea(Area area)
+        //{
+        //    List<GuestRequest> guestRequests = new List<GuestRequest>();
+        //    var v = from item in GetAllGuestRequest()
+        //            group item by item.Area into areasInGroup
+        //            select new { area = areasInGroup };
+        //    foreach (var group in v)
+        //    {
+        //        foreach (var ar in group.area)
+        //            guestRequests.Add(ar);
+        //    }
+        //    return guestRequests;
+        //}
 
         //public List<GuestRequest> GetAllGuestRequestByNumRelax(int num)
         //{
@@ -398,10 +439,10 @@ namespace BL
                     let temp = SumDays(a.CreateDate)
                     where temp >= numDays
                     select a;
+            if(!v.Any())
+                Console.WriteLine("have not orders ");
             foreach (var item in v)
-                orders.Add(item);
-            //if (orders.Count == 0)
-            //try caych
+                orders.Add(item);       
             return orders;
         }
 
@@ -423,10 +464,10 @@ namespace BL
             var v = from a in GetAllHostingUnit()
                     where CheckAvailableDateByDateAndSumDays(a, dateTime, VacationDays) == true
                     select a;
+            if(!v.Any())
+                Console.WriteLine("have not units available");
             foreach (var item in v)
-                units.Add(item);
-            //if (units.Count == 0)
-            //    try catch
+                units.Add(item);         
             return units;
         }
         #endregion

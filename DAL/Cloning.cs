@@ -18,6 +18,7 @@ namespace DAL
             target.OrderDate = original.OrderDate;
             target.GuestRequestKey = original.GuestRequestKey;
             target.CreateDate = original.CreateDate;
+            target.commision = original.commision;
             return target;
         }
 

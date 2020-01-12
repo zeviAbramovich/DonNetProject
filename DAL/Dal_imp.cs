@@ -13,6 +13,7 @@ namespace DAL
     class Dal_imp : IDal
     {
         #region AddDeleteAndUpdate
+
         public bool AddHostingUnit(HostingUnit unit)
         {
             if (unit.HostingUnitKey == 0)
@@ -27,10 +28,9 @@ namespace DAL
             {
                 UpdateHostingUnit(unit);
             }
-            catch ( CannotUpdateException cue)
+            catch (CannotUpdateException cue)
             {
-
-                throw new CannotAddException("the key must be empty or correct key for update", cue) ;
+                throw new CannotAddException("the key must be empty or correct key for update", cue);
             }
             return true;
         }
@@ -50,7 +50,6 @@ namespace DAL
             }
             catch (CannotUpdateException cue)
             {
-
                 throw new CannotAddException("the key must be empty or correct key for update", cue);
             }
             return true;
@@ -69,9 +68,8 @@ namespace DAL
             {
                 UpdateRequest(guest);
             }
-            catch ( CannotUpdateException cue)
+            catch (CannotUpdateException cue)
             {
-
                 throw new CannotAddException("the key must be empty or correct key for update", cue);
             }
             return true;
@@ -110,46 +108,19 @@ namespace DAL
 
         public bool UpdateOrder(Order order)
         {
-            Order order1 = new Order();
-            try
-            {
-                order1 = GetOrder(order.OrderKey);
-            }
-            catch (MissingMemberException me)
-            {
-                throw new CannotUpdateException("Cannot update! order number "+order.OrderKey.ToString()+ "not exsist",me);
-            }
-            order1.Status = order.Status;
+            Order order1 = DataSource.orders.FirstOrDefault(c => c.OrderKey == order.OrderKey);
+            if (order1 == null)
+                throw new CannotUpdateException("Cannot update! order number " + order.OrderKey.ToString() + "not exsist");
             return true;
         }
 
-        public bool UpdateRequest(GuestRequest guestRequest)
+        public bool UpdateRequest(GuestRequest updateRequest)
         {
-            GuestRequest guestRequest1 = new GuestRequest();
-            try
-            {
-                guestRequest1 = GetGuestRequest(guestRequest.GuestRequestKey);
-            }
-            catch (MissingMemberException ex)
-            {
-                throw new MissingMemberException("There is no RequestKey "+ guestRequest.GuestRequestKey.ToString(), ex);
-            }
-            var v = from a in GetAllOrders()
-                    where a.GuestRequestKey == guestRequest.GuestRequestKey
-                    select a;
-            foreach (var item in v)// משנה לכל ההזמנות שקשורות לבקשה את הסטטוס לסגור כי הזמנה השתנתה
-            {
-                item.Status = StatusOrder.RequestChanged;
-                UpdateOrder(item);
-            }
-            var z = from a in DataSource.guestRequests
-                    where a.GuestRequestKey == guestRequest1.GuestRequestKey
-                    select a;
-            foreach (var item in z)
-            {
-                item.Status = StatusGuest.Expired;   //סוגר לבקשה את הסטטוס לנסגר כי יש בקשה חדשה            
-            }
-            AddRequest(guestRequest1);//מעדכן מה שרציתי
+            GuestRequest request = DataSource.guestRequests.Find(g => g.GuestRequestKey == updateRequest.GuestRequestKey);
+            if (request == null)           
+                throw new CannotUpdateException("There is no RequestKey " + updateRequest.GuestRequestKey.ToString());                      
+            request.Status = StatusGuest.Expired;
+            AddRequest(request);//מעדכן מה שרציתי
             return true;
         }
 
@@ -158,8 +129,8 @@ namespace DAL
             var v = from item in DataSource.hostingUnitList
                     where host.HostId == item.Owner.HostId
                     select item;
-            if (v == null)
-                throw new CannotUpdateException("Host ID not exsist");
+            if (!v.Any())
+                throw new MissingMemberException("Host ID not exsist");
             foreach (var item in v)
             {
                 item.Owner = new Host
@@ -251,15 +222,8 @@ namespace DAL
         {
             HostingUnit tempUnit = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == key);
             HostingUnit unit = tempUnit.Clone();
-            try
-            {
-                if (unit == null)
-                    throw new MissingMemberException("did not find unit");
-            }
-            catch (MissingMemberException ms)
-            {
-                throw ms;
-            }
+            if (unit == null)
+                throw new MissingMemberException("did not find unit");
             return unit;
         }
 
@@ -267,15 +231,8 @@ namespace DAL
         {
             Order tempOrder = DataSource.orders.FirstOrDefault(x => x.OrderKey == key);
             Order order = tempOrder.Clone();
-            try
-            {
-                if (order == null)
-                    throw new MissingMemberException("did not find order");
-            }
-            catch (MissingMemberException)
-            {
-                throw;
-            }
+            if (order == null)
+                throw new MissingMemberException("did not find order");
             return order;
         }
 
@@ -283,15 +240,8 @@ namespace DAL
         {
             GuestRequest tempRequest = DataSource.guestRequests.FirstOrDefault(x => x.GuestRequestKey == key);
             GuestRequest guest = tempRequest.Clone();
-            try
-            {
-                if (guest == null)
-                    throw new MissingMemberException("did not find guest request");
-            }
-            catch (MissingMemberException)
-            {
-                throw;
-            }
+            if (guest == null)
+                throw new MissingMemberException("did not find guest request");
             return guest;
         }
 

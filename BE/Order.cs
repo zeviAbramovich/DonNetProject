@@ -14,7 +14,8 @@ namespace BE
         public long OrderKey { get; set; }
         public StatusOrder Status { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime OrderDate { get; set; }        
+        public DateTime OrderDate { get; set; }
+        public double commision;
 
         public override string ToString()
         {

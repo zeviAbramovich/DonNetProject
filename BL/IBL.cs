@@ -8,6 +8,8 @@ using DAL;
 
 namespace BL
 {
+    public delegate bool delegateRequest(GuestRequest guestRequest);
+
     public interface IBL
     {
         bool CheckAvailableDate(HostingUnit unit, GuestRequest guest);
@@ -45,6 +47,6 @@ namespace BL
         List<Order> OrderFromNumDaysOrMore(int numDays);
         int NumOrdersOfGuest(GuestRequest guestRequest);
         int NumOrdersOfHostingUnit(HostingUnit hostingUnit);
-        List<GuestRequest> AllGuestRequest(Delegate d, List<GuestRequest> l);
+        List<GuestRequest> GuestRequestCondition(delegateRequest requestCondition);
     }
 }
