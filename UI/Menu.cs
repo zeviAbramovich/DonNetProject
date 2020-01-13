@@ -17,7 +17,7 @@ namespace UI
         }
         public enum ClientMenu
         {
-            AddRequest = 1, UpdateRequest
+            AddRequest = 1, UpdateRequest, Back_To_MainMenu
         }
         public enum OwnerMenu
         {

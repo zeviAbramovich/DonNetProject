@@ -206,7 +206,7 @@ namespace DAL
         {
             List<HostingUnit> hostingUnits = new List<HostingUnit>();
             foreach (var item in DataSource.hostingUnitList)
-                hostingUnits.Add(item.Clone());
+                hostingUnits.Add(item);
             return hostingUnits;
         }
 
@@ -238,10 +238,10 @@ namespace DAL
 
         public GuestRequest GetGuestRequest(long key)
         {
-            GuestRequest tempRequest = DataSource.guestRequests.FirstOrDefault(x => x.GuestRequestKey == key);
+            GuestRequest tempRequest = DataSource.guestRequests.FirstOrDefault(x => x.GuestRequestKey == key);//check if exist
+            if (tempRequest == null)
+                throw new MissingMemberException("did not find guest request",this.GetType().ToString());
             GuestRequest guest = tempRequest.Clone();
-            if (guest == null)
-                throw new MissingMemberException("did not find guest request");
             return guest;
         }
 

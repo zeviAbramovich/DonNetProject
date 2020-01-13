@@ -25,6 +25,7 @@ namespace UI
             do switch (chois)
                 {
                     case 1:
+                        chois = 0;
                         Console.WriteLine("What you would like to do?");
                         Console.Write(Menu.GetMenu(Menu.ClientMenu.AddRequest));
                         while (Int32.TryParse(Console.ReadLine(), out chois) != true)
@@ -33,7 +34,7 @@ namespace UI
                         }
                         switch (chois)
                         {
-                            case 1:
+                            case 1://add request
                                 //TODO exceptions in order the whiles
                                 string stringTemp = "";
                                 int intTemp = 0;
@@ -46,7 +47,8 @@ namespace UI
                                     Console.WriteLine("use only letters, please enter again");
                                 }
                                 guestTemp.PrivateName = stringTemp;
-                                Console.WriteLine("Family Name?");                                while (!Utilities.Tools.IsAllLetters(Console.ReadLine()))
+                                Console.WriteLine("Family Name?");
+                                while (!Utilities.Tools.IsAllLetters(Console.ReadLine()))
                                 {
                                     Console.WriteLine("use only letters, please enter again");
                                 }
@@ -55,7 +57,7 @@ namespace UI
                                 while (!Utilities.Tools.ValidateMail(Console.ReadLine()))
                                 {
                                     Console.WriteLine("E-mail not valid!");
-                              
+
                                 }
                                 guestTemp.MailAddress = stringTemp;
                                 guestTemp.RegistrationDate = DateTime.Now;
@@ -71,7 +73,7 @@ namespace UI
                                 {
                                     Console.WriteLine("Incorect date...");
                                     Console.WriteLine("When you would like to leave?(dd/mm/yyyy)");
-                              
+
                                 }
                                 guestTemp.ReleaseDate = dateTemp;
                                 Console.WriteLine("where? (1-4)\n" + Utilities.Tools.GetEnum(guestTemp.Area));
@@ -98,7 +100,7 @@ namespace UI
                                 Console.WriteLine("How many childrens?");
                                 while (!Int32.TryParse(Console.ReadLine(), out intTemp))
                                 {
-                                   
+
                                     Console.WriteLine("You must enter a number!");
                                 }
                                 guestTemp.Children = intTemp;
@@ -143,15 +145,60 @@ namespace UI
                                 }
 
                                 break;
-                            case 2:
+                            case 2://update request
+                                long longtemp = 0;
+
+                                Console.WriteLine("whats the number of the request");
+                                while (!long.TryParse(Console.ReadLine(), out longtemp))
+                                {
+                                    Console.WriteLine("you must to insert numbers!!!");
+                                }
+                                try
+                                {
+                                    guestTemp = BL.FactoryMethode.GetBL().GetGuestRequest(longtemp);
+                                    Console.WriteLine(guestTemp.ToString());
+
+                                }
+                                catch (MissingMemberException me)
+                                {
+                                    Console.WriteLine("ERROR! " + me.GetType() + " " + me.TargetSite);
+                                    Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                    Console.ReadLine();
+                                    break;
+                                }
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
                                 break;
+                            case 3:
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
+                                break;
+                            default:
+                                chois = 0;
+                                break;
+
+
 
                         }
                         break;
-                    case 2:
+                    case 2://Owner
+                        chois = 0;
                         Console.WriteLine("What you would like to do?");
                         Console.WriteLine(Menu.GetMenu(Menu.OwnerMenu.AddHostingUnit));
-                        Console.ReadLine();
+                        chois = Int32.Parse(Console.ReadLine());
+                        switch (chois)
+                        {
+                            case 1://AddHostingUnit
+                                List<HostingUnit> list = new List<HostingUnit>();
+                                list=BL.FactoryMethode.GetBL().GetAllHostingUnit();
+                                Console.WriteLine(list.ToString());
+                                break;
+                            case 2://DeleteHostingUnit
+                            case 3://UpdateHostingUnit
+
+                            default:
+                                break;
+                        }
                         break;
                     default:
                         break;
