@@ -10,10 +10,11 @@ namespace UI
 {
     class IUI
     {
-        public IBL bl = BL.FactoryMethode.GetBL();
+
 
         static void Main(string[] args)
         {
+            IBL bl =BL.FactoryMethode.GetBL();
             Console.WriteLine("Wellcome to Gooking!");
             Console.WriteLine("Who are you? (Client/Owner)");
             Console.Write(Menu.GetMenu(Menu.MainMenu.Client));//client / owner
@@ -130,7 +131,7 @@ namespace UI
                                 guestTemp.ChildrensAttractions = (Requirements)intTemp;
                                 try
                                 {
-                                    BL.FactoryMethode.GetBL().AddRequest(guestTemp);
+                                    bl.AddRequest(guestTemp);
                                     Console.WriteLine(BL.FactoryMethode.GetBL().GetGuestRequest(10000000).ToString());
                                     Console.WriteLine("Your request added successfuly!");
                                 }
@@ -155,7 +156,7 @@ namespace UI
                                 }
                                 try
                                 {
-                                    guestTemp = BL.FactoryMethode.GetBL().GetGuestRequest(longtemp);
+                                    guestTemp =bl.GetGuestRequest(longtemp);
                                     Console.WriteLine(guestTemp.ToString());
 
                                 }
@@ -190,7 +191,7 @@ namespace UI
                         {
                             case 1://AddHostingUnit
                                 List<HostingUnit> list = new List<HostingUnit>();
-                                list=BL.FactoryMethode.GetBL().GetAllHostingUnit();
+                                list =bl.GetAllHostingUnit();
                                 Console.WriteLine(list.ToString());
                                 break;
                             case 2://DeleteHostingUnit
