@@ -211,7 +211,7 @@ namespace DAL
         {
             List<HostingUnit> hostingUnits = new List<HostingUnit>();
             foreach (var item in DataSource.hostingUnitList)
-                hostingUnits.Add(item);
+                hostingUnits.Add(item.Clone());
             return hostingUnits;
         }
 
