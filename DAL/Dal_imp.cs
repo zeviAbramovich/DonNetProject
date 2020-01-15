@@ -12,14 +12,14 @@ namespace DAL
     //,אבל זו היתה דרישתכם ובאמת אצל דן ביטלו את הדרישה הזו
     class Dal_imp : IDal
     {
-        #region AddDeleteAndUpdate
+        #region Add Delete And Update
 
         public bool AddHostingUnit(HostingUnit unit)
         {
             if (unit.HostingUnitKey == 0)
             {
                 HostingUnit hostingUnit = unit.Clone();//על פי נספח 1
-                hostingUnit.HostingUnitKey = Configuration.serialHostingUnit++;
+                hostingUnit.HostingUnitKey = ++Configuration.serialHostingUnit;
                 hostingUnit.Diary = new bool[12, 31];
                 DataSource.hostingUnitList.Add(hostingUnit);
                 return true;
@@ -75,19 +75,24 @@ namespace DAL
             return true;
         }
 
-        public bool DeleteHostingUnit(HostingUnit unit)
+        public bool DeleteHostingUnit(long key)
         {
             HostingUnit unit1 = new HostingUnit();
+            unit1 = GetHostingUnit(key).Clone();
             try
             {
-                unit1 = GetHostingUnit(unit.HostingUnitKey);
+                DataSource.hostingUnitList.Remove(unit1);
+                return true;
             }
             catch (MissingMemberException ms)
             {
-                throw ms;
+                throw new MissingMemberException ("No match key",ms);
             }
-            DataSource.hostingUnitList.Remove(unit1);
-            return true;
+            catch(NullReferenceException nre)
+            {
+                throw new MissingMemberException("",nre);
+            }
+            //DataSource.hostingUnitList.Remove(unit1);
         }
 
         public bool UpdateHostingUnit(HostingUnit unit)
@@ -101,7 +106,7 @@ namespace DAL
             {
                 throw new CannotUpdateException("Hosting Unit number " + unit.HostingUnitKey + " not found", me);
             }
-            DeleteHostingUnit(hosting);
+            DeleteHostingUnit(hosting.HostingUnitKey);
             DataSource.hostingUnitList.Add(hosting);
             return true;
         }
@@ -221,9 +226,9 @@ namespace DAL
         public HostingUnit GetHostingUnit(long key)
         {
             HostingUnit tempUnit = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == key);
-            HostingUnit unit = tempUnit.Clone();
-            if (unit == null)
+            if (tempUnit == null)
                 throw new MissingMemberException("did not find unit");
+            HostingUnit unit = tempUnit.Clone();
             return unit;
         }
 

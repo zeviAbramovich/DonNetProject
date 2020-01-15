@@ -20,7 +20,7 @@ namespace BL
         bool UpdateRequest(GuestRequest request);
 
         bool AddHostingUnit(HostingUnit unit);
-        bool DeleteHostingUnit(HostingUnit unit);
+        bool DeleteHostingUnit(long key);
         bool UpdateHostingUnit(HostingUnit unit);
 
         bool AddOrder(Order order);

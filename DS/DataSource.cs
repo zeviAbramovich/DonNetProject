@@ -13,7 +13,7 @@ namespace DS
         {
                 new HostingUnit()
                 {
-                  HostingUnitName = "Plaza",HostingUnitKey = Configuration.serialHostingUnit++,
+                  HostingUnitName = "Plaza",HostingUnitKey = Configuration.serialHostingUnit++,Diary=new bool[12,31],
                     Owner = new Host()
                     {
                           HostId = 313583460,

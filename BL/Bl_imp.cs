@@ -133,18 +133,18 @@ namespace BL
             return true;
         }
 
-        public bool DeleteHostingUnit(HostingUnit unit)
+        public bool DeleteHostingUnit(long key)
         {
             List<Order> orders = GetAllOrders();
             var v = from a in orders
-                    where a.HostingUnitKey == unit.HostingUnitKey
+                    where a.HostingUnitKey == key
                     where a.Status == StatusOrder.MailSent
                     select a;
             if (v.Any())
                 throw new CannotDeleteException("Cannot delete! There is at least one open order");
             try
             {
-                dal.DeleteHostingUnit(unit);
+                dal.DeleteHostingUnit(key);
             }
             catch (MissingMemberException mme)
             {

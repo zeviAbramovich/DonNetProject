@@ -189,11 +189,75 @@ namespace UI
                         switch (chois)
                         {
                             case 1://AddHostingUnit
+                                chois = 0;
                                 List<HostingUnit> list = new List<HostingUnit>();
-                                list=BL.FactoryMethode.GetBL().GetAllHostingUnit();
-                                Console.WriteLine(list.ToString());
+                                HostingUnit unit = new HostingUnit();
+                                list = BL.FactoryMethode.GetBL().GetAllHostingUnit();
+                                foreach (var item in list)
+                                {
+                                    Console.WriteLine(item.HostingUnitKey.ToString());
+                                }
+                                Host a = new Host();
+                                a.HostId = long.Parse(Console.ReadLine());
+                                a.PrivateName = Console.ReadLine();
+                                a.FamilyName = Console.ReadLine();
+                                a.PhoneNumber = long.Parse(Console.ReadLine());
+                                a.MailAddress = Console.ReadLine();
+
+                                BankAccount be = new BankAccount();
+                                be.BankNumber = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BankNumber;
+                                be.BranchAddress = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchAddress;
+                                be.BankName = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BankName;
+                                be.BranchCity = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchCity;
+                                be.BranchNumber = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchNumber;
+                                Console.WriteLine("whats the account number?");
+                                be.BankAccountNumber = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("Are you agree for terms & conditions? (Y/N)");
+                                if (Console.ReadLine() == "Y")
+                                    a.CollectionClearance = true;
+                                try
+                                {
+
+                                    unit.Owner = a;
+                                    unit.Owner.HostBankAccount = be;
+                                    BL.FactoryMethode.GetBL().AddHostingUnit(unit);
+                                }
+                                catch (CannotAddException cae)
+                                {
+                                    Console.WriteLine("Failed to add" + cae.Message);
+                                    Console.WriteLine(Menu.GetMenu(Menu.MainMenu.Client));
+                                    chois = Int32.Parse(Console.ReadLine());
+                                }
+                                
+                                list = BL.FactoryMethode.GetBL().GetAllHostingUnit();
+                                foreach (var item in list)
+                                {
+                                    Console.WriteLine(item.HostingUnitKey.ToString());
+                                }
+                                Console.WriteLine(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
+                                //chois = 0;
                                 break;
                             case 2://DeleteHostingUnit
+                                Console.WriteLine("Which host you want to delete? (keyNumber)");
+                                try
+                                {
+
+                                    BL.FactoryMethode.GetBL().DeleteHostingUnit(long.Parse(Console.ReadLine()));
+
+                                }
+                                catch (CannotDeleteException cde)
+                                {
+                                    Console.WriteLine("Failed"+cde.Message);
+                                    chois = 0;
+                                    break;
+                                }
+                                list = BL.FactoryMethode.GetBL().GetAllHostingUnit();
+                                foreach (var item in list)
+                                {
+                                    Console.WriteLine(item.HostingUnitKey.ToString());
+                                }
+                                break;
                             case 3://UpdateHostingUnit
 
                             default:
