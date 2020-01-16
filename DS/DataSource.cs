@@ -14,6 +14,8 @@ namespace DS
                 new HostingUnit()
                 {
                   HostingUnitName = "Plaza",HostingUnitKey = Configuration.serialHostingUnit++,Diary=new bool[12,31],
+                    HostingType=(HostingType)1,Adults=3,Children=3,Area = (Area)1,Garden=true,
+                    Pool = true, Jacuzzi =true,ChildrensAttractions = true,
                     Owner = new Host()
                     {
                           HostId = 313583460,
@@ -36,8 +38,10 @@ namespace DS
 
                  new HostingUnit()
                  {
-
                      HostingUnitName = "nirvana",HostingUnitKey = Configuration.serialHostingUnit,
+                     Diary=new bool[12,31],HostingType=(HostingType)1,Adults=3,
+                     Children=3,Area = (Area)1,Garden=true,
+                    Pool = true, Jacuzzi =true,ChildrensAttractions = true,
                      Owner = new Host()
                      {
                         HostId = 313583460,

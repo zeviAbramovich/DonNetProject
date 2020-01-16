@@ -25,11 +25,13 @@ namespace DAL
         public static HostingUnit Clone(this HostingUnit original)
         {
             HostingUnit target = new HostingUnit();
-            if (original.Diary != null)
+            if (original.Diary == null)
             {
-                target.Diary = (bool[,])original.Diary.Clone();
+                target.Diary = new bool[12, 31];
                 //target.DiaryDto = original.DiaryDto;
             }
+            else
+                target.Diary = (bool[,])original.Diary.Clone();
             target.HostingUnitKey = original.HostingUnitKey;
             target.HostingUnitName = original.HostingUnitName;
             target.Adults = original.Adults;
