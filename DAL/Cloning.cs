@@ -28,7 +28,7 @@ namespace DAL
             if (original.Diary != null)
             {
                 target.Diary = (bool[,])original.Diary.Clone();
-                target.DiaryDto = original.DiaryDto;
+                //target.DiaryDto = original.DiaryDto;
             }
             target.HostingUnitKey = original.HostingUnitKey;
             target.HostingUnitName = original.HostingUnitName;

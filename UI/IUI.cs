@@ -10,10 +10,11 @@ namespace UI
 {
     class IUI
     {
-        public IBL bl = BL.FactoryMethode.GetBL();
+
 
         static void Main(string[] args)
         {
+            IBL bl = BL.FactoryMethode.GetBL();
             Console.WriteLine("Wellcome to Gooking!");
             Console.WriteLine("Who are you? (Client/Owner)");
             Console.Write(Menu.GetMenu(Menu.MainMenu.Client));//client / owner
@@ -130,8 +131,8 @@ namespace UI
                                 guestTemp.ChildrensAttractions = (Requirements)intTemp;
                                 try
                                 {
-                                    BL.FactoryMethode.GetBL().AddRequest(guestTemp);
-                                    Console.WriteLine(BL.FactoryMethode.GetBL().GetGuestRequest(10000000).ToString());
+                                    bl.AddRequest(guestTemp);
+                                    Console.WriteLine(bl.GetGuestRequest(10000000).ToString());
                                     Console.WriteLine("Your request added successfuly!");
                                 }
                                 catch (CannotAddException cae)
@@ -155,7 +156,7 @@ namespace UI
                                 }
                                 try
                                 {
-                                    guestTemp = BL.FactoryMethode.GetBL().GetGuestRequest(longtemp);
+                                    guestTemp = bl.GetGuestRequest(longtemp);
                                     Console.WriteLine(guestTemp.ToString());
 
                                 }
@@ -176,9 +177,6 @@ namespace UI
                             default:
                                 chois = 0;
                                 break;
-
-
-
                         }
                         break;
                     case 2://Owner
@@ -189,38 +187,51 @@ namespace UI
                         switch (chois)
                         {
                             case 1://AddHostingUnit
-                                chois = 0;
-                                List<HostingUnit> list = new List<HostingUnit>();
-                                HostingUnit unit = new HostingUnit();
-                                list = BL.FactoryMethode.GetBL().GetAllHostingUnit();
-                                foreach (var item in list)
+                                chois = 0;                               
+                                HostingUnit unit = new HostingUnit
                                 {
-                                    Console.WriteLine(item.HostingUnitKey.ToString());
+                                    HostingUnitName = "qw",
+                                    Area = Area.Center,
+                                    SubArea = "vdf",
+                                    HostingType = HostingType.Zimmer,
+                                    Adults = 3,
+                                    Children = 2,
+                                    Pool = true,
+                                    Garden = true,
+                                    Jacuzzi = true,
+                                    ChildrensAttractions = true,
+                                    Owner = new Host
+                                    {
+                                        HostId = 313,
+                                        PrivateName = "zeev",
+                                        FamilyName = "abra",
+                                        PhoneNumber = 0502418419,
+                                        MailAddress = "zevi3190@gmail.com",
+                                        HostBankAccount = new BankAccount
+                                        {
+                                            BankAccountNumber = 333,
+                                            BankNumber = bl.GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BankNumber,
+                                            BranchAddress = bl.GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchAddress,
+                                            BankName = bl.GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BankName,
+                                            BranchCity = bl.GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchCity,
+                                            BranchNumber = bl.GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchNumber
+                                        },
+                                    },
+                                };
+                                while (!Utilities.Tools.ValidateMail(unit.Owner.MailAddress))
+                                {
+                                    Console.WriteLine("enter mail again");
                                 }
-                                Host a = new Host();
-                                a.HostId = long.Parse(Console.ReadLine());
-                                a.PrivateName = Console.ReadLine();
-                                a.FamilyName = Console.ReadLine();
-                                a.PhoneNumber = long.Parse(Console.ReadLine());
-                                a.MailAddress = Console.ReadLine();
-
-                                BankAccount be = new BankAccount();
-                                be.BankNumber = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BankNumber;
-                                be.BranchAddress = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchAddress;
-                                be.BankName = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BankName;
-                                be.BranchCity = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchCity;
-                                be.BranchNumber = BL.FactoryMethode.GetBL().GetAllBranches().FirstOrDefault(x => x.BankNumber == 12).BranchNumber;
-                                Console.WriteLine("whats the account number?");
-                                be.BankAccountNumber = Int32.Parse(Console.ReadLine());
+                                while (!Utilities.Tools.IsAllLetters(unit.HostingUnitName))
+                                {
+                                    Console.WriteLine("enter unit name again");
+                                }
                                 Console.WriteLine("Are you agree for terms & conditions? (Y/N)");
                                 if (Console.ReadLine() == "Y")
-                                    a.CollectionClearance = true;
+                                    unit.Owner.CollectionClearance = true;
                                 try
                                 {
-
-                                    unit.Owner = a;
-                                    unit.Owner.HostBankAccount = be;
-                                    BL.FactoryMethode.GetBL().AddHostingUnit(unit);
+                                    bl.AddHostingUnit(unit);
                                 }
                                 catch (CannotAddException cae)
                                 {
@@ -228,36 +239,43 @@ namespace UI
                                     Console.WriteLine(Menu.GetMenu(Menu.MainMenu.Client));
                                     chois = Int32.Parse(Console.ReadLine());
                                 }
-                                
-                                list = BL.FactoryMethode.GetBL().GetAllHostingUnit();
-                                foreach (var item in list)
+                                Console.WriteLine("this your units ");
+                                List<HostingUnit> units = bl.GetAllHostingUnit();
+                                foreach (HostingUnit item in units)
                                 {
-                                    Console.WriteLine(item.HostingUnitKey.ToString());
+                                    Console.WriteLine(item.HostingUnitName);
                                 }
-                                Console.WriteLine(Menu.GetMenu(Menu.MainMenu.Client));
-                                chois = Int32.Parse(Console.ReadLine());
+                                //int a = units.Count();
+                                //Console.WriteLine(a);
+                                //list = bl.GetAllHostingUnit();
+                                //foreach (var item in list)
+                                //{
+                                //    Console.WriteLine(item.HostingUnitKey.ToString());
+                                //}
+                                //Console.WriteLine(Menu.GetMenu(Menu.MainMenu.Client));
+                                //chois = Int32.Parse(Console.ReadLine());
                                 //chois = 0;
                                 break;
-                            case 2://DeleteHostingUnit
-                                Console.WriteLine("Which host you want to delete? (keyNumber)");
-                                try
-                                {
+                            //case 2://DeleteHostingUnit
+                            //    Console.WriteLine("Which host you want to delete? (keyNumber)");
+                            //    try
+                            //    {
 
-                                    BL.FactoryMethode.GetBL().DeleteHostingUnit(long.Parse(Console.ReadLine()));
+                            //        bl.DeleteHostingUnit(long.Parse(Console.ReadLine()));
 
-                                }
-                                catch (CannotDeleteException cde)
-                                {
-                                    Console.WriteLine("Failed"+cde.Message);
-                                    chois = 0;
-                                    break;
-                                }
-                                list = BL.FactoryMethode.GetBL().GetAllHostingUnit();
-                                foreach (var item in list)
-                                {
-                                    Console.WriteLine(item.HostingUnitKey.ToString());
-                                }
-                                break;
+                            //    }
+                            //    catch (CannotDeleteException cde)
+                            //    {
+                            //        Console.WriteLine("Failed" + cde.Message);
+                            //        chois = 0;
+                            //        break;
+                            //    }
+                            //    list = bl.GetAllHostingUnit();
+                            //    foreach (var item in list)
+                            //    {
+                            //        Console.WriteLine(item.HostingUnitKey.ToString());
+                            //    }
+                            //    break;
                             case 3://UpdateHostingUnit
 
                             default:

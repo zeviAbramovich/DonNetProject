@@ -24,14 +24,14 @@ namespace BE
         public bool Jacuzzi { get; set; }
         public bool Garden { get; set; }
         public bool ChildrensAttractions { get; set; }
-        //[XmlIgnore]
+        [XmlIgnore]
         public bool[,] Diary { get;  set; }
         [XmlArray("Diary")]
         public bool[] DiaryDto
         {
             get { return Diary.Flatten(); }
             set { Diary = value.Expand(4); }
-        }        
+        }
 
         public override string ToString()
         {
