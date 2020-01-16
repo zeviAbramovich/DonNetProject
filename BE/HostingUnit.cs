@@ -24,8 +24,9 @@ namespace BE
         public bool Jacuzzi { get; set; }
         public bool Garden { get; set; }
         public bool ChildrensAttractions { get; set; }
+        public double SumComission { get; set; }
         [XmlIgnore]
-        public bool[,] Diary { get;  set; }
+        public bool[,] Diary { get; set; }
         [XmlArray("Diary")]
         public bool[] DiaryDto
         {

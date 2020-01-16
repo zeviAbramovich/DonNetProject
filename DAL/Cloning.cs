@@ -41,6 +41,7 @@ namespace DAL
             target.Jacuzzi = original.Jacuzzi;
             target.Garden = original.Garden;
             target.ChildrensAttractions = original.ChildrensAttractions;
+            target.SumComission = original.SumComission;
             target.Owner = new Host
             {
                 HostId = original.Owner.HostId,

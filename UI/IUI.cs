@@ -25,7 +25,7 @@ namespace UI
             }
             do switch (chois)
                 {
-                    case 1:
+                    case 1://client
                         chois = 0;
                         Console.WriteLine("What you would like to do?");
                         Console.Write(Menu.GetMenu(Menu.ClientMenu.AddRequest));
@@ -187,7 +187,7 @@ namespace UI
                         switch (chois)
                         {
                             case 1://AddHostingUnit
-                                chois = 0;                               
+                                chois = 0;
                                 HostingUnit unit = new HostingUnit
                                 {
                                     HostingUnitName = "qw",
@@ -243,44 +243,65 @@ namespace UI
                                 List<HostingUnit> units = bl.GetAllHostingUnit();
                                 foreach (HostingUnit item in units)
                                 {
-                                    Console.WriteLine(item.HostingUnitName);
+                                    Console.WriteLine(item.HostingUnitKey);
                                 }
-                                //int a = units.Count();
-                                //Console.WriteLine(a);
-                                //list = bl.GetAllHostingUnit();
-                                //foreach (var item in list)
-                                //{
-                                //    Console.WriteLine(item.HostingUnitKey.ToString());
-                                //}
-                                //Console.WriteLine(Menu.GetMenu(Menu.MainMenu.Client));
-                                //chois = Int32.Parse(Console.ReadLine());
-                                //chois = 0;
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
                                 break;
-                            //case 2://DeleteHostingUnit
-                            //    Console.WriteLine("Which host you want to delete? (keyNumber)");
-                            //    try
-                            //    {
+                            case 2://DeleteHostingUnit
+                                Console.WriteLine("Which host you want to delete? (keyNumber)");
+                                try
+                                {
+                                    bl.DeleteHostingUnit(long.Parse(Console.ReadLine()));
+                                }
+                                catch (CannotDeleteException cde)
+                                {
+                                    Console.WriteLine("Failed" + cde.Message);
+                                    chois = 0;
+                                    break;
+                                }
+                                List<HostingUnit> list = bl.GetAllHostingUnit();
+                                foreach (var item in list)
+                                {
+                                    Console.WriteLine(item.HostingUnitKey.ToString());
+                                }
 
-                            //        bl.DeleteHostingUnit(long.Parse(Console.ReadLine()));
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
+                                break;
 
-                            //    }
-                            //    catch (CannotDeleteException cde)
-                            //    {
-                            //        Console.WriteLine("Failed" + cde.Message);
-                            //        chois = 0;
-                            //        break;
-                            //    }
-                            //    list = bl.GetAllHostingUnit();
-                            //    foreach (var item in list)
-                            //    {
-                            //        Console.WriteLine(item.HostingUnitKey.ToString());
-                            //    }
-                            //    break;
                             case 3://UpdateHostingUnit
+                                Console.WriteLine("enter num of unit");
+                                long key = long.Parse(Console.ReadLine());                                                                                   
+                                if (!bl.ChecksWhethertheUnitHasOpenOrders(key))
+                                { 
+                                    Console.WriteLine("cant update have open orders");
+                                    break;
+                                }
+                                HostingUnit hostingUnit = bl.GetUnit(key);
+                                hostingUnit.Owner.CollectionClearance = false;
+                                bl.UpdateHostingUnit(hostingUnit);
+                                if(!bl.GetUnit(key).Owner.CollectionClearance);
+                                Console.WriteLine("acsses ");
+                                break;
+
+                            case 4://change collection cleerence                       
+                                Console.WriteLine("enter num unit");
+                                try
+                                {
+                                    hostingUnit = bl.GetUnit(long.Parse(Console.ReadLine()));
+                                }
+                                catch (MissingMemberException mme)
+                                {
+                                    Console.WriteLine("faild beacuse", mme.Message);
+                                }
+
+                                break;
 
                             default:
                                 break;
                         }
+                    
                         break;
                     default:
                         break;

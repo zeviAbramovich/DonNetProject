@@ -60,7 +60,7 @@ namespace DAL
             if (guest.GuestRequestKey == 0)
             {
                 GuestRequest guestRequest = guest.Clone();
-                guestRequest.GuestRequestKey = Configuration.serialGuestRequest++;
+                guestRequest.GuestRequestKey = ++Configuration.serialGuestRequest;
                 DataSource.guestRequests.Add(guestRequest);
                 return true;
             }
@@ -77,11 +77,15 @@ namespace DAL
 
         public bool DeleteHostingUnit(long key)
         {
-            HostingUnit unit1 = new HostingUnit();
-            unit1 = GetHostingUnit(key).Clone();
+            HostingUnit unit = new HostingUnit();
+            var v = from item in DataSource.hostingUnitList
+                    where item.HostingUnitKey == key
+                    select item;
+            foreach (HostingUnit item in v)
+                unit = item;
             try
             {
-                DataSource.hostingUnitList.Remove(unit1);
+                DataSource.hostingUnitList.Remove(unit);    
                 return true;
             }
             catch (MissingMemberException ms)
@@ -91,8 +95,7 @@ namespace DAL
             catch(NullReferenceException nre)
             {
                 throw new MissingMemberException("",nre);
-            }
-            //DataSource.hostingUnitList.Remove(unit1);
+            }          
         }
 
         public bool UpdateHostingUnit(HostingUnit unit)
@@ -106,7 +109,8 @@ namespace DAL
             {
                 throw new CannotUpdateException("Hosting Unit number " + unit.HostingUnitKey + " not found", me);
             }
-            DeleteHostingUnit(hosting.HostingUnitKey);
+            hosting.HostingUnitName = unit.HostingUnitName;
+            DeleteHostingUnit(unit.HostingUnitKey);
             DataSource.hostingUnitList.Add(hosting);
             return true;
         }

@@ -15,6 +15,16 @@ namespace BL
         public IDal dal = DAL.FactoryMethode.GetDal();
 
         #region helpingFunction
+        public bool ChecksWhethertheUnitHasOpenOrders(long unitKey)
+        {
+            var v = from item in GetAllOrders()
+                    where item.HostingUnitKey == unitKey
+                    where item.Status == StatusOrder.MailSent
+                    select item;
+            if (v.Any())
+                return false;
+            return true;
+        }
 
         public bool CheckAvailableDate(HostingUnit unit, GuestRequest guest)
         {
@@ -174,16 +184,12 @@ namespace BL
 
         public bool UpdateHostingUnit(HostingUnit unit)
         {
+           
             HostingUnit hostingUnit = new HostingUnit();
             if (unit.Owner.CollectionClearance == false)
-            {
-                List<Order> orders = GetAllOrders();
-                var v = from a in orders
-                        where a.HostingUnitKey == unit.HostingUnitKey
-                        where a.Status == StatusOrder.MailSent
-                        select a;
-                if (!v.Any())
-                    throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");
+            {                
+               if( !ChecksWhethertheUnitHasOpenOrders(unit.HostingUnitKey))
+                    throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");                                                  
                 dal.UpdateHostingUnit(unit);
                 return true;
             }

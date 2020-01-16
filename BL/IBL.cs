@@ -15,6 +15,7 @@ namespace BL
         bool CheckAvailableDate(HostingUnit unit, GuestRequest guest);
         bool CheckAvailableDateByDateAndSumDays(HostingUnit unit, DateTime date, int VacationDays);
         bool CreateOrder(GuestRequest guest);
+        bool ChecksWhethertheUnitHasOpenOrders(long unitKey);
 
         bool AddRequest(GuestRequest request);
         bool UpdateRequest(GuestRequest request);
