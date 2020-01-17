@@ -293,7 +293,8 @@ namespace UI
                                     Console.WriteLine(item.OrderKey);
                                 }
                                 Console.WriteLine("sucsses");
-                                Console.ReadLine();
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
                                 break;
 
                             case 5://update order
@@ -303,6 +304,8 @@ namespace UI
                                 Console.WriteLine("fd");
                                 bl.UpdateOrder(order);
                                 Console.WriteLine("fd");
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
                                 break;
 
                             default:
