@@ -131,7 +131,7 @@ namespace UI
                                 try
                                 {
                                     bl.AddRequest(guestTemp);
-                                    Console.WriteLine(bl.GetGuestRequest(10000000).ToString());
+                                    Console.WriteLine(bl.GetGuestRequest(10000001).ToString());
                                     Console.WriteLine("Your request added successfuly!");
                                 }
                                 catch (CannotAddException cae)
@@ -284,17 +284,27 @@ namespace UI
                                 Console.WriteLine("acsses ");
                                 break;
 
-                            case 4://change collection cleerence                       
-                                Console.WriteLine("enter num unit");
-                                try
+                            case 4://add order                                  
+                                GuestRequest request = bl.GetGuestRequest(10000001);                         
+                                bl.CreateOrder(request);
+                                foreach (Order item in bl.GetAllOrders())
                                 {
-                                    hostingUnit = bl.GetUnit(long.Parse(Console.ReadLine()));
+                                    Console.WriteLine(item.OrderKey);
                                 }
-                                catch (MissingMemberException mme)
-                                {
-                                    Console.WriteLine("faild beacuse", mme.Message);
-                                }
+                                Console.WriteLine("sucsses");
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
+                                break;
 
+                            case 5://update order
+                                Order order = bl.GetOrder(10000001);
+                                Console.WriteLine("fd");
+                                order.Status = StatusOrder.MailSent;
+                                Console.WriteLine("fd");
+                                bl.UpdateOrder(order);
+                                Console.WriteLine("fd");
+                                Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
+                                chois = Int32.Parse(Console.ReadLine());
                                 break;
 
                             default:

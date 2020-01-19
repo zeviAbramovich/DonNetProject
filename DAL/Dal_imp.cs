@@ -42,7 +42,7 @@ namespace DAL
             if (order.OrderKey == 0)
             {
                 Order order1 = order.Clone();
-                order1.OrderKey = Configuration.serialOrder++;
+                order1.OrderKey = ++Configuration.serialOrder;
                 DataSource.orders.Add(order1);
                 return true;
             }

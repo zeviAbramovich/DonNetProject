@@ -28,11 +28,14 @@ namespace BL
 
         public bool CheckAvailableDate(HostingUnit unit, GuestRequest guest)
         {
-            for (DateTime date = guest.EntryDate; date < guest.ReleaseDate; date.AddDays(1))
+            DateTime date = guest.EntryDate;
+            while (date<guest.ReleaseDate)
             {
                 if (unit.Diary[date.Month, date.Day])
                     return false;
+                date = date.AddDays(1);
             }
+          
             return true;
         }
 
@@ -62,7 +65,7 @@ namespace BL
                     continue;
                 if (guest.Adults > item.Adults && guest.Children > item.Children)
                     continue;
-                if (guest.SubArea != null && guest.SubArea != item.SubArea)
+                if (guest.SubArea != "" && guest.SubArea != item.SubArea)
                     continue;
                 if (guest.Pool == Requirements.Necessary && item.Pool == false)
                     continue;
