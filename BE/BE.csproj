@@ -58,5 +58,19 @@
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\BankAccount.datasource" />
+    <None Include="Properties\DataSources\Branche.datasource" />
+    <None Include="Properties\DataSources\CannotAddException.datasource" />
+    <None Include="Properties\DataSources\CannotDeleteException.datasource" />
+    <None Include="Properties\DataSources\CannotUpdateException.datasource" />
+    <None Include="Properties\DataSources\Configuration.datasource" />
+    <None Include="Properties\DataSources\GuestRequest.datasource" />
+    <None Include="Properties\DataSources\Host.datasource" />
+    <None Include="Properties\DataSources\HostingUnit.datasource" />
+    <None Include="Properties\DataSources\IdAlreadyExsistException.datasource" />
+    <None Include="Properties\DataSources\Order.datasource" />
+    <None Include="Properties\DataSources\Utilities.Tools.datasource" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
