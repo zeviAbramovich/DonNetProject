@@ -271,17 +271,13 @@ namespace UI
 
                             case 3://UpdateHostingUnit
                                 Console.WriteLine("enter num of unit");
-                                long key = long.Parse(Console.ReadLine());                                                                                   
-                                if (!bl.ChecksWhethertheUnitHasOpenOrders(key))
-                                { 
-                                    Console.WriteLine("cant update have open orders");
-                                    break;
-                                }
+                                long key = 10000000;                                                                                                               
                                 HostingUnit hostingUnit = bl.GetUnit(key);
-                                hostingUnit.Owner.CollectionClearance = false;
+                                hostingUnit.Diary[1, 5] = true;
+                              //  hostingUnit.Owner.CollectionClearance = false;
                                 bl.UpdateHostingUnit(hostingUnit);
-                                if(!bl.GetUnit(key).Owner.CollectionClearance);
-                                Console.WriteLine("acsses ");
+                                hostingUnit = bl.GetUnit(10000000);
+                                Console.WriteLine(hostingUnit.Diary[1,5]);                                   
                                 break;
 
                             case 4://add order                                  
@@ -297,16 +293,15 @@ namespace UI
                                 break;
 
                             case 5://update order
-                                Order order = bl.GetOrder(10000001);
-                                Console.WriteLine("fd");
-                                order.Status = StatusOrder.MailSent;
-                                Console.WriteLine("fd");
-                                bl.UpdateOrder(order);
-                                Console.WriteLine("fd");
+                                Order order = bl.GetOrder(10000001);                               
+                                order.Status = StatusOrder.CustomerResponsiveness;                               
+                                bl.UpdateOrder(order);                                   
+                                order = bl.GetOrder(10000002);
+                                Console.WriteLine(order.Status);
                                 Console.Write(Menu.GetMenu(Menu.MainMenu.Client));
                                 chois = Int32.Parse(Console.ReadLine());
                                 break;
-
+                                         
                             default:
                                 break;
                         }

@@ -23,7 +23,7 @@ namespace DS
                           FamilyName = "Abra",
                           MailAddress = "zevi3190@gmail.com",
                           PhoneNumber = 0502418419,
-                          CollectionClearance = false,
+                          CollectionClearance = true,
                           HostBankAccount = new BankAccount()
                              {
                                  BranchNumber = 111,
@@ -49,7 +49,7 @@ namespace DS
                         FamilyName = "Abra",
                         MailAddress = "zevi3190@gmail.com",
                         PhoneNumber = 0502418419,
-                        CollectionClearance = false,
+                        CollectionClearance = true,
                         HostBankAccount = new BankAccount()
                         {
                             BranchNumber = 111,
