@@ -15,6 +15,13 @@ namespace BL
         public IDal dal = DAL.FactoryMethode.GetDal();
 
         #region helpingFunction
+        /// <summary>
+        /// בודק האם יש ליחידה הזמנות במצב פתוח 
+        /// </summary>
+        /// <param name=" מספר יחידה"></param>
+        /// <returns>
+        /// אם יש מחזיר שקר אם אין מחזיר אמת
+        /// </returns>
         public bool ChecksWhethertheUnitHasOpenOrders(long unitKey)
         {
             var v = from item in GetAllOrders()
@@ -26,19 +33,36 @@ namespace BL
             return true;
         }
 
+        /// <summary>
+        /// מקבל בקשה ויחידה, ובודק האם הזמן המצוין בבקשה פנוי ביחידה
+        /// </summary>
+        /// <param name="יחידת אירוח"></param>
+        /// <param name="בקשת לקוח"></param>
+        /// <returns>
+        /// אם פנוי מחזיר אמת, אם לא מחזיר שקר
+        /// </returns>
+        /// 
         public bool CheckAvailableDate(HostingUnit unit, GuestRequest guest)
         {
             DateTime date = guest.EntryDate;
-            while (date<guest.ReleaseDate)
+            while (date < guest.ReleaseDate)
             {
                 if (unit.Diary[date.Month, date.Day])
                     return false;
                 date = date.AddDays(1);
             }
-          
             return true;
         }
 
+        /// <summary>
+        /// מקבל יחידה,תאריך,ומספר ימי חופשה,ובודקת האם היחידה פנויה מהתאריך שהתקבל עד סוף ימי החופשה
+        /// </summary>
+        /// <param name="יחידת אירוח"></param>
+        /// <param name="תאריך כניסה"></param>
+        /// <param name="מספר ימי חופשה"></param>
+        /// <returns>
+        /// אם פנוי מחזיר אמת, אם לא מחזיר שקר
+        /// </returns>
         public bool CheckAvailableDateByDateAndSumDays(HostingUnit unit, DateTime date, int VacationDays)
         {
             for (int i = 0; i < VacationDays; i++)
@@ -50,6 +74,13 @@ namespace BL
             return true;
         }
 
+        /// <summary>
+        /// מקבל בקשת לקוח ומייצר הזמנות לפי ההתאמות שהפונקציה מוצאת
+        /// </summary>
+        /// <param name="בקשת לקוח"></param>
+        /// <returns>
+        /// אם לא נוצרו הזמנות מחזיר שקר, אחרת מחזיר אמת
+        /// </returns>
         public bool CreateOrder(GuestRequest guest)
         {
             int count = 0;
@@ -98,6 +129,21 @@ namespace BL
             return true;
         }
 
+        /// <summary>
+        /// בודק כמה יחידות מחזיק מארח
+        /// </summary>
+        /// <param name="מארח"></param>
+        /// <returns>
+        /// מספר יחידות
+        /// </returns>
+        public int NumOfUnits(Host host)
+        {
+            var num = from item in GetAllHostingUnit()
+                      where item.Owner.HostId == host.HostId
+                      select item;
+            return num.Count();
+        }
+
         #endregion
 
         #region AddDeleteUpdate       
@@ -132,7 +178,7 @@ namespace BL
 
         public bool AddRequest(GuestRequest request)
         {
-            if (request.EntryDate >= request.ReleaseDate)
+            if (request.EntryDate >= request.ReleaseDate || request.EntryDate < DateTime.Now)
                 throw new CannotAddException("the entry date is after the relasing date");
             request.Status = StatusGuest.Open;
             try
@@ -166,11 +212,11 @@ namespace BL
             return true;
         }
         /// <summary>
-        /// updete the host details in all the units.
+        /// מעדכן פרטי מארח בכל היחידות
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="מארח"></param>
         /// <returns>
-        /// true or false
+        /// אם הצליח לעדכן מחזיר אמת, אם לא אז זורק חריגה
         /// </returns>
         public bool UpdateHost(Host host)
         {
@@ -187,21 +233,15 @@ namespace BL
 
         public bool UpdateHostingUnit(HostingUnit unit)
         {
-           
-            HostingUnit hostingUnit = new HostingUnit();
-            if (unit.Owner.CollectionClearance == false)
-            {                
-               if( !ChecksWhethertheUnitHasOpenOrders(unit.HostingUnitKey))
-                    throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");                                                  
-                dal.UpdateHostingUnit(unit);
-                return true;
-            }
-            else
+            if (unit.Owner.CollectionClearance == false)//if the change is the collection clearance is false
             {
+                if (!ChecksWhethertheUnitHasOpenOrders(unit.HostingUnitKey))
+                    throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");
                 dal.UpdateHostingUnit(unit);
                 return true;
             }
-
+            dal.UpdateHostingUnit(unit);
+            return true;
         }
 
         public bool UpdateOrder(Order orderUpdate)
@@ -219,19 +259,20 @@ namespace BL
             {
                 throw new CannotUpdateException("cannot update order beacuse ", mme);
             }
-            //"בעל יחידת אירוח יוכל לשלוח הזמנה ללקוח רק אם חתם על הרשאה"
+            //If the original unit does not have a collection clearance, then I will not be able to change order status
             if (!unit.Owner.CollectionClearance)
                 throw new CannotUpdateException("the Owner " + unit.Owner.PrivateName + " " + unit.Owner.FamilyName + " did not settle a payment agreement");
-            //"כאשר סטטוס הזמנה משתנה לסגירת עסקה - לא ניתן לשנות יותר את הסטטוס שלה"          
+            //if the original order has its status closed (no matter what the reason) i don't want to change the order          
             if (order.Status == StatusOrder.CustomerUnresponsiveness || order.Status == StatusOrder.CustomerResponsiveness || order.Status == StatusOrder.RequestChanged)
                 throw new CannotUpdateException("the Order number:" + order.OrderKey + " is closed");
-
+            //if the change I made is because the customer closed because he didn't want to, or because this order was closed because the request was changed
             if (orderUpdate.Status == StatusOrder.CustomerUnresponsiveness || orderUpdate.Status == StatusOrder.RequestChanged)
             {
                 order.Status = orderUpdate.Status;
                 dal.UpdateOrder(order);//לא עשיתי טרי קאטצ כי מצאתי את ההזמנה הזאת בתחילת הפונקציה
                 return true;
             }
+            //if the change I made is that I sent an email to the customer
             if (orderUpdate.Status == StatusOrder.MailSent)
             {
                 orderUpdate.Status = StatusOrder.MailSent;
@@ -239,26 +280,26 @@ namespace BL
                 Console.WriteLine("mail sent\n");
                 return true;
             }
+            //if the change I made is that the customer has closed the deal because he wants to
             if (orderUpdate.Status == StatusOrder.CustomerResponsiveness)
             {
                 orderUpdate.commision = Configuration.commision * SumDays(request.EntryDate, request.ReleaseDate);
-                orderUpdate.Status = StatusOrder.CustomerResponsiveness;
                 request.Status = StatusGuest.ClosesBySite;//מעדכן בקשה נסגרה כי הלקוח רצה
-                for (DateTime date = request.EntryDate; date < request.ReleaseDate; date.AddDays(1))
+                for (DateTime date = request.EntryDate; date < request.ReleaseDate; date = date.AddDays(1))
                     unit.Diary[date.Month, date.Day] = true;//מעדכן את המטריצה בימים שהלקוח רצה              
                 UpdateHostingUnit(unit);
                 UpdateRequest(request);
+                dal.UpdateOrder(orderUpdate);
                 List<Order> orders = GetAllOrders();
                 var v = from a in orders
                         where a.GuestRequestKey == request.GuestRequestKey
                         where a.Status != StatusOrder.CustomerResponsiveness
                         select a;
-                foreach (var item in v)
+                foreach (var item in v)//changes the status of the rest customer orders 
                 {
                     item.Status = StatusOrder.RequestChanged;
                     dal.UpdateOrder(item);
                 }
-                dal.UpdateOrder(orderUpdate);
                 return true;
             }
             return true;
@@ -266,27 +307,42 @@ namespace BL
 
         public bool UpdateRequest(GuestRequest request)
         {
+            GuestRequest guestRequest = new GuestRequest();
             try
             {
-                GuestRequest guestRequest = GetGuestRequest(request.GuestRequestKey);
+                guestRequest = GetGuestRequest(request.GuestRequestKey);
             }
             catch (MissingMemberException mme)
             {
                 throw new CannotUpdateException("cannot update request beacuse ", mme);
             }
-            if (request.Status != StatusGuest.Open)
+            //if the original order is not open
+            if (guestRequest.Status != StatusGuest.Open)
                 throw new CannotUpdateException("Request number: " + request.GuestRequestKey.ToString() + " is closed!");
-            List<Order> orders = GetAllOrders();
-            var v = from a in orders
-                    where a.GuestRequestKey == request.GuestRequestKey
-                    select a;
-            foreach (var item in v)
+            //if the status of the update is open, 
+            //then I have to close the rest of the order 
+            //and the original request becomes expired, and add the new request
+            if (request.Status == StatusGuest.Open)
             {
-                item.Status = StatusOrder.CustomerUnresponsiveness;
-                UpdateOrder(item);
+                List<Order> orders = GetAllOrders();
+                var v = from a in orders
+                        where a.GuestRequestKey == request.GuestRequestKey
+                        select a;
+                foreach (var item in v)
+                {
+                    item.Status = StatusOrder.CustomerUnresponsiveness;
+                    UpdateOrder(item);
+                }
+                guestRequest.Status = StatusGuest.Expired;//cancle old request
+                AddRequest(request);//add the update request
+                return true;
             }
-            request.Status = StatusGuest.Expired;
-            AddRequest(request);
+            //if the status of the update is closed,beacuse the customer wanted, or expired
+            if (request.Status == StatusGuest.ClosesBySite || request.Status == StatusGuest.Expired)
+            {
+                dal.UpdateRequest(request);
+                return true;
+            }
             return true;
         }
 
@@ -371,48 +427,7 @@ namespace BL
             return guestRequests;
         }
 
-        //public List<GuestRequest> GetAllGuestRequestByArea(Area area)
-        //{
-        //    List<GuestRequest> guestRequests = new List<GuestRequest>();
-        //    var v = from item in GetAllGuestRequest()
-        //            group item by item.Area into areasInGroup
-        //            select new { area = areasInGroup };
-        //    foreach (var group in v)
-        //    {
-        //        foreach (var ar in group.area)
-        //            guestRequests.Add(ar);
-        //    }
-        //    return guestRequests;
-        //}
 
-        //public List<GuestRequest> GetAllGuestRequestByNumRelax(int num)
-        //{
-        //    List<GuestRequest> guestRequests = new List<GuestRequest>();
-        //    var v = from a in GetAllGuestRequest()
-        //            group a by a.Adults + a.Children == num;
-        //    foreach (var item in v)
-        //    {
-        //        guestRequests.Add(item);
-        //    }
-        //    return guestRequests;
-        //}
-
-        //public List<HostingUnit> GetAllHostingUnitByArea(Area area)
-        //{
-        //    List<HostingUnit> hostingUnits = new List<HostingUnit>();
-        //    var v = from a in GetAllHostingUnit()
-        //            group a by a.Area == area;
-        //    foreach (var item in v)
-        //    {
-        //        hostingUnits.Add(item);
-        //    }
-        //    return hostingUnits;
-        //}
-
-        //public List<Host> GetAllHostByNumHostingUnit()
-        //{
-
-        //}
 
         #endregion
 
@@ -479,6 +494,41 @@ namespace BL
                 units.Add(item);
             return units;
         }
+        #endregion
+
+        #region Grouping
+        public IEnumerable<IGrouping<Area, GuestRequest>> GetAllGuestRequestByArea(IEnumerable<GuestRequest> guestRequests)
+        {
+            var guestAr = from item in guestRequests
+                          group item by item.Area into guest
+                          select guest;
+            return guestAr;
+
+
+        }
+        public IEnumerable<IGrouping<int, GuestRequest>> GetAllGuestRequestByNumRelax(IEnumerable<GuestRequest> guestRequests)
+        {
+            var guestNuA = from item in guestRequests
+                           group item by item.Adults + item.Children into guest
+                           select guest;
+            return guestNuA;
+        }
+        public IEnumerable<IGrouping<Area, HostingUnit>> GetAllHostingUnitByArea(IEnumerable<HostingUnit> hostingUnits)
+        {
+
+            var hostAr = from item in hostingUnits
+                         group item by item.Area into host
+                         select host;
+            return hostAr;
+        }
+        public IEnumerable<IGrouping<int, Host>> GetAllHostByNumHostingUnit(IEnumerable<Host> hosts)
+        {
+            var hostNuUnit = from item in GetAllHostingUnit()
+                             let owner = item.Owner
+                             group owner by NumOfUnits(owner);
+            return hostNuUnit;
+        }
+
         #endregion
     }
 }

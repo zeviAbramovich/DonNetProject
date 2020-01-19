@@ -16,6 +16,7 @@ namespace BL
         bool CheckAvailableDateByDateAndSumDays(HostingUnit unit, DateTime date, int VacationDays);
         bool CreateOrder(GuestRequest guest);
         bool ChecksWhethertheUnitHasOpenOrders(long unitKey);
+        int NumOfUnits(Host host);
 
         bool AddRequest(GuestRequest request);
         bool UpdateRequest(GuestRequest request);
@@ -37,10 +38,11 @@ namespace BL
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
-        //TODO grouping List<GuestRequest> GetAllGuestRequestByArea(Area area);
-        //TODO grouping List<GuestRequest> GetAllGuestRequestByNumRelax(int num);
-        //TODO grouping List<HostingUnit> GetAllHostingUnitByArea(Area area);
-        //TODO grouping List<Host> GetAllHostByNumHostingUnit();
+
+        IEnumerable<IGrouping<Area, GuestRequest>> GetAllGuestRequestByArea(IEnumerable<GuestRequest> guestRequests);
+        IEnumerable<IGrouping<int, GuestRequest>> GetAllGuestRequestByNumRelax(IEnumerable<GuestRequest> guestRequests);
+        IEnumerable<IGrouping<Area, HostingUnit>> GetAllHostingUnitByArea(IEnumerable<HostingUnit> hostingUnits);
+        IEnumerable<IGrouping<int, Host>> GetAllHostByNumHostingUnit(IEnumerable<Host> hosts);
 
         List<HostingUnit> UnitsAvailable(DateTime dateTime, int VacationDays);
         int SumDays(DateTime dateTime);

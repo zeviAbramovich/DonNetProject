@@ -16,15 +16,17 @@ namespace DAL
 
         public bool AddHostingUnit(HostingUnit unit)
         {
-            if (unit.HostingUnitKey == 0)
+            if (unit.HostingUnitKey == 0)//must be new unit
             {
                 HostingUnit hostingUnit = unit.Clone();//על פי נספח 1
                 hostingUnit.HostingUnitKey = ++Configuration.serialHostingUnit;
                 hostingUnit.Diary = new bool[12, 31];
                 DataSource.hostingUnitList.Add(hostingUnit);
+                if (!DataSource.hosts.Any(x => x.HostId != unit.Owner.HostId))
+                    DataSource.hosts.Add(unit.Owner);
                 return true;
             }
-            try
+            try//The key is not 0, so I'm posting an update 
             {
                 UpdateHostingUnit(unit);
             }
@@ -37,14 +39,14 @@ namespace DAL
 
         public bool AddOrder(Order order)
         {
-            if (order.OrderKey == 0)
+            if (order.OrderKey == 0)//must be new order
             {
                 Order order1 = order.Clone();
                 order1.OrderKey = ++Configuration.serialOrder;
                 DataSource.orders.Add(order1);
                 return true;
             }
-            try
+            try//The key is not 0, so I'm posting an update 
             {
                 UpdateOrder(order);
             }
@@ -57,7 +59,7 @@ namespace DAL
 
         public bool AddRequest(GuestRequest guest)
         {
-            if (guest.GuestRequestKey == 0)
+            if (guest.GuestRequestKey == 0)//must be new request
             {
                 GuestRequest guestRequest = guest.Clone();
                 guestRequest.GuestRequestKey = ++Configuration.serialGuestRequest;
@@ -66,7 +68,7 @@ namespace DAL
             }
             try
             {
-                UpdateRequest(guest);
+                UpdateRequest(guest);//The key is not 0, so I'm posting an update 
             }
             catch (CannotUpdateException cue)
             {
@@ -79,10 +81,10 @@ namespace DAL
         {
             HostingUnit unit = new HostingUnit();
             var v = from item in DataSource.hostingUnitList
-                    where item.HostingUnitKey == key
+                    where item.HostingUnitKey == key//catch the unit I want to delete
                     select item;
             foreach (HostingUnit item in v)
-                unit = item;
+                unit = item;//unit is originally unit
             try
             {
                 DataSource.hostingUnitList.Remove(unit);    
@@ -91,73 +93,76 @@ namespace DAL
             catch (MissingMemberException ms)
             {
                 throw new MissingMemberException ("No match key",ms);
-            }
-            catch(NullReferenceException nre)
-            {
-                throw new MissingMemberException("",nre);
-            }          
+            }                
         }
 
-        public bool UpdateHostingUnit(HostingUnit unit)
+        public bool UpdateHostingUnit(HostingUnit updateUnit)
         {
             HostingUnit hosting = new HostingUnit();
             try
             {
-                hosting = GetHostingUnit(unit.HostingUnitKey);
+                hosting = GetHostingUnit(updateUnit.HostingUnitKey);
             }
             catch (MissingMemberException me)
             {
-                throw new CannotUpdateException("Hosting Unit number " + unit.HostingUnitKey + " not found", me);
+                throw new CannotUpdateException("Hosting Unit number " + updateUnit.HostingUnitKey + " not found", me);
             }
-            hosting.HostingUnitName = unit.HostingUnitName;
-            DeleteHostingUnit(unit.HostingUnitKey);
-            DataSource.hostingUnitList.Add(hosting);
+            hosting = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == updateUnit.HostingUnitKey);//hosting is the originally unit
+            DataSource.hostingUnitList.Remove(hosting);//delete the originally
+            DataSource.hostingUnitList.Add(updateUnit);//add the originally
             return true;
         }
 
-        public bool UpdateOrder(Order order)
+        public bool UpdateOrder(Order updateOrder)
         {
-            Order order1 = DataSource.orders.FirstOrDefault(c => c.OrderKey == order.OrderKey);
-            if (order1 == null)
-                throw new CannotUpdateException("Cannot update! order number " + order.OrderKey.ToString() + "not exsist");
+            Order originalOrder = DataSource.orders.FirstOrDefault(c => c.OrderKey == updateOrder.OrderKey);
+            if (originalOrder == null)
+                throw new CannotUpdateException("Cannot update! order number " + updateOrder.OrderKey.ToString() + "not exsist");
+            originalOrder.Status = updateOrder.Status;
             return true;
         }
 
         public bool UpdateRequest(GuestRequest updateRequest)
         {
-            GuestRequest request = DataSource.guestRequests.Find(g => g.GuestRequestKey == updateRequest.GuestRequestKey);
-            if (request == null)           
-                throw new CannotUpdateException("There is no RequestKey " + updateRequest.GuestRequestKey.ToString());                      
-            request.Status = StatusGuest.Expired;
-            AddRequest(request);//מעדכן מה שרציתי
+            GuestRequest OriginalRequest = DataSource.guestRequests.Find(g => g.GuestRequestKey == updateRequest.GuestRequestKey);
+            if (OriginalRequest == null)
+                throw new CannotUpdateException("There is no RequestKey " + updateRequest.GuestRequestKey.ToString());
+            //if my status change is open, then I close the old request and add the new one
+            if (updateRequest.Status == StatusGuest.Open)
+            {                          
+                OriginalRequest.Status = StatusGuest.Expired;
+                AddRequest(OriginalRequest);//מעדכן מה שרציתי
+                return true;
+            }
+            ////if my status change is not open, then i update the status
+            if (updateRequest.Status == StatusGuest.ClosesBySite|| updateRequest.Status == StatusGuest.Expired)
+            {
+                OriginalRequest.Status = updateRequest.Status;
+                return true;
+            }
             return true;
         }
 
         public bool UpdateHost(Host host)
         {
+            Host hostOriginal = DataSource.hosts.FirstOrDefault(x => x.HostId == host.HostId);
+            DataSource.hosts.Remove(hostOriginal);
+            DataSource.hosts.Add(host);
             var v = from item in DataSource.hostingUnitList
-                    where host.HostId == item.Owner.HostId
+                    where item.Owner.HostId == host.HostId
                     select item;
-            if (!v.Any())
-                throw new MissingMemberException("Host ID not exsist");
-            foreach (var item in v)
+            foreach (HostingUnit item in v)
             {
-                item.Owner = new Host
-                {
-                    FamilyName = host.FamilyName,
-                    MailAddress = host.MailAddress,
-                    PhoneNumber = host.PhoneNumber,
-                    PrivateName = host.PrivateName,
-                    HostBankAccount = new BankAccount
-                    {
-                        BankAccountNumber = host.HostBankAccount.BankAccountNumber,
-                        BankName = host.HostBankAccount.BankName,
-                        BankNumber = host.HostBankAccount.BankNumber,
-                        BranchCity = host.HostBankAccount.BranchCity,
-                        BranchAddress = host.HostBankAccount.BranchAddress,
-                        BranchNumber = host.HostBankAccount.BranchNumber
-                    }
-                };
+                item.Owner.FamilyName = host.FamilyName;
+                item.Owner.MailAddress = host.MailAddress;
+                item.Owner.PhoneNumber = host.PhoneNumber;
+                item.Owner.PrivateName = host.PrivateName;
+                item.Owner.HostBankAccount.BankAccountNumber = host.HostBankAccount.BankAccountNumber;
+                item.Owner.HostBankAccount.BankName = host.HostBankAccount.BankName;
+                item.Owner.HostBankAccount.BankNumber = host.HostBankAccount.BankNumber;
+                item.Owner.HostBankAccount.BranchAddress = host.HostBankAccount.BranchAddress;
+                item.Owner.HostBankAccount.BranchCity = host.HostBankAccount.BranchCity;
+                item.Owner.HostBankAccount.BranchNumber = host.HostBankAccount.BranchNumber;
             }
             return true;
         }

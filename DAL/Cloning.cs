@@ -11,14 +11,16 @@ namespace DAL
     {
         public static Order Clone(this Order original)
         {
-            Order target = new Order();
-            target.HostingUnitKey = original.HostingUnitKey;
-            target.Status = original.Status;
-            target.OrderKey = original.OrderKey;
-            target.OrderDate = original.OrderDate;
-            target.GuestRequestKey = original.GuestRequestKey;
-            target.CreateDate = original.CreateDate;
-            target.commision = original.commision;
+            Order target = new Order
+            {
+                HostingUnitKey = original.HostingUnitKey,
+                Status = original.Status,
+                OrderKey = original.OrderKey,
+                OrderDate = original.OrderDate,
+                GuestRequestKey = original.GuestRequestKey,
+                CreateDate = original.CreateDate,
+                commision = original.commision
+            };
             return target;
         }
 
@@ -67,24 +69,26 @@ namespace DAL
 
         public static GuestRequest Clone(this GuestRequest original)
         {
-            GuestRequest target = new GuestRequest();
-            target.Adults = original.Adults;
-            target.Area = original.Area;
-            target.Children = original.Children;
-            target.ChildrensAttractions = original.ChildrensAttractions;
-            target.EntryDate = original.EntryDate;
-            target.FamilyName = original.FamilyName;
-            target.Garden = original.Garden;
-            target.GuestRequestKey = original.GuestRequestKey;
-            target.HostingType = original.HostingType;
-            target.Jacuzzi = original.Jacuzzi;
-            target.MailAddress = original.MailAddress;
-            target.Pool = original.Pool;
-            target.PrivateName = original.PrivateName;
-            target.RegistrationDate = original.RegistrationDate;
-            target.ReleaseDate = original.ReleaseDate;
-            target.Status = original.Status;
-            target.SubArea = original.SubArea;
+            GuestRequest target = new GuestRequest
+            {
+                Adults = original.Adults,
+                Area = original.Area,
+                Children = original.Children,
+                ChildrensAttractions = original.ChildrensAttractions,
+                EntryDate = original.EntryDate,
+                FamilyName = original.FamilyName,
+                Garden = original.Garden,
+                GuestRequestKey = original.GuestRequestKey,
+                HostingType = original.HostingType,
+                Jacuzzi = original.Jacuzzi,
+                MailAddress = original.MailAddress,
+                Pool = original.Pool,
+                PrivateName = original.PrivateName,
+                RegistrationDate = original.RegistrationDate,
+                ReleaseDate = original.ReleaseDate,
+                Status = original.Status,
+                SubArea = original.SubArea
+            };
             return target;
         }
     }
