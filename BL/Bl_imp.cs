@@ -95,6 +95,14 @@ namespace BL
             return true;
         }
 
+        public int NumOfUnits(Host host)
+        {
+            var num = from item in GetAllHostingUnit()
+                      where item.Owner.HostId == host.HostId
+                      select item;
+            return num.Count();
+        }
+
         #endregion
 
         #region AddDeleteUpdate       
@@ -184,12 +192,12 @@ namespace BL
 
         public bool UpdateHostingUnit(HostingUnit unit)
         {
-           
+
             HostingUnit hostingUnit = new HostingUnit();
             if (unit.Owner.CollectionClearance == false)
-            {                
-               if( !ChecksWhethertheUnitHasOpenOrders(unit.HostingUnitKey))
-                    throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");                                                  
+            {
+                if (!ChecksWhethertheUnitHasOpenOrders(unit.HostingUnitKey))
+                    throw new CannotUpdateException("Can't remove debit authorization for account because there is at least one open order ");
                 dal.UpdateHostingUnit(unit);
                 return true;
             }
@@ -476,6 +484,41 @@ namespace BL
                 units.Add(item);
             return units;
         }
+
+        #region Grouping
+        public IEnumerable<IGrouping<Area, GuestRequest>> GetAllGuestRequestByArea(IEnumerable<GuestRequest> guestRequests)
+        {
+            var guest_Ar = from item in guestRequests
+                           group item by item.Area into guest
+                           select guest;
+            return guest_Ar;
+
+
+        }
+        public IEnumerable<IGrouping<int, GuestRequest>> GetAllGuestRequestByNumRelax(IEnumerable<GuestRequest> guestRequests)
+        {
+            var guest_NuA = from item in guestRequests
+                            group item by item.Adults + item.Children into guest
+                            select guest;
+            return guest_NuA;
+        }
+        public IEnumerable<IGrouping<Area, HostingUnit>> GetAllHostingUnitByArea(IEnumerable<HostingUnit> hostingUnits)
+        {
+
+            var host_Ar = from item in hostingUnits
+                          group item by item.Area into host
+                          select host;
+            return host_Ar;
+        }
+        public IEnumerable<IGrouping<int, Host>> GetAllHostByNumHostingUnit(IEnumerable<Host> hosts)
+        {
+            var host_NuUnit = from item in GetAllHostingUnit()
+                              let owner = item.Owner
+                              group owner by NumOfUnits(owner);
+            return host_NuUnit;
+        }
+
         #endregion
     }
 }
+#endregion

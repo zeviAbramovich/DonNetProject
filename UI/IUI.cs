@@ -101,7 +101,6 @@ namespace UI
                                 Console.WriteLine("How many childrens?");
                                 while (!Int32.TryParse(Console.ReadLine(), out intTemp))
                                 {
-
                                     Console.WriteLine("You must enter a number!");
                                 }
                                 guestTemp.Children = intTemp;

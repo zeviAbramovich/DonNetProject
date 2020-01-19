@@ -22,6 +22,8 @@ namespace DAL
                 hostingUnit.HostingUnitKey = ++Configuration.serialHostingUnit;
                 hostingUnit.Diary = new bool[12, 31];
                 DataSource.hostingUnitList.Add(hostingUnit);
+                if (!DataSource.hosts.Any(x => x.HostId != unit.Owner.HostId))
+                    DataSource.hosts.Add(unit.Owner);
                 return true;
             }
             try
