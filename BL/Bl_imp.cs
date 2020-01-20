@@ -470,6 +470,7 @@ namespace BL
             return orders;
         }
 
+
         public int SumDays(DateTime dateTime)
         {
             DateTime date = DateTime.Now;

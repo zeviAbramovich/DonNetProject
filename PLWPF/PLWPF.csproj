@@ -81,6 +81,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GuestControlMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HostControlMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HostManagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -88,6 +100,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GuestControlMenu.xaml.cs">
+      <DependentUpon>GuestControlMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HostControlMenu.xaml.cs">
+      <DependentUpon>HostControlMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HostManagePage.xaml.cs">
+      <DependentUpon>HostManagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -124,6 +145,9 @@
     <None Include="Properties\DataSources\BE.HostingUnit.datasource" />
     <None Include="Properties\DataSources\BE.IdAlreadyExsistException.datasource" />
     <None Include="Properties\DataSources\BE.Order.datasource" />
+    <None Include="Properties\DataSources\BL.delegateRequest.datasource" />
+    <None Include="Properties\DataSources\BL.FactoryMethode.datasource" />
+    <None Include="Properties\DataSources\BL.IBL.datasource" />
     <None Include="Properties\DataSources\ControlzEx.BadgedEx.datasource" />
     <None Include="Properties\DataSources\ControlzEx.PopupEx.datasource" />
     <None Include="Properties\DataSources\MaterialDesignColors.ColorManipulation.ColorHelper.datasource" />
@@ -287,6 +311,11 @@
     <None Include="Properties\DataSources\ShowMeTheXAML.XamlFormatter.datasource" />
     <None Include="Properties\DataSources\ShowMeTheXAML.XamlResolveEventArgs.datasource" />
     <None Include="Properties\DataSources\ShowMeTheXAML.XamlResolver.datasource" />
+    <None Include="Properties\DataSources\UI.Menu+ClientMenu.datasource" />
+    <None Include="Properties\DataSources\UI.Menu+ExceptionMenu.datasource" />
+    <None Include="Properties\DataSources\UI.Menu+MainMenu.datasource" />
+    <None Include="Properties\DataSources\UI.Menu+OwnerMenu.datasource" />
+    <None Include="Properties\DataSources\UI.Menu.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -303,6 +332,10 @@
     <ProjectReference Include="..\BL\BL.csproj">
       <Project>{2faf4988-4d60-42e2-8ed3-7d6920657e1f}</Project>
       <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\UI.csproj">
+      <Project>{399082ff-10c8-4b3c-b4e0-81785ee6710f}</Project>
+      <Name>UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{81e7d3b5-0592-428c-a16b-4acdae92e69f}</Project>

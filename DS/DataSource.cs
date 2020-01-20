@@ -19,6 +19,7 @@ namespace DS
                     Owner = new Host()
                     {
                           HostId = 313583460,
+                          Password="A1234",
                           PrivateName = "Zeev",
                           FamilyName = "Abra",
                           MailAddress = "zevi3190@gmail.com",

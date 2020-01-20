@@ -49,6 +49,7 @@ namespace DAL
             target.Owner = new Host
             {
                 HostId = original.Owner.HostId,
+                Password=original.Owner.Password,
                 CollectionClearance = original.Owner.CollectionClearance,
                 FamilyName = original.Owner.FamilyName,
                 MailAddress = original.Owner.MailAddress,

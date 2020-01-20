@@ -1,4 +1,4 @@
-﻿<Window
+﻿<Window x:Name="MainScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,8 +12,46 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="638" Width="800" >
+        Title="MainWindow" Height="638" Width="800" WindowStyle="SingleBorderWindow"  Loaded="Window_Loaded" >
     <Window.Resources>
-      
+
+
+
+
+        <CollectionViewSource x:Key="slideWipeViewSource" d:DesignSource="{d:DesignInstance {x:Type materialDesign:SlideWipe}, CreateList=True}"/>
+
+
+
     </Window.Resources>
+
+    <Grid x:Name="MainGrid" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="MenuView" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        </Grid>
+
+
+        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
+    ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מארח" Click="Host_Click" Grid.Row="0" Grid.RowSpan="1" >
+            
+        </Button>
+        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
+    ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="אורח" Click="Button_Click" Grid.Row="1"  Grid.RowSpan="1"  />
+        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
+    ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מנהל מערכת" Grid.Row="3" />
+
+    </Grid>
+
 </Window>

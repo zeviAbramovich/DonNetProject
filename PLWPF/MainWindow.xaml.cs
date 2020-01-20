@@ -21,15 +21,41 @@ namespace PLWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<HostingUnit> units = new List<HostingUnit>();
-        List<GuestRequest> requests = new List<GuestRequest>();
+        
         public MainWindow()
         {
             InitializeComponent();
-          
-         
+
+
         }
 
-        
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //HostControlMenu a = new HostControlMenu();
+            //MenuView.Children.Add(a);
+ 
+        }
+
+        private void Host_Click(object sender, RoutedEventArgs e)
+        {
+            HostControlMenu a = new HostControlMenu();
+            MenuView.Children.Clear();
+            MenuView.Children.Add(a);
+            
+            
+
+        }
+
+        private void BundledTheme_IsActiveChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            GuestControlMenu guest = new GuestControlMenu();
+            MenuView.Children.Clear();
+            MenuView.Children.Add(guest);
+        }
     }
 }

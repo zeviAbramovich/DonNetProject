@@ -10,6 +10,7 @@ namespace BE
     public class Host
     {
         public long HostId { get; set; }
+        public string Password { get;  set; }
         public String PrivateName { get; set; }
         public String FamilyName { get; set; }
         public long PhoneNumber { get; set; }
