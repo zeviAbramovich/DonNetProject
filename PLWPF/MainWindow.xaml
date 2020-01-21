@@ -39,7 +39,7 @@
 
         </Grid.ColumnDefinitions>
 
-        <Frame x:Name="zevi" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Content="Frame" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Navigated="zevi_Navigated" />
+        <Frame ContentRendered="zevi_ContentRendered" x:Name="zevi" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Content="Frame" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
 
 
 

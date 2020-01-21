@@ -55,5 +55,11 @@ namespace PLWPF
            
 
         }
+
+        private void zevi_ContentRendered(object sender, EventArgs e)
+        {
+            zevi.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+
+        }
     }
 }
