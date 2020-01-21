@@ -24,7 +24,9 @@ namespace PLWPF
         
         public MainWindow()
         {
+
             InitializeComponent();
+            
 
 
         }
@@ -38,11 +40,8 @@ namespace PLWPF
 
         private void Host_Click(object sender, RoutedEventArgs e)
         {
-            HostControlMenu a = new HostControlMenu();
-            MenuView.Children.Clear();
-            MenuView.Children.Add(a);
-            
-            
+
+            zevi.Navigate(new HostControlMenu());
 
         }
 
@@ -53,9 +52,8 @@ namespace PLWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            GuestControlMenu guest = new GuestControlMenu();
-            MenuView.Children.Clear();
-            MenuView.Children.Add(guest);
+           
+
         }
     }
 }

@@ -20,7 +20,7 @@ namespace PLWPF
     /// <summary>
     /// Interaction logic for HostControlMenu.xaml
     /// </summary>
-    public partial class HostControlMenu : UserControl
+    public partial class HostControlMenu : Page
     {
         public HostControlMenu()
         {
