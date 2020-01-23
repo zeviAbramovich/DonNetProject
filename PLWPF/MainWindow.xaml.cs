@@ -26,35 +26,14 @@ namespace PLWPF
         {
 
             InitializeComponent();
-            
 
-
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //HostControlMenu a = new HostControlMenu();
-            //MenuView.Children.Add(a);
- 
-        }
-
-        private void Host_Click(object sender, RoutedEventArgs e)
-        {
-
-            zevi.Navigate(new HostControlMenu());
+            zevi.Navigate(new MainMenu());
 
         }
 
-        private void BundledTheme_IsActiveChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-           
-
-        }
+     
+        
+       
 
         private void zevi_ContentRendered(object sender, EventArgs e)
         {

@@ -12,7 +12,7 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="638" Width="800" WindowStyle="SingleBorderWindow"  Loaded="Window_Loaded" >
+        Title="MainWindow" Height="638" Width="800" WindowStyle="SingleBorderWindow" >
     <Window.Resources>
 
 
@@ -24,35 +24,10 @@
 
     </Window.Resources>
 
-    <Grid x:Name="MainGrid" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" >
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+       
 
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+        <Frame ContentRendered="zevi_ContentRendered" x:Name="zevi"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
 
-        </Grid.ColumnDefinitions>
-
-        <Frame ContentRendered="zevi_ContentRendered" x:Name="zevi" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Content="Frame" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
-
-
-
-
-        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
-    ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מארח" Click="Host_Click" Grid.Row="0" Grid.RowSpan="1" >
-
-        </Button>
-        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
-    ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="אורח" Click="Button_Click" Grid.Row="1"  Grid.RowSpan="1"  />
-        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
-    ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מנהל מערכת" Grid.Row="3" />
-
-    </Grid>
+    
 
 </Window>

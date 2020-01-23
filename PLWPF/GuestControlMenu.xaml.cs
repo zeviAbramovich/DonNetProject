@@ -18,7 +18,7 @@ namespace PLWPF
     /// <summary>
     /// Interaction logic for GuestControlMenu.xaml
     /// </summary>
-    public partial class GuestControlMenu : UserControl
+    public partial class GuestControlMenu : Page
     {
         public GuestControlMenu()
         {

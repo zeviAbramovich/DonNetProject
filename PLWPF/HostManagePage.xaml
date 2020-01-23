@@ -6,68 +6,16 @@
       xmlns:local="clr-namespace:PLWPF"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+     
       Title="HostManagePage">
 
     <Grid>
         <materialDesign:DrawerHost
-  Margin="164,52,152,76"
-  HorizontalAlignment="Center"
-  VerticalAlignment="Center"
+  
+  HorizontalAlignment="Stretch"
+  VerticalAlignment="Stretch"
   BorderThickness="2"
   BorderBrush="{DynamicResource MaterialDesignDivider}">
-            <materialDesign:DrawerHost.LeftDrawerContent>
-                <StackPanel
-      Margin="16">
-                    <TextBlock
-        Margin="4"
-        HorizontalAlignment="Center">
-      LEFT FIELD
-                    </TextBlock>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        CommandParameter="{x:Static Dock.Left}"
-        Margin="4"
-        HorizontalAlignment="Center"
-        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE THIS
-                    </Button>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        Margin="4"
-        HorizontalAlignment="Center"
-        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE ALL
-                    </Button>
-                </StackPanel>
-            </materialDesign:DrawerHost.LeftDrawerContent>
-            <materialDesign:DrawerHost.TopDrawerContent>
-                <StackPanel
-      Margin="16"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal">
-                    <TextBlock
-        Margin="4"
-        VerticalAlignment="Center">
-      TOP BANANA
-                    </TextBlock>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        Style="{DynamicResource MaterialDesignFlatButton}"
-        Margin="4"
-        VerticalAlignment="Center">
-                        CLOSE ALL
-                    </Button>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        CommandParameter="{x:Static Dock.Top}"
-        Style="{DynamicResource MaterialDesignFlatButton}"
-        Margin="4"
-        VerticalAlignment="Center">
-                        CLOSE THIS
-                    </Button>
-                </StackPanel>
-            </materialDesign:DrawerHost.TopDrawerContent>
             <materialDesign:DrawerHost.RightDrawerContent>
                 <StackPanel
       Margin="16">
@@ -93,39 +41,12 @@
                     </Button>
                 </StackPanel>
             </materialDesign:DrawerHost.RightDrawerContent>
-            <materialDesign:DrawerHost.BottomDrawerContent>
-                <StackPanel
-      Margin="16"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal">
-                    <TextBlock
-        Margin="4"
-        VerticalAlignment="Center">
-      BOTTOM BRACKET
-                    </TextBlock>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        Style="{DynamicResource MaterialDesignFlatButton}"
-        Margin="4"
-        VerticalAlignment="Center">
-                        CLOSE ALL
-                    </Button>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        CommandParameter="{x:Static Dock.Bottom}"
-        Style="{DynamicResource MaterialDesignFlatButton}"
-        Margin="4"
-        VerticalAlignment="Center">
-                        CLOSE THIS
-                    </Button>
-                </StackPanel>
-            </materialDesign:DrawerHost.BottomDrawerContent>
             <Grid
     MinWidth="480"
     MinHeight="480">
                 <Grid
-      VerticalAlignment="Center"
-      HorizontalAlignment="Center">
+      VerticalAlignment="Top"
+      HorizontalAlignment="Right">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -141,7 +62,7 @@
         CommandParameter="{x:Static Dock.Right}"
         Grid.Row="1"
         Grid.Column="2"
-        Margin="4">
+        Margin="4,4,4,0" VerticalAlignment="Top">
                         <materialDesign:PackIcon
           Kind="ArrowRight" />
                     </Button>

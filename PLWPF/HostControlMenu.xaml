@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:PLWPF"
              xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.HostControlMenu"
              mc:Ignorable="d" 
-             d:DesignHeight="547" d:DesignWidth="349" Loaded="UserControl_Loaded">
+             Loaded="UserControl_Loaded">
     <Page.Resources>
         <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
 
@@ -20,7 +20,7 @@
             <RowDefinition />
             <RowDefinition  />
             <RowDefinition />
-           
+
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -32,29 +32,27 @@
         <TextBox x:Name="hostIdTextBox" Width="120" materialDesign:HintAssist.Hint="תעודת זהות"  VerticalAlignment="Center" Text="{Binding HostId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3,8,0,16" Height="24" HorizontalAlignment="Left" Grid.Column="0"/>
         <Label FontStretch="Condensed" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontSize="16" Grid.Row="1"  HorizontalAlignment="Stretch" Content=":סיסמה" Grid.Column="1" Margin="22,8,11,5" Grid.ColumnSpan="2" ></Label>
         <PasswordBox x:Name="passwordTextBox" Width="120" materialDesign:HintAssist.Hint="Password" materialDesign:TextFieldAssist.HasClearButton="True" materialDesign:HintAssist.HelperText="At least 8 characters" VerticalAlignment="Center"  Grid.Row="1" Margin="6,15,17,5" Height="22" HorizontalAlignment="Center" Grid.Column="0"/>-->
-        <Button Content="משתמש חדש" Grid.Row="1" Grid.RowSpan="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,10,0,0" />
+        <Button Content="משתמש חדש" Grid.Row="1"  Style="{StaticResource MaterialDesignFlatAccentBgButton}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,10,0,0" >
+          
+        </Button>
         <materialDesign:Flipper
   Style="{StaticResource MaterialDesignCardFlipper}"
-  VerticalAlignment="top" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Cursor="Hand" HorizontalAlignment="Stretch" >
+ Grid.ColumnSpan="2" >
             <materialDesign:Flipper.FrontContent>
                 <Button
-      
-                    HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.RowSpan="1" Grid.ColumnSpan="1"
+      Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                    
       Command="{x:Static materialDesign:Flipper.FlipCommand}"
-     
-      Width="250">
-            משתמש קיים
+     Margin="8" Width="200" >
+                    משתמש קיים
                 </Button>
             </materialDesign:Flipper.FrontContent>
             <materialDesign:Flipper.BackContent>
                 <Grid
-      Height="300"
-      Width="230">
+     Height="300" >
                     <Grid.RowDefinitions>
-                        <RowDefinition
-          Height="Auto" />
-                        <RowDefinition
-          Height="*" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <materialDesign:ColorZone
         Mode="Accent"
@@ -121,6 +119,11 @@
                 </Grid>
             </materialDesign:Flipper.BackContent>
         </materialDesign:Flipper>
+        <Button
+    Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+    ToolTip="MaterialDesignFlatButton" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="2" Click="Back_Click">
+            Back
+        </Button>
     </Grid>
 
 </Page>

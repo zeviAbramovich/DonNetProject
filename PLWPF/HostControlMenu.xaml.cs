@@ -56,15 +56,19 @@ namespace PLWPF
                 hostIdTextBox.Clear();
             }
             
-            OpenPage();
+            NavigationService login = NavigationService.GetNavigationService(this);
+            login.Navigate(new MainMenu());
+            login.Navigate(new HostManagePage());
+            
 
         }
 
-        private void OpenPage()
-        {
-            HostManagePage host = new HostManagePage();
-            host.BeginInit();
 
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+            //NavigationService back = NavigationService.GetNavigationService(this);
+            //back.Navigate()
         }
     }
 }
