@@ -21,23 +21,65 @@ namespace PLWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         public MainWindow()
         {
 
             InitializeComponent();
 
-            zevi.Navigate(new MainMenu());
+            Frame.Navigate(new MainMenu());
 
         }
 
-     
-        
-       
 
+
+
+
+        
+
+        public static T GetParent<T>(DependencyObject child) where T : DependencyObject
+
+        {
+
+            DependencyObject dependencyObject = VisualTreeHelper.GetParent(child);
+
+            if (dependencyObject != null)
+
+            {
+
+                T parent = dependencyObject as T;
+
+                if (parent != null)
+
+                {
+
+                    return parent;
+
+                }
+
+                else
+
+                {
+
+                    return GetParent<T>(dependencyObject);
+
+                }
+
+            }
+
+            else
+
+            {
+
+                return null;
+
+            }
+
+        }
         private void zevi_ContentRendered(object sender, EventArgs e)
         {
-            zevi.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+            
+            Frame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
 
         }
     }

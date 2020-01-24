@@ -81,6 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Host\ExistOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,11 +93,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HostControlMenu.xaml">
+    <Page Include="Host\HostControlMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HostManagePage.xaml">
+    <Page Include="Host\HostManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,16 +109,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Host\ExistOrders.xaml.cs">
+      <DependentUpon>ExistOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="GuestControlMenu.xaml.cs">
       <DependentUpon>GuestControlMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HostControlMenu.xaml.cs">
+    <Compile Include="Host\HostControlMenu.xaml.cs">
       <DependentUpon>HostControlMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HostManagePage.xaml.cs">
+    <Compile Include="Host\HostManagePage.xaml.cs">
       <DependentUpon>HostManagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">

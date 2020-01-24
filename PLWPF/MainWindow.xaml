@@ -14,20 +14,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="638" Width="800" WindowStyle="SingleBorderWindow" >
     <Window.Resources>
-
-
-
-
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+            <Setter Property="BorderBrush" Value="Beige" />
+            <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>
+        </Style>
         <CollectionViewSource x:Key="slideWipeViewSource" d:DesignSource="{d:DesignInstance {x:Type materialDesign:SlideWipe}, CreateList=True}"/>
 
-
-
     </Window.Resources>
+    <Grid >
+        <Frame ContentRendered="zevi_ContentRendered" x:Name="Frame"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="0,0,0.2,-0.2"/>
+    </Grid>
 
-       
 
-        <Frame ContentRendered="zevi_ContentRendered" x:Name="zevi"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
 
-    
 
 </Window>

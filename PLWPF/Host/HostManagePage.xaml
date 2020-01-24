@@ -1,0 +1,30 @@
+﻿<Page x:Class="PLWPF.HostManagePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PLWPF"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+     x:Name="hostmanage"
+      Title="HostManagePage" d:DesignWidth="800" d:DesignHeight="450">
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="63*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="_buttons" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button  Content="הזמנות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" Click="Exist_Orders" />
+            <Button Content="יחידות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" />
+            <Button Content="הוספת יחידות" Style="{StaticResource myButton}"  VerticalAlignment="Center"/>
+            <Button Content="עדכון הזמנות" Style="{StaticResource myButton}"  VerticalAlignment="Center" />
+            <Button Content="עדכון יחידות" Style="{StaticResource myButton}" VerticalAlignment="Center"/>
+        </StackPanel>
+        <Frame x:Name="view" Style="{StaticResource myFrame}" Grid.Column="1"/>
+        <Button Content="Button" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center"   Width="75" Margin="248.8,418,249,0" Click="Button_Click"/>
+
+
+
+    </Grid>
+</Page>

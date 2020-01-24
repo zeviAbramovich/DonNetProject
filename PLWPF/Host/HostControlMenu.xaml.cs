@@ -56,19 +56,16 @@ namespace PLWPF
                 hostIdTextBox.Clear();
             }
             
-            NavigationService login = NavigationService.GetNavigationService(this);
-            login.Navigate(new MainMenu());
-            login.Navigate(new HostManagePage());
-            
+          
 
+
+            MainWindow.GetParent<Page>(this).NavigationService.Navigate(new HostManagePage());
         }
 
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
-            //NavigationService back = NavigationService.GetNavigationService(this);
-            //back.Navigate()
+            MainWindow.GetParent<Page>(this).NavigationService.Navigate(new MainMenu());
         }
     }
 }

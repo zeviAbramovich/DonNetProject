@@ -8,7 +8,7 @@ namespace BE
 {
     public enum StatusOrder
     {
-        NotYetApproved=1, MailSent, CustomerUnresponsiveness, CustomerResponsiveness ,RequestChanged
+        NotYetApproved, MailSent, CustomerUnresponsiveness, CustomerResponsiveness ,RequestChanged
     }
 
     public enum StatusGuest

@@ -5,8 +5,20 @@
              xmlns:local="clr-namespace:PLWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
         <ResourceDictionary>
+            <Style x:Key="myButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+                <Setter Property="BorderBrush" Value="Beige" />
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Height" Value="75"/>
+                <Setter Property="Margin" Value="0,10,0,0"/>
+            </Style>
+            <Style x:Key="myFrame" TargetType="Frame">
+                <Setter Property="BorderBrush" Value="Beige" />
+            </Style>
             <ResourceDictionary.MergedDictionaries>
+
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />

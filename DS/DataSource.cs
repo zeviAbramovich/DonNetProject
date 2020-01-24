@@ -18,8 +18,8 @@ namespace DS
                     Pool = true, Jacuzzi =true,ChildrensAttractions = true,
                     Owner = new Host()
                     {
-                          HostId = 313583460,
-                          Password="A1234",
+                          HostId = 1,
+                          Password="1",
                           PrivateName = "Zeev",
                           FamilyName = "Abra",
                           MailAddress = "zevi3190@gmail.com",
@@ -63,7 +63,16 @@ namespace DS
                      }
                  }
         };
-        public static List<Order> orders = new List<Order> { };
+        public static List<Order> orders = new List<Order> {
+            new Order
+            {
+                Status = StatusOrder.MailSent, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10000000, GuestRequestKey=10000000, OrderDate= DateTime.Now, OrderKey= 10002100
+            },
+            new Order
+            {
+                Status = StatusOrder.NotYetApproved, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10022000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10102100
+            }
+            };
         public static List<GuestRequest> guestRequests = new List<GuestRequest> { };
         public static List<Host> hosts = new List<Host> { };
     }

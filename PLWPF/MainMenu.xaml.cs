@@ -22,6 +22,7 @@ namespace PLWPF
     /// </summary>
     public partial class MainMenu : Page
     {
+
         public MainMenu()
         {
             InitializeComponent();
@@ -29,14 +30,21 @@ namespace PLWPF
 
         private void Host_Button(object sender, RoutedEventArgs e)
         {
-            NavigationService service = NavigationService.GetNavigationService(this);
-            service.Navigate(new HostControlMenu());
+            Page host = new HostControlMenu();
+            view.Refresh();
+            view.Navigate(host);
+           
+            //Grid.SetColumn(host, 1);
         }
 
         private void Guest_Click(object sender, RoutedEventArgs e)
         {
+            
+            //Page guest = new GuestControlMenu();
+            //full_screen.Refresh();
+            //full_screen.Navigate(guest);
             NavigationService service = NavigationService.GetNavigationService(this);
-            service.Navigate(new HostControlMenu());
+            service.Navigate(new GuestControlMenu());
         }
     }
 }

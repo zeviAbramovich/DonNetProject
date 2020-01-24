@@ -9,22 +9,30 @@
    
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainMenu">
+    <Page.Resources>
+        <Style x:Key="myButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+            <Setter Property="BorderBrush" Value="Beige" />
+            <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>
+        </Style>
+    </Page.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+        <Grid.ColumnDefinitions>    
+            <ColumnDefinition Width="111*"/>
+
+
+            <ColumnDefinition Width="289*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel  HorizontalAlignment="Left" Height="394" Margin="11,28,0,0" VerticalAlignment="Top" Width="236">
-            <Button BorderBrush="Beige" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
-                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מארח"  Margin="43,15" Click="Host_Button"  />
-            <Button BorderBrush="Beige" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
-                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="אורח"  Margin="43,15" Click="Guest_Click"   />
-            <Button BorderBrush="Beige" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
-                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מנהל מערכת" Margin="43,15" />
+        <Frame Grid.ColumnSpan="2" x:Name="full_screen" HorizontalAlignment="Stretch"  />
+        <StackPanel  HorizontalAlignment="Left" Height="394" Margin="21,34,0,22" VerticalAlignment="Stretch" Width="179">
+            <Button x:Name="myButton" BorderBrush="Beige" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מארח"  Margin="15,15,14.2,15" Click="Host_Button"  />
+            <Button  Style="{StaticResource myButton}" Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="אורח"  Margin="13,15,16.2,15" Click="Guest_Click"   />
+            <Button BorderBrush="Beige" Style="{StaticResource myButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מנהל מערכת" Margin="11,15,18.2,15" />
         </StackPanel>
-        <Frame x:Name="view" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" />
+        <Frame x:Name="view" HorizontalAlignment="Stretch" Margin="1,0,0,0" Grid.Column="1" />
 
     </Grid>
 </Page>

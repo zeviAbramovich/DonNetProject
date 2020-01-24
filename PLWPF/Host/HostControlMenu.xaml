@@ -1,0 +1,112 @@
+﻿<Page           
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    
+             xmlns:local="clr-namespace:PLWPF"
+             xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.HostControlMenu"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded" Height="600" Width="400">
+    <Page.Resources>
+        <CollectionViewSource x:Key="hostViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Host}, CreateList=True}"/>
+
+    </Page.Resources>
+
+
+    <Grid x:Name="tb_User_Password" VerticalAlignment="Stretch" HorizontalAlignment="Center" DataContext="{StaticResource hostViewSource}" Width="400" Height="600">
+
+        <!--<Label FontSize="16" VerticalAlignment="Center" Grid.Row="0" Margin="3,8,16,8" HorizontalAlignment="Center" Content=":תעודת זהות" Grid.Column="1" Height="32" Width="110" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="hostIdTextBox" Width="120" materialDesign:HintAssist.Hint="תעודת זהות"  VerticalAlignment="Center" Text="{Binding HostId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3,8,0,16" Height="24" HorizontalAlignment="Left" Grid.Column="0"/>
+        <Label FontStretch="Condensed" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontSize="16" Grid.Row="1"  HorizontalAlignment="Stretch" Content=":סיסמה" Grid.Column="1" Margin="22,8,11,5" Grid.ColumnSpan="2" ></Label>
+        <PasswordBox x:Name="passwordTextBox" Width="120" materialDesign:HintAssist.Hint="Password" materialDesign:TextFieldAssist.HasClearButton="True" materialDesign:HintAssist.HelperText="At least 8 characters" VerticalAlignment="Center"  Grid.Row="1" Margin="6,15,17,5" Height="22" HorizontalAlignment="Center" Grid.Column="0"/>-->
+
+
+        <StackPanel VerticalAlignment="Center">
+            <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Width="170" BorderThickness="0" >
+                <materialDesign:Flipper.FrontContent>
+                    <Button
+                     VerticalAlignment="Top"
+      Style="{StaticResource myButton}"
+                    
+      Command="{x:Static materialDesign:Flipper.FlipCommand}"
+     Margin="8" Width="150" >
+                        משתמש קיים
+                    </Button>
+                </materialDesign:Flipper.FrontContent>
+                <materialDesign:Flipper.BackContent>
+                    <Grid
+     Height="200" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone
+        Mode="Accent"
+        Padding="6">
+                            <StackPanel
+          Orientation="Horizontal">
+                                <Button
+            Style="{StaticResource MaterialDesignToolForegroundButton}"
+            Command="{x:Static materialDesign:Flipper.FlipCommand}"
+            HorizontalAlignment="Left">
+                                    <materialDesign:PackIcon
+              Kind="ArrowLeft"
+              HorizontalAlignment="Right" />
+                                </Button>
+                                <TextBlock
+            
+            VerticalAlignment="Center">
+          כניסת משתמש
+                                </TextBlock>
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+                        <Grid
+        Grid.Row="1"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Top"
+        Width="150">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBox x:Name="hostIdTextBox"
+          materialDesign:HintAssist.Hint="תעודת זהות"
+          materialDesign:HintAssist.IsFloating="True"
+           Text="{Binding HostId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+
+                            </TextBox>
+                            <PasswordBox x:Name="passwordTextBox"
+          Grid.Row="1"
+          materialDesign:HintAssist.Hint="סיסמה"
+          materialDesign:HintAssist.IsFloating="True"
+          >
+
+                            </PasswordBox>
+                            <StackPanel
+          Grid.Row="2"
+          Orientation="Horizontal"
+         
+          HorizontalAlignment="Stretch">
+
+                                <Button Content="התחברות" HorizontalAlignment="Stretch" Style="{StaticResource myButton}" Height="30"   VerticalAlignment="Center"  Click="Login_Click"  />
+                            </StackPanel>
+                           
+                        </Grid>
+                    </Grid>
+                </materialDesign:Flipper.BackContent>
+            </materialDesign:Flipper>
+            <Button Content="משתמש חדש" Grid.Row="1"  Style="{StaticResource myButton}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="75,5.8,75,2.8" />
+
+            <Button
+    Style="{StaticResource myButton}"
+    ToolTip="MaterialDesignFlatButton" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="2" Click="Back_Click" Margin="75,5.2,75,3">
+                Back
+            </Button>
+                   </StackPanel>
+    </Grid>
+
+</Page>
