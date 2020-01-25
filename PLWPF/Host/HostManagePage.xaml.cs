@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PLWPF.Host;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,15 +21,21 @@ namespace PLWPF
     /// </summary>
     public partial class HostManagePage : Page
     {
+        public long currentId { get; set; }
         public HostManagePage()
         {
             InitializeComponent();
         }
 
+        public HostManagePage(long hostId)
+        {
+            InitializeComponent();
+            currentId = hostId;
+        }
         private void Exist_Orders(object sender, RoutedEventArgs e)
         {
 
-            view.Navigate(new ExistOrders());
+            view.Navigate(new ExistOrders(currentId));
                 
 
         }
@@ -40,7 +47,7 @@ namespace PLWPF
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            view.NavigationService.Navigate(new UnitsPage(currentId));
         }
     }
 }

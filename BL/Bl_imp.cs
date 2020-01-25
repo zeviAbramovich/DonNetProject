@@ -427,8 +427,40 @@ namespace BL
             return guestRequests;
         }
 
-
-
+        /// <summary>
+        /// get all the orders of the giving host key
+        /// </summary>
+        /// <param name="hostkey"></param>
+        /// <returns>list<order></returns>
+       public List<Order> GetAllHostOrders(long hostkey)
+        {
+            List<Order> orders = new List<Order>();
+            var v = from item in GetAllOrders()
+                    where item.OrderKey == hostkey
+                    select item;
+            foreach (var item in v)
+            {
+                orders.Add(item);
+            }
+            return orders;
+        }
+        /// <summary>
+        /// get all the units belong to the host
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>list<HostingUnit></returns>
+        public List<HostingUnit> GetAllHostUnits(long key)
+        {
+            List<HostingUnit> units = new List<HostingUnit>();
+            var v = from item in GetAllHostingUnit()
+                    where item.Owner.HostId == key
+                    select item;
+            foreach (var item in v)
+            {
+                units.Add(item);
+            }
+            return units;
+        }
         #endregion
 
         #region SpecialDemands

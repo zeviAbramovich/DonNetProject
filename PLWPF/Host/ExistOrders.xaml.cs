@@ -23,7 +23,8 @@ namespace PLWPF
     /// </summary>
     public partial class ExistOrders : Page
     {
-        List<Order> orders = BL.FactoryMethode.GetBL().GetAllOrders();
+        public long currentId { get; set; }
+        List<Order> orders = new List<Order>();
         public ExistOrders()
         {
             InitializeComponent();
@@ -32,8 +33,17 @@ namespace PLWPF
            
         }
 
-        
-
+        public ExistOrders(long id)
+        {
+            InitializeComponent();
+            currentId = id;
+            orders=BL.FactoryMethode.GetBL().GetAllHostOrders(currentId);
+        }
+        /// <summary>
+        /// catch the current order
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 

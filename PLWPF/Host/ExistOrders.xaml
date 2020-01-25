@@ -14,21 +14,14 @@
         
     </Page.Resources>
 
-    <Grid DataContext="{StaticResource orderViewSource}" Cursor="None" >
-        <ListView x:Name="orderListView" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"    SelectionMode="Single"  Cursor="Hand" >
+    <Grid DataContext="{StaticResource orderViewSource}" Cursor="None" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,97,0,303">
+        <ListView x:Name="orderListView" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"    SelectionMode="Single"  Cursor="Hand" IsTextSearchCaseSensitive="True" >
             <ListView.FocusVisualStyle>
                 <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}"/>
             </ListView.FocusVisualStyle>
             <ListView.Effect>
                 <DropShadowEffect RenderingBias="Quality"/>
             </ListView.Effect>
-           
-            <ListView.ItemContainerStyle>
-               
-                <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown"/>
-                </Style>
-            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn x:Name="commisionColumn" Header="commision"  Width="Auto">

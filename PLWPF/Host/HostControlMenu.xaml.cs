@@ -56,7 +56,7 @@ namespace PLWPF
                 hostIdTextBox.Clear();
             }
             
-            MainWindow.GetParent<Page>(this).NavigationService.Navigate(new HostManagePage());
+            MainWindow.GetParent<Page>(this).NavigationService.Navigate(new HostManagePage(id));
         }
 
 

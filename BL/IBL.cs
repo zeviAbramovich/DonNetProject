@@ -38,6 +38,9 @@ namespace BL
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
+        List<Order> GetAllHostOrders(long key);
+        List<HostingUnit> GetAllHostUnits(long key);
+       
 
         IEnumerable<IGrouping<Area, GuestRequest>> GetAllGuestRequestByArea(IEnumerable<GuestRequest> guestRequests);
         IEnumerable<IGrouping<int, GuestRequest>> GetAllGuestRequestByNumRelax(IEnumerable<GuestRequest> guestRequests);
