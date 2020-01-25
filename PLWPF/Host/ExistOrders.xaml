@@ -11,10 +11,14 @@
 
     <Page.Resources>
         <CollectionViewSource  x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
+        
     </Page.Resources>
 
-    <Grid DataContext="{StaticResource orderViewSource}" >
-        <ListView x:Name="orderListView" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige"   ItemsSource="{Binding}" SelectionMode="Single" Margin="30,42,39,40" Cursor="Hand">
+    <Grid DataContext="{StaticResource orderViewSource}" Cursor="None" >
+        <ListView x:Name="orderListView" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"   ItemsSource="{Binding}" SelectionMode="Single"  Cursor="Hand" SelectionChanged="orderListView_SelectionChanged">
+            <ListView.FocusVisualStyle>
+                <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}"/>
+            </ListView.FocusVisualStyle>
             <ListView.Effect>
                 <DropShadowEffect RenderingBias="Quality"/>
             </ListView.Effect>
@@ -27,52 +31,52 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="commisionColumn" Header="commision" Width="102">
+                    <GridViewColumn x:Name="commisionColumn" Header="commision"  Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Content="{Binding commision}" />
+                                <TextBlock Text="{Binding commision}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="createDateColumn" Header="Create Date" Width="102">
+                    <GridViewColumn x:Name="createDateColumn" Header="Create Date"  Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker Margin="-6,-1" IsEnabled="False" SelectedDate="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                <TextBlock Margin="-6,-1"   Width="Auto" IsEnabled="False" Text="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="102">
+                    <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key"  Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding GuestRequestKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                <TextBlock Margin="-6,-1" Width="Auto" Text="{Binding GuestRequestKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="102">
+                    <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding HostingUnitKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                <TextBlock Margin="-6,-1"  Width="Auto" Text="{Binding HostingUnitKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="orderDateColumn" Header="Order Date" Width="102">
+                    <GridViewColumn x:Name="orderDateColumn" Header="Order Date"  Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker Margin="-6,-1" SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                <TextBlock   Width="Auto" Text="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="orderKeyColumn" Header="Order Key" Width="102">
+                    <GridViewColumn x:Name="orderKeyColumn" Header="Order Key"  Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Content="{Binding OrderKey}" Margin="-6,-1"/>
+                                <TextBlock Text="{Binding OrderKey}" Margin="-6,-1" Width="Auto"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="statusColumn" Header="Status" Width="102">
+                    <GridViewColumn x:Name="statusColumn" Header="Status" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Content="{Binding Status}" Margin="-6,-1"/>
+                                <TextBlock Text="{Binding Status}" Margin="-6,-1"  Width="Auto"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

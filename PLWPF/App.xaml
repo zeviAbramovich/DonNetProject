@@ -17,6 +17,11 @@
             <Style x:Key="myFrame" TargetType="Frame">
                 <Setter Property="BorderBrush" Value="Beige" />
             </Style>
+            <Style x:Key="buttonStack" TargetType="StackPanel" >
+                <Setter Property="Margin" Value="21,34,0,34"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="Height" Value="400"/>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

@@ -10,30 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BE;
 
-namespace PLWPF
+namespace PLWPF.Host
 {
     /// <summary>
-    /// Interaction logic for ExistOrders.xaml
+    /// Interaction logic for OrderReview.xaml
     /// </summary>
-    public partial class ExistOrders : Page
+    public partial class OrderReview : Page
     {
-        List<Order> orders = BL.FactoryMethode.GetBL().GetAllOrders();
-        public ExistOrders()
+        Order viewOrder = new Order();
+        public OrderReview()
         {
             InitializeComponent();
-
-            orderListView.ItemsSource = orders;
-           
         }
-
-        private void orderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public OrderReview(Order order)
         {
-
-            
+            viewOrder = BL.FactoryMethode.GetBL().GetOrder(order.GuestRequestKey);
+            InitializeComponent();
         }
+
+
     }
 }
