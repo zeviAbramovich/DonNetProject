@@ -20,7 +20,7 @@
             <Style x:Key="buttonStack" TargetType="StackPanel" >
                 <Setter Property="Margin" Value="21,34,0,34"/>
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
-                <Setter Property="Height" Value="400"/>
+                <Setter Property="Height" Value="500"/>
             </Style>
             <ResourceDictionary.MergedDictionaries>
 

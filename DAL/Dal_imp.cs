@@ -244,9 +244,9 @@ namespace DAL
         public Order GetOrder(long key)
         {
             Order tempOrder = DataSource.orders.FirstOrDefault(x => x.OrderKey == key);
-            Order order = tempOrder.Clone();
-            if (order == null)
+            if (tempOrder == null)
                 throw new MissingMemberException("did not find order");
+            Order order = tempOrder.Clone();
             return order;
         }
 

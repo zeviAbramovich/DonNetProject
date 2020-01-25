@@ -37,5 +37,10 @@ namespace PLWPF
         {
             this.NavigationService.Navigate(new MainMenu());
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

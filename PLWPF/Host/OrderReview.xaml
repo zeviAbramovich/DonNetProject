@@ -16,9 +16,14 @@
     <Page.Resources>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
     </Page.Resources>
-    <Grid>
 
-        <Grid x:Name="grid1" VerticalAlignment="Center"  HorizontalAlignment="Center" DataContext="{StaticResource orderViewSource}">
+
+    <Grid>
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="9,2,-7,0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions> 
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -28,24 +33,20 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="commision:"/>
-            <TextBlock x:Name="commisionTextBlock" IsEnabled="False" VerticalAlignment="Center" Text="{Binding commision}" Grid.Row="0" Margin="3" HorizontalAlignment="Center" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Create Date:"/>
-            <TextBlock x:Name="createDateTextBlock" IsEnabled="False" VerticalAlignment="Center" Text="{Binding CreateDate}" Grid.Row="1" Margin="3" HorizontalAlignment="Center" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Guest Request Key:"/>
-            <TextBlock x:Name="guestRequestKeyTextBlock" IsEnabled="False" VerticalAlignment="Center" Text="{Binding GuestRequestKey}" Grid.Row="2" Margin="3" HorizontalAlignment="Center" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Key:"/>
-            <TextBlock x:Name="hostingUnitKeyTextBlock" IsEnabled="False" VerticalAlignment="Center" Text="{Binding HostingUnitKey}" Grid.Row="3" Margin="3" HorizontalAlignment="Center" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Order Date:"/>
-            <TextBlock x:Name="orderDateTextBlock" VerticalAlignment="Center" IsEnabled="False" Text="{Binding OrderDate}" Grid.Row="4" Margin="3" HorizontalAlignment="Center" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Order Key:"/>
-            <TextBlock x:Name="orderKeyLabel" VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Center" Grid.Column="1" Text="{Binding OrderKey}"/>
-            <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Status:"/>
-            <ComboBox x:Name="statusComboBox" Width="120" VerticalAlignment="Center" Grid.Row="6" Margin="3" ItemsSource="{Binding Status}" Height="Auto" HorizontalAlignment="Center" DisplayMemberPath="Status" Grid.Column="1">
+            <Label Content="commision:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="commisionTextBlock" Grid.Column="1"  HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding commision}" VerticalAlignment="Center" Foreground="#DDF3EAEA"/>
+            <Label Content="Create Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBlock x:Name="createDateTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding CreateDate}" VerticalAlignment="Center"/>
+            <Label Content="Guest Request Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBlock x:Name="guestRequestKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" Text="{Binding GuestRequestKey}" VerticalAlignment="Center"/>
+            <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBlock x:Name="hostingUnitKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" Text="{Binding HostingUnitKey}" VerticalAlignment="Center"/>
+            <Label Content="Order Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBlock x:Name="orderDateTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" Text="{Binding OrderDate}" VerticalAlignment="Center"/>
+            <Label Content="Order Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <Label x:Name="orderKeyLabel" Content="{Binding OrderKey}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+            <ComboBox x:Name="statusComboBox" Grid.Column="1" DisplayMemberPath="Status" HorizontalAlignment="Left" Height="Auto"  Margin="3" Grid.Row="6" VerticalAlignment="Center" Width="120">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>

@@ -15,18 +15,18 @@
     </Page.Resources>
 
     <Grid DataContext="{StaticResource orderViewSource}" Cursor="None" >
-        <ListView x:Name="orderListView" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"   ItemsSource="{Binding}" SelectionMode="Single"  Cursor="Hand" SelectionChanged="orderListView_SelectionChanged">
+        <ListView x:Name="orderListView" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"    SelectionMode="Single"  Cursor="Hand" >
             <ListView.FocusVisualStyle>
                 <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}"/>
             </ListView.FocusVisualStyle>
             <ListView.Effect>
                 <DropShadowEffect RenderingBias="Quality"/>
             </ListView.Effect>
+           
             <ListView.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Typography.StylisticSet1" Value="True" />
-                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+               
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown"/>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>

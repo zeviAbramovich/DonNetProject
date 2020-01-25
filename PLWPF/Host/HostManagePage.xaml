@@ -8,7 +8,7 @@
       xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.HostManagePage"
       mc:Ignorable="d" 
      x:Name="hostmanage"
-      Title="HostManagePage" d:DesignWidth="800" d:DesignHeight="450">
+      Title="HostManagePage" d:DesignWidth="800" d:DesignHeight="550">
 
     <Page.Resources>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
@@ -19,9 +19,9 @@
             <ColumnDefinition Width="25*" />
             <ColumnDefinition Width="63*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="_buttons" Style="{StaticResource buttonStack}" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <StackPanel x:Name="_buttons" Style="{StaticResource buttonStack}" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Stretch">
             <Button  Content="הזמנות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" Click="Exist_Orders" />
-            <Button Content="יחידות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" />
+            <Button Content="יחידות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" Click="Button_Click_1" />
             <Button Content="הוספת יחידות" Style="{StaticResource myButton}"  VerticalAlignment="Center"/>
             <Button Content="עדכון הזמנות" Style="{StaticResource myButton}"  VerticalAlignment="Center" />
             <Button Content="עדכון יחידות" Style="{StaticResource myButton}" VerticalAlignment="Center"/>

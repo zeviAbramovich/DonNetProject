@@ -24,11 +24,15 @@ namespace PLWPF.Host
         public OrderReview()
         {
             InitializeComponent();
+            grid1.DataContext = viewOrder;
         }
         public OrderReview(Order order)
         {
-            viewOrder = BL.FactoryMethode.GetBL().GetOrder(order.GuestRequestKey);
+
             InitializeComponent();
+            viewOrder = BL.FactoryMethode.GetBL().GetOrder(order.OrderKey);
+            grid1.DataContext = viewOrder;
+
         }
 
 
