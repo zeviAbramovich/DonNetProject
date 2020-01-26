@@ -28,13 +28,16 @@ namespace PLWPF.Host
         }
         public OrderReview(Order order)
         {
-
             InitializeComponent();
             viewOrder = BL.FactoryMethode.GetBL().GetOrder(order.OrderKey);
             grid1.DataContext = viewOrder;
-
+            statusComboBox.ItemsSource = Enum.GetValues(typeof(BE.StatusOrder));
+            statusComboBox.Text = order.Status.ToString();
         }
 
-
+        private void statusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
     }
 }

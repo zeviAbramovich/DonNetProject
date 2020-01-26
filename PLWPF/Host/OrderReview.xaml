@@ -46,12 +46,8 @@
             <Label Content="Order Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
             <Label x:Name="orderKeyLabel" Content="{Binding OrderKey}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
             <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-            <ComboBox x:Name="statusComboBox" Grid.Column="1" DisplayMemberPath="Status" HorizontalAlignment="Left" Height="Auto"  Margin="3" Grid.Row="6" VerticalAlignment="Center" Width="120">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel/>
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
+            <ComboBox x:Name="statusComboBox" Grid.Column="1"  HorizontalAlignment="Left" Height="Auto"  SelectedItem="{Binding Status}"
+                      Margin="3" Grid.Row="6" VerticalAlignment="Center" Width="120" SelectionChanged ="statusComboBox_SelectionChanged"  Foreground="#DDFFFFFF">
             </ComboBox>
         </Grid>
 
