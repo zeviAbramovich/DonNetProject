@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BE;
+using System.Net.Mail;
 
 namespace PLWPF.Host
 {
@@ -33,11 +34,24 @@ namespace PLWPF.Host
             grid1.DataContext = viewOrder;
             statusComboBox.ItemsSource = Enum.GetValues(typeof(BE.StatusOrder));
             statusComboBox.Text = order.Status.ToString();
+            
         }
 
-        private void statusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void confirmation_Click(object sender, RoutedEventArgs e)
         {
-            
+            viewOrder.Status = (BE.StatusOrder)Enum.Parse(typeof(BE.StatusOrder), statusComboBox.SelectedItem.ToString());
+
+            try
+            {
+                BL.FactoryMethode.GetBL().UpdateOrder(viewOrder);
+
+            }
+            catch (CannotUpdateException cue)
+            {
+                System.Windows.Forms.MessageBox.Show(cue.Message,"Error!",System.Windows.Forms.MessageBoxButtons.OK);
+
+            }
+
         }
     }
 }

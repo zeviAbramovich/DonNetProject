@@ -32,6 +32,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <Label Content="commision:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
             <TextBlock x:Name="commisionTextBlock" Grid.Column="1"  HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding commision}" VerticalAlignment="Center" Foreground="#DDF3EAEA"/>
@@ -49,6 +50,7 @@
             <ComboBox x:Name="statusComboBox" Grid.Column="1"  HorizontalAlignment="Left" Height="Auto"  SelectedItem="{Binding Status}"
                       Margin="3" Grid.Row="6" VerticalAlignment="Center" Width="120" SelectionChanged ="statusComboBox_SelectionChanged"  Foreground="#DDFFFFFF">
             </ComboBox>
+            <Button x:Name="confirmation" Content="אישור" Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource myButton}" Height="20" Width="90" Margin="56,5.4,55.6,4.6" Click="confirmation_Click" />
         </Grid>
 
     </Grid>
