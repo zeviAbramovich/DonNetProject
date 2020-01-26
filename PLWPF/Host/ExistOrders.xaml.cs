@@ -37,19 +37,22 @@ namespace PLWPF
             currentId = id;
             orders=BL.FactoryMethode.GetBL().GetAllHostOrders(currentId);
             orderListView.ItemsSource = orders;
-
         }
+
+        private void orderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {           
+            var whatever = orderListView.SelectedItem as Order;
+            OrderReview review = new OrderReview(whatever);
+            this.NavigationService.Navigate(review);
+        }
+      
         /// <summary>
         /// catch the current order
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        
-        private void orderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var order = orderListView.SelectedItem as Order;
-            OrderReview review = new OrderReview(order);
-            this.NavigationService.Navigate(review);
-        }
+        /// 
+
+
     }
 }
