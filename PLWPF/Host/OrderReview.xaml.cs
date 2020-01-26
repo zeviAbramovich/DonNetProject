@@ -25,16 +25,38 @@ namespace PLWPF.Host
         {
             InitializeComponent();
             grid1.DataContext = viewOrder;
+            
         }
         public OrderReview(Order order)
         {
-
+            
             InitializeComponent();
             viewOrder = BL.FactoryMethode.GetBL().GetOrder(order.OrderKey);
             grid1.DataContext = viewOrder;
+            statusComboBox.ItemsSource = Enum.GetValues(typeof(BE.StatusOrder));
+            statusComboBox.Text = order.Status.ToString();
+            
 
         }
 
+        //private void statusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    confirm.IsEnabled = true;
 
+        //}
+
+        //private void confirm_Click(object sender, RoutedEventArgs e)
+        //{
+        //    viewOrder.Status = (BE.StatusOrder)statusComboBox.SelectedValue;
+        //    try
+        //    {
+        //        BL.FactoryMethode.GetBL().UpdateOrder(viewOrder);
+        //    }
+        //    catch (CannotUpdateException cue)
+        //    {
+        //        System.Windows.Forms.MessageBox.Show(cue.Message);
+        //        this.NavigationService.Navigate(new ExistOrders(1));
+        //    }
+        //}
     }
 }

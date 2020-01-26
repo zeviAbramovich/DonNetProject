@@ -22,6 +22,7 @@
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="Height" Value="500"/>
             </Style>
+            <Color x:Key="myLabecolor">#DDFFFFFF</Color>
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
