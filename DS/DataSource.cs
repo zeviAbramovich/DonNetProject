@@ -70,7 +70,7 @@ namespace DS
             },
             new Order
             {
-                Status = StatusOrder.NotYetApproved, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10022000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10102100
+                Status = StatusOrder.NotYetApproved, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10102100
             }
             };
         public static List<GuestRequest> guestRequests = new List<GuestRequest> { };

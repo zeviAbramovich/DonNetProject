@@ -435,9 +435,11 @@ namespace BL
        public List<Order> GetAllHostOrders(long hostkey)
         {
             List<Order> orders = new List<Order>();
-            var v = from item in GetAllOrders()
-                    where item.OrderKey == hostkey
-                    select item;
+            var v = from itemOrder in GetAllOrders()
+                    from itemUnit in GetAllHostingUnit()                   
+                    where itemUnit.Owner.HostId==hostkey
+                    where itemOrder.HostingUnitKey == itemUnit.HostingUnitKey
+                    select itemOrder;
             foreach (var item in v)
             {
                 orders.Add(item);

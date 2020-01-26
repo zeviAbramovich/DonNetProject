@@ -34,10 +34,7 @@ namespace PLWPF
         }
         private void Exist_Orders(object sender, RoutedEventArgs e)
         {
-
-            view.Navigate(new ExistOrders(currentId));
-                
-
+            view.Navigate(new ExistOrders(currentId));                
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

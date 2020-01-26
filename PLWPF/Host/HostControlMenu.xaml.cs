@@ -54,11 +54,9 @@ namespace PLWPF
             {
                 MessageBox.Show("Wrong ID or Password");
                 hostIdTextBox.Clear();
-            }
-            
+            }            
             MainWindow.GetParent<Page>(this).NavigationService.Navigate(new HostManagePage(id));
         }
-
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
