@@ -276,8 +276,7 @@ namespace BL
             if (orderUpdate.Status == StatusOrder.MailSent)
             {
                 orderUpdate.Status = StatusOrder.MailSent;
-                dal.UpdateOrder(orderUpdate);
-                Console.WriteLine("mail sent\n");
+                dal.UpdateOrder(orderUpdate);         
                 return true;
             }
             //if the change I made is that the customer has closed the deal because he wants to
