@@ -48,7 +48,7 @@
             <Label x:Name="orderKeyLabel" Content="{Binding OrderKey}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
             <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
             <ComboBox x:Name="statusComboBox" Grid.Column="1"  HorizontalAlignment="Left" Height="Auto"  SelectedItem="{Binding Status}"
-                      Margin="3" Grid.Row="6" VerticalAlignment="Center" Width="120"   Foreground="#DDFFFFFF">
+                      Margin="3" Grid.Row="6" VerticalAlignment="Center" Width="120"  Foreground="#DDFFFFFF">
             </ComboBox>
             <Button x:Name="confirmation" Content="אישור" Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource myButton}" Height="20" Width="90" Margin="56,5.4,55.6,4.6" Click="confirmation_Click" />
         </Grid>

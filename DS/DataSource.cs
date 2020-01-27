@@ -66,14 +66,20 @@ namespace DS
         public static List<Order> orders = new List<Order> {
             new Order
             {
-                Status = StatusOrder.MailSent, CreateDate= DateTime.Now, Commision=0, HostingUnitKey=10000000, GuestRequestKey=10000000, OrderDate= DateTime.Now, OrderKey= 10002100
+                Status = StatusOrder.MailSent, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10002100
             },
             new Order
             {
-                Status = StatusOrder.NotYetApproved, CreateDate= DateTime.Now, Commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10102100
+                Status = StatusOrder.NotYetApproved, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10102100
             }
             };
-        public static List<GuestRequest> guestRequests = new List<GuestRequest> { };
+        public static List<GuestRequest> guestRequests = new List<GuestRequest>
+        {
+            new GuestRequest
+            {
+                 GuestRequestKey=10220000, PrivateName = "zevush", MailAddress="zevi3190@gmail.com", Status= StatusGuest.Open, EntryDate=DateTime.Parse("11/11/2019"), ReleaseDate=DateTime.Parse("20/11/2019")
+            } 
+        };
         public static List<Host> hosts = new List<Host> { };
     }
 }

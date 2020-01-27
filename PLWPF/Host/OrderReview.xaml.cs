@@ -36,22 +36,55 @@ namespace PLWPF.Host
             statusComboBox.Text = order.Status.ToString();
             
         }
-
         private void confirmation_Click(object sender, RoutedEventArgs e)
         {
-            viewOrder.Status = (BE.StatusOrder)Enum.Parse(typeof(BE.StatusOrder), statusComboBox.SelectedItem.ToString());
-
-            try
+            if ((StatusOrder)statusComboBox.SelectedItem == StatusOrder.MailSent)
             {
-                BL.FactoryMethode.GetBL().UpdateOrder(viewOrder);
+                viewOrder.Status = (BE.StatusOrder)Enum.Parse(typeof(BE.StatusOrder), statusComboBox.SelectedItem.ToString());
 
+                try
+                {
+                    BL.FactoryMethode.GetBL().UpdateOrder(viewOrder);
+                    GuestRequest cliant = BL.FactoryMethode.GetBL().GetGuestRequest(viewOrder.GuestRequestKey);
+                    HostingUnit unit = BL.FactoryMethode.GetBL().GetUnit(viewOrder.HostingUnitKey);
+                    MailMessage mail = new MailMessage();
+                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+
+                    mail.From = new MailAddress("gooking69770@gmail.com");
+                    mail.To.Add(cliant.MailAddress);
+                    mail.Subject = "We have good news for you!!";
+                    mail.Body = string.Format("Hello {0}!\nwe have new offer for your vecation\n{1}\n Please contact the owner for continue your reservation.", cliant.PrivateName, unit.ToString());
+
+                    smtpClient.Port = 587;
+                    smtpClient.Credentials = new System.Net.NetworkCredential("gooking69770", "Zevi1234");
+                    smtpClient.EnableSsl = true;
+
+                    smtpClient.Send(mail);
+                    System.Windows.Forms.MessageBox.Show("mail sent");
+                }
+                catch (CannotUpdateException cue)
+                {
+                    System.Windows.Forms.MessageBox.Show(cue.Message, "Error!", System.Windows.Forms.MessageBoxButtons.OK);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
-            catch (CannotUpdateException cue)
-            {
-                System.Windows.Forms.MessageBox.Show(cue.Message,"Error!",System.Windows.Forms.MessageBoxButtons.OK);
-
+            else
+            { 
+                viewOrder.Status = (BE.StatusOrder)Enum.Parse(typeof(BE.StatusOrder), statusComboBox.SelectedItem.ToString());
+                try
+                {
+                    BL.FactoryMethode.GetBL().UpdateOrder(viewOrder);
+                    MessageBox.Show("not");
+                }
+                catch (CannotUpdateException me)
+                {
+                    MessageBox.Show(me.Message);
+                }
             }
-
         }
     }
 }
