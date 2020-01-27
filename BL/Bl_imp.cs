@@ -283,7 +283,7 @@ namespace BL
             //if the change I made is that the customer has closed the deal because he wants to
             if (orderUpdate.Status == StatusOrder.CustomerResponsiveness)
             {
-                orderUpdate.commision = Configuration.commision * SumDays(request.EntryDate, request.ReleaseDate);
+                orderUpdate.Commision = Configuration.commision * SumDays(request.EntryDate, request.ReleaseDate);
                 request.Status = StatusGuest.ClosesBySite;//מעדכן בקשה נסגרה כי הלקוח רצה
                 for (DateTime date = request.EntryDate; date < request.ReleaseDate; date = date.AddDays(1))
                     unit.Diary[date.Month, date.Day] = true;//מעדכן את המטריצה בימים שהלקוח רצה              
