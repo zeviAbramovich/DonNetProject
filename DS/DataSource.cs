@@ -66,11 +66,11 @@ namespace DS
         public static List<Order> orders = new List<Order> {
             new Order
             {
-                Status = StatusOrder.MailSent, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10002100
+                Status = StatusOrder.MailSent, CreateDate= DateTime.Now, Commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10002100
             },
             new Order
             {
-                Status = StatusOrder.NotYetApproved, CreateDate= DateTime.Now, commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10102100
+                Status = StatusOrder.NotYetApproved, CreateDate= DateTime.Now, Commision=0, HostingUnitKey=10000000, GuestRequestKey=10220000, OrderDate= DateTime.Now, OrderKey= 10102100
             }
             };
         public static List<GuestRequest> guestRequests = new List<GuestRequest>

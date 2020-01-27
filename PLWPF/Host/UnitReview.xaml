@@ -1,0 +1,79 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PLWPF.Host"
+      xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.Host.UnitReview"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UnitReview">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid x:Name="grid1" VerticalAlignment="Center"  HorizontalAlignment="Center" DataContext="{StaticResource hostingUnitViewSource}" FlowDirection="RightToLeft">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="מבוגרים:"/>
+            <TextBlock x:Name="adultsTextBlock" VerticalAlignment="Center" Text="{Binding Adults}" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
+            <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="אזור:"/>
+            <ComboBox x:Name="areaComboBox" Width="120" SelectedItem="{Binding Area}" VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="Area" Grid.Column="1"  Foreground="#DDFFFFFF">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="ילדים:"/>
+            <TextBlock x:Name="childrenTextBlock" VerticalAlignment="Center" Text="{Binding Children}" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
+            <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="אטרקציות לילדים:"/>
+            <CheckBox x:Name="childrensAttractionsCheckBox" VerticalAlignment="Center" Grid.Row="10" Margin="3" IsChecked="{Binding ChildrensAttractions, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
+            <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="גינה:"/>
+            <CheckBox x:Name="gardenCheckBox" VerticalAlignment="Center" Grid.Row="7" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
+            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סוג היחידה:"/>
+            <ComboBox x:Name="hostingTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3" SelectedItem="{Binding HostingType}"  Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="HostingType" Grid.Column="1" Foreground="#DDFFFFFF">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="מספר יחידה:"/>
+            <Label x:Name="hostingUnitKeyLabel" VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Content="{Binding HostingUnitKey}"/>
+            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="שם היחידה:"/>
+            <TextBox x:Name="hostingUnitNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
+            <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="ג'קוזי:"/>
+            <CheckBox x:Name="jacuzziCheckBox" VerticalAlignment="Center" Grid.Row="8" Margin="3" IsChecked="{Binding Jacuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
+            <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="בריכה:"/>
+            <CheckBox x:Name="poolCheckBox" VerticalAlignment="Center" Grid.Row="9" Margin="3" IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
+            <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="תת אזור:"/>
+            <TextBox x:Name="subAreaTextBlock" VerticalAlignment="Center" Text="{Binding SubArea}" Grid.Row="4" Margin="3" HorizontalAlignment="Stretch" Grid.Column="1" Foreground="#DDFFFFFF"/>
+            <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סך העמלה:"/>
+            <TextBlock x:Name="sumComissionTextBlock" VerticalAlignment="Center" Text="{Binding SumComission}" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
+            <Button Content="אישור" Grid.Row="12" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource myButton}" Height="30" Margin="0,0"  VerticalAlignment="Center" Width="75" Click="Button_Click"/>
+        </Grid>
+        
+
+    </Grid>
+</Page>

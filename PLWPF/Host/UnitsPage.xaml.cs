@@ -37,5 +37,12 @@ namespace PLWPF.Host
             hostingUnitListView.ItemsSource = units;
             
         }
+
+        private void hostingUnitListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            HostingUnit unit = new HostingUnit();
+            unit = hostingUnitListView.SelectedItem as HostingUnit;
+            this.NavigationService.Navigate(new UnitReview(unit));
+        }
     }
 }

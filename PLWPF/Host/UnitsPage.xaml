@@ -14,8 +14,8 @@
         <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
     </Page.Resources>
 
-    <Grid DataContext="{StaticResource hostingUnitViewSource}" VerticalAlignment="Center">
-        <ListView x:Name="hostingUnitListView" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="top" SelectionMode="Single" >
+    <Grid DataContext="{StaticResource hostingUnitViewSource}" VerticalAlignment="Center" HorizontalAlignment="Center" FlowDirection="RightToLeft">
+        <ListView x:Name="hostingUnitListView" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="top" SelectionMode="Single" SelectionChanged="hostingUnitListView_SelectionChanged" >
             <ListView.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -27,91 +27,49 @@
                     <GridView.ColumnHeaderContextMenu>
                         <xcad:ContextMenuEx/>
                     </GridView.ColumnHeaderContextMenu>
-                    <GridViewColumn x:Name="adultsColumn" Header="Adults" Width="80">
+                    <GridViewColumn x:Name="hostingUnitKeyColumn" Header="מספר יחידה" Width="Auto" FrameworkElement.FlowDirection="RightToLeft">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="6,-1,-6,-1" Text="{Binding Adults}"/>
+                                <Label Content="{Binding HostingUnitKey}" HorizontalAlignment="Center" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="areaColumn" Header="Area" Width="80">
+                    <GridViewColumn x:Name="hostingUnitNameColumn"  Header="שם יחידה" Width="100" FrameworkElement.FlowDirection="RightToLeft">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="-6,-1" >
-                                    <ComboBoxItem Content="{Binding Area}" Visibility="Visible" />
-                                </ComboBox>
+                                <TextBlock Margin="-6,-1" HorizontalAlignment="Center" Text="{Binding HostingUnitName, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="childrenColumn" Header="Children" Width="80">
+                    <GridViewColumn x:Name="areaColumn" Header="אזור" Width="100"  FrameworkElement.FlowDirection="RightToLeft">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="-6,-1" Text="{Binding Children}"/>
+                                <TextBlock Margin="-6,-1" >
+                                    <TextBlock Text="{Binding Area}" Visibility="Visible" HorizontalAlignment="Center" />
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="childrensAttractionsColumn" Header="Childrens Attractions" Width="80">
+                    <GridViewColumn x:Name="hostingTypeColumn"  Header="סוג היחידה" Width="100" FrameworkElement.FlowDirection="RightToLeft">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding ChildrensAttractions, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-6,-1"/>
+                                <TextBlock  Margin="-6,-1">
+                                    <TextBlock Text="{Binding HostingType}" HorizontalAlignment="Center" />
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="gardenColumn" Header="Garden" Width="80">
+                    <GridViewColumn x:Name="subAreaColumn" Header="תת אזור" Width="100" FrameworkElement.FlowDirection="RightToLeft">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-6,-1"/>
+                                <TextBlock Margin="-6,-1" HorizontalAlignment="Center" Text="{Binding SubArea}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="hostingTypeColumn" Header="Hosting Type" Width="80">
+                    <GridViewColumn x:Name="sumComissionColumn" Header="עמלה ששולמה" Width="100" FrameworkElement.FlowDirection="RightToLeft">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox Margin="-6,-1">
-                                    <ComboBoxItem Content="{Binding HostingType}"/>
-                                </ComboBox>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding HostingUnitKey}" Margin="-6,-1"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="hostingUnitNameColumn" Header="Hosting Unit Name" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="jacuzziColumn" Header="Jacuzzi" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Jacuzzi, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-6,-1"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="poolColumn" Header="Pool" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Pool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-6,-1"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="subAreaColumn" Header="Sub Area" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1" Text="{Binding SubArea}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="sumComissionColumn" Header="Sum Comission" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1" Text="{Binding SumComission}"/>
+                                <TextBlock Margin="-6,-1" HorizontalAlignment="Center" Text="{Binding SumComission}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
