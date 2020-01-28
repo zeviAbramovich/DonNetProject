@@ -36,9 +36,9 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="מבוגרים:"/>
-            <TextBlock x:Name="adultsTextBlock" VerticalAlignment="Center" Text="{Binding Adults}" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
+            <TextBox x:Name="adultsTextBlock" VerticalAlignment="Center" Text="{Binding Adults}" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="אזור:"/>
-            <ComboBox x:Name="areaComboBox" Width="120" SelectedItem="{Binding Area}" VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="Area" Grid.Column="1"  Foreground="#DDFFFFFF">
+            <ComboBox x:Name="areaComboBox" Width="120"  VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="Area" Grid.Column="1"  Foreground="#DDFFFFFF">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>
@@ -46,13 +46,13 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="ילדים:"/>
-            <TextBlock x:Name="childrenTextBlock" VerticalAlignment="Center" Text="{Binding Children}" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
+            <TextBox x:Name="childrenTextBlock" VerticalAlignment="Center" Text="{Binding Children}" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
             <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="אטרקציות לילדים:"/>
             <CheckBox x:Name="childrensAttractionsCheckBox" VerticalAlignment="Center" Grid.Row="10" Margin="3" IsChecked="{Binding ChildrensAttractions, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="גינה:"/>
             <CheckBox x:Name="gardenCheckBox" VerticalAlignment="Center" Grid.Row="7" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סוג היחידה:"/>
-            <ComboBox x:Name="hostingTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3" SelectedItem="{Binding HostingType}"  Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="HostingType" Grid.Column="1" Foreground="#DDFFFFFF">
+            <ComboBox x:Name="hostingTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3"   Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="HostingType" Grid.Column="1" Foreground="#DDFFFFFF">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>

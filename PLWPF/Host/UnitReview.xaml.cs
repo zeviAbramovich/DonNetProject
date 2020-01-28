@@ -22,9 +22,12 @@ namespace PLWPF.Host
     /// </summary>
     public partial class UnitReview : Page
     {
+        HostingUnit newUnit = new HostingUnit();
         public UnitReview()
         {
             InitializeComponent();
+            grid1.DataContext = newUnit;
+            hostingUnitKeyLabel.Content = string.Format("מספר יתווסף בהמשך...");
         }
         public UnitReview(HostingUnit unit)
         {

@@ -24,7 +24,7 @@
             <ColumnDefinition Width="289*"/>
         </Grid.ColumnDefinitions>
         <Frame Grid.ColumnSpan="2" x:Name="full_screen" HorizontalAlignment="Stretch"  />
-        <StackPanel  HorizontalAlignment="Left" Height="394" Margin="21,34,0,34" VerticalAlignment="Stretch" Width="179">
+        <StackPanel  HorizontalAlignment="Center" Height="Auto"  VerticalAlignment="Center" >
             <Button x:Name="myButton" BorderBrush="Beige" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מארח"  Margin="15,15,14.2,15" Click="Host_Button"  />
             <Button  Style="{StaticResource myButton}" Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"

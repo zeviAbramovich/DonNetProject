@@ -44,5 +44,10 @@ namespace PLWPF.Host
             unit = hostingUnitListView.SelectedItem as HostingUnit;
             this.NavigationService.Navigate(new UnitReview(unit));
         }
+
+        private void addUnit_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new UnitReview());
+        }
     }
 }
