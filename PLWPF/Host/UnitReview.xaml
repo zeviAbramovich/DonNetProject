@@ -38,7 +38,7 @@
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="מבוגרים:"/>
             <TextBox x:Name="adultsTextBlock" VerticalAlignment="Center" Text="{Binding Adults}" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="אזור:"/>
-            <ComboBox x:Name="areaComboBox" Width="120"  VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="Area" Grid.Column="1"  Foreground="#DDFFFFFF">
+            <ComboBox x:Name="areaComboBox" Width="120"   VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Center"  Grid.Column="1"  Foreground="#DDFFFFFF" IsSynchronizedWithCurrentItem="True">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>
@@ -52,7 +52,7 @@
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="גינה:"/>
             <CheckBox x:Name="gardenCheckBox" VerticalAlignment="Center" Grid.Row="7" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סוג היחידה:"/>
-            <ComboBox x:Name="hostingTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3"   Height="Auto" HorizontalAlignment="Left" DisplayMemberPath="HostingType" Grid.Column="1" Foreground="#DDFFFFFF">
+            <ComboBox x:Name="hostingTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3"   Height="Auto" HorizontalAlignment="Center"  Grid.Column="1" Foreground="#DDFFFFFF">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>

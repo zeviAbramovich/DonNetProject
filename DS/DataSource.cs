@@ -45,7 +45,8 @@ namespace DS
                     Pool = true, Jacuzzi =true,ChildrensAttractions = true,
                      Owner = new Host()
                      {
-                        HostId = 313583460,
+                        HostId = 1,
+                        Password="1",
                         PrivateName = "Zeev",
                         FamilyName = "Abra",
                         MailAddress = "zevi3190@gmail.com",

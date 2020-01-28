@@ -35,7 +35,7 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <Label Content="commision:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBlock x:Name="commisionTextBlock" Grid.Column="1"  HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding commision}" VerticalAlignment="Center" Foreground="#DDF3EAEA"/>
+            <TextBlock x:Name="commisionTextBlock" Grid.Column="1"  HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Commision}" VerticalAlignment="Center" Foreground="#DDF3EAEA"/>
             <Label Content="Create Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
             <TextBlock x:Name="createDateTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding CreateDate}" VerticalAlignment="Center"/>
             <Label Content="Guest Request Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>

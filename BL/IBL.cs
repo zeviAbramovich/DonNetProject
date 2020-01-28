@@ -33,6 +33,7 @@ namespace BL
         HostingUnit GetUnit(long key);
         GuestRequest GetGuestRequest(long key);
         Order GetOrder(long key);
+        Host GetHost(long key);
 
         List<HostingUnit> GetAllHostingUnit();
         List<GuestRequest> GetAllGuestRequest();

@@ -119,6 +119,9 @@ namespace DAL
             if (originalOrder == null)
                 throw new CannotUpdateException("Cannot update! order number " + updateOrder.OrderKey.ToString() + "not exsist");
             originalOrder.Status = updateOrder.Status;
+            originalOrder.Commision = updateOrder.Commision;
+            HostingUnit unit = DataSource.hostingUnitList.Find(x => x.HostingUnitKey == updateOrder.HostingUnitKey);
+            unit.SumComission += updateOrder.Commision;
             return true;
         }
 
@@ -257,6 +260,21 @@ namespace DAL
                 throw new MissingMemberException("did not find guest request",this.GetType().ToString());
             GuestRequest guest = tempRequest.Clone();
             return guest;
+        }
+
+        public Host GetHost(long key)
+        {
+            Host host = new Host();
+            try
+            {
+                host = DataSource.hosts.FirstOrDefault(x => x.HostId == key);
+            }
+            catch (ArgumentNullException)
+            {
+
+                throw new MissingMemberException("not found the Host in the list");
+            }
+            return host;
         }
 
         #endregion

@@ -23,25 +23,52 @@ namespace PLWPF.Host
     public partial class UnitReview : Page
     {
         HostingUnit newUnit = new HostingUnit();
+        BE.Host host=new BE.Host();
         public UnitReview()
         {
             InitializeComponent();
+            try
+            {
+                host = BL.FactoryMethode.GetBL().GetHost(UnitsPage.currentId);
+            }
+            catch (MissingMemberException mme)
+            {
+
+                MessageBox.Show(mme.Message);
+            }
+            newUnit.Owner = host;
             grid1.DataContext = newUnit;
             hostingUnitKeyLabel.Content = string.Format("מספר יתווסף בהמשך...");
+            areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Area));
+            hostingTypeComboBox.ItemsSource = Enum.GetValues(typeof(BE.HostingType));
         }
         public UnitReview(HostingUnit unit)
         {
             InitializeComponent();
-            grid1.DataContext = unit;
+            newUnit = unit;
+            grid1.DataContext = newUnit;
             areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Area));
-            areaComboBox.Text = unit.Area.ToString();
+            areaComboBox.Text = newUnit.Area.ToString();
             hostingTypeComboBox.ItemsSource = Enum.GetValues(typeof(BE.HostingType));
-            hostingTypeComboBox.Text = unit.HostingType.ToString();
+            hostingTypeComboBox.Text = newUnit.HostingType.ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO update
+  
+            try
+            {
+                BL.FactoryMethode.GetBL().AddHostingUnit(newUnit);
+                grid1.DataContext = newUnit;
+            }
+            catch (CannotAddException cae)
+            {
+                MessageBox.Show(cae.Message);
+            }
+            catch (CannotUpdateException cue)
+            {
+                MessageBox.Show(cue.Message);
+            }
         }
     }
 }

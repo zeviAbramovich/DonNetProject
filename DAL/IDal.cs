@@ -26,10 +26,12 @@ namespace DAL
         HostingUnit GetHostingUnit(long key);
         Order GetOrder(long key);
         GuestRequest GetGuestRequest(long key);
+        Host GetHost(long key);
 
         List<HostingUnit> GetAllHostingUnit();
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
-        List<Branche> GetAllBranches();        
+        List<Branche> GetAllBranches();
+        
     }
 }

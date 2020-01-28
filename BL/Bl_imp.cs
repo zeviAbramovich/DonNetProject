@@ -391,6 +391,21 @@ namespace BL
             return order;
         }
 
+        public Host GetHost(long key)
+        {
+            Host host = new Host();
+         try
+            {
+                host = dal.GetHost(key);
+            }
+            catch (MissingMemberException mme)
+            {
+
+                throw mme;
+            }
+            return host;
+        }
+
         public List<Branche> GetAllBranches()
         {
             List<Branche> branches = dal.GetAllBranches();

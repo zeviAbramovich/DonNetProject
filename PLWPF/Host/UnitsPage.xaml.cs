@@ -24,7 +24,7 @@ namespace PLWPF.Host
     /// </summary>
     public partial class UnitsPage : Page
     {
-        public long currentId { get; set; }
+        public static long currentId { get; set; }
         public UnitsPage()
         {
             InitializeComponent();

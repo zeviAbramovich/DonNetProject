@@ -13,8 +13,8 @@
         <CollectionViewSource  x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
     </Page.Resources>
 
-    <Grid DataContext="{StaticResource orderViewSource}" Cursor="None" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,97,0,303">
-        <ListView x:Name="orderListView" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"    SelectionMode="Single"  Cursor="Hand" IsTextSearchCaseSensitive="True"  Margin="0,0,0,-0.4" SelectionChanged="orderListView_SelectionChanged" >
+    <Grid DataContext="{StaticResource orderViewSource}" Cursor="None" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,97,0,303" FlowDirection="RightToLeft">
+        <ListView x:Name="orderListView" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"    SelectionMode="Single"  Cursor="Hand" IsTextSearchCaseSensitive="True"   SelectionChanged="orderListView_SelectionChanged" >
             <ListView.FocusVisualStyle>
                 <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}"/>
             </ListView.FocusVisualStyle>
@@ -23,52 +23,45 @@
             </ListView.Effect>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="commisionColumn" Header="commision"  Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding commision}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="createDateColumn" Header="Create Date"  Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1"   Width="Auto" IsEnabled="False" Text="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key"  Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1" Width="Auto" Text="{Binding GuestRequestKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1"  Width="Auto" Text="{Binding HostingUnitKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="orderDateColumn" Header="Order Date"  Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock   Width="Auto" Text="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="orderKeyColumn" Header="Order Key"  Width="Auto">
+                    <GridViewColumn x:Name="orderKeyColumn" Header="מספר הזמנה"  Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding OrderKey}" Margin="-6,-1" Width="Auto"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="statusColumn" Header="Status" Width="Auto">
+                    <GridViewColumn x:Name="statusColumn" Header="סטטוס" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Status}" Margin="-6,-1"  Width="Auto"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="createDateColumn" Header="תאריך יצירת הזמנה"  Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-6,-1"   Width="Auto" IsEnabled="False" Text="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="hostingUnitKeyColumn" Header="מספר יחידה" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-6,-1"  Width="Auto" Text="{Binding HostingUnitKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="orderDateColumn" Header="תאריך שליחת המייל"  Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock   Width="Auto" Text="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="commisionColumn" Header="עמלה"  Width="Auto" FrameworkElement.FlowDirection="RightToLeft">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Commision}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
