@@ -265,9 +265,11 @@ namespace DAL
         public Host GetHost(long key)
         {
             Host host = new Host();
+            HostingUnit unit = new HostingUnit();
             try
             {
-                host = DataSource.hosts.FirstOrDefault(x => x.HostId == key);
+                unit = DataSource.hostingUnitList.FirstOrDefault(x => x.Owner.HostId == key);
+                host = unit.Owner;
             }
             catch (ArgumentNullException)
             {
