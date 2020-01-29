@@ -22,6 +22,7 @@ namespace PLWPF
     public partial class HostManagePage : Page
     {
         public long currentId { get; set; }
+        public static BE.Host host = new BE.Host();
         public HostManagePage()
         {
             InitializeComponent();
@@ -31,6 +32,8 @@ namespace PLWPF
         {
             InitializeComponent();
             currentId = hostId;
+            host = BL.FactoryMethode.GetBL().GetHost(currentId);
+            privateName.Text = string.Format("שלום " +host.PrivateName+"!");
         }
         private void Exist_Orders(object sender, RoutedEventArgs e)
         {

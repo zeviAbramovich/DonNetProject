@@ -35,6 +35,7 @@ namespace DAL
             else
             target.Diary = (bool[,])original.Diary.Clone();
             target.HostingUnitKey = original.HostingUnitKey;
+            target.bookDates = original.bookDates.ToList();
             target.HostingUnitName = original.HostingUnitName;
             target.Adults = original.Adults;
             target.Children = original.Children;

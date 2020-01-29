@@ -38,9 +38,11 @@ namespace PLWPF.Host
         }
         private void confirmation_Click(object sender, RoutedEventArgs e)
         {
-            if ((StatusOrder)statusComboBox.SelectedItem == StatusOrder.MailSent)
+            if ((StatusOrder)statusComboBox.SelectedItem == StatusOrder.MailSent&& viewOrder.Status != StatusOrder.MailSent)
             {
+               
                 viewOrder.Status = (BE.StatusOrder)Enum.Parse(typeof(BE.StatusOrder), statusComboBox.SelectedItem.ToString());
+                viewOrder.OrderDate = DateTime.Now;
 
                 try
                 {
@@ -84,6 +86,8 @@ namespace PLWPF.Host
                 {
                     MessageBox.Show(me.Message);
                 }
+                if ((StatusOrder)statusComboBox.SelectedItem == StatusOrder.CustomerResponsiveness)
+                    statusComboBox.IsEnabled = false;
             }
         }
     }

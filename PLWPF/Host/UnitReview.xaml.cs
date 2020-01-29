@@ -12,14 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf.Transitions;
 using BE;
 using PLWPF;
+using MaterialDesignThemes.Wpf;
 
 namespace PLWPF.Host
 {
     /// <summary>
     /// Interaction logic for UnitReview.xaml
     /// </summary>
+    /// 
     public partial class UnitReview : Page
     {
         HostingUnit newUnit = new HostingUnit();
@@ -51,9 +54,20 @@ namespace PLWPF.Host
             areaComboBox.Text = newUnit.Area.ToString();
             hostingTypeComboBox.ItemsSource = Enum.GetValues(typeof(BE.HostingType));
             hostingTypeComboBox.Text = newUnit.HostingType.ToString();
+            SetBlackOutDates();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void hostingTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            newUnit.HostingType = (BE.HostingType)Enum.Parse(typeof(BE.HostingType), hostingTypeComboBox.SelectedItem.ToString());
+        }
+
+
+        private void areaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            newUnit.Area = (BE.Area)Enum.Parse(typeof(BE.Area), areaComboBox.SelectedItem.ToString());
+        }
+        private void Confirm_Click(object sender, RoutedEventArgs e)
         {
 
   
@@ -61,6 +75,8 @@ namespace PLWPF.Host
             {
                 BL.FactoryMethode.GetBL().AddHostingUnit(newUnit);
                 grid1.DataContext = newUnit;
+                
+                this.NavigationService.Navigate(new UnitsPage(UnitsPage.currentId));
             }
             catch (CannotAddException cae)
             {
@@ -71,5 +87,19 @@ namespace PLWPF.Host
                 MessageBox.Show(cue.Message);
             }
         }
+
+        private void SetBlackOutDates()
+        {
+            foreach (DateTime date in newUnit.bookDates)
+            {
+                Calendar.BlackoutDates.Add(new CalendarDateRange(date));
+            }
+        }
+        public void CalendarDialogOpenedEventHandler(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            SetBlackOutDates();
+        }
+
+     
     }
 }

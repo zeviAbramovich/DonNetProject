@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:PLWPF.Host"
       xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.Host.UnitReview"
       mc:Ignorable="d" 
@@ -29,6 +30,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -38,7 +40,7 @@
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="מבוגרים:"/>
             <TextBox x:Name="adultsTextBlock" VerticalAlignment="Center" Text="{Binding Adults}" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="אזור:"/>
-            <ComboBox x:Name="areaComboBox" Width="120"   VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Center"  Grid.Column="1"  Foreground="#DDFFFFFF" IsSynchronizedWithCurrentItem="True">
+            <ComboBox x:Name="areaComboBox" Width="120"    VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Center"  Grid.Column="1"  Foreground="#DDFFFFFF" IsSynchronizedWithCurrentItem="True" SelectionChanged="areaComboBox_SelectionChanged">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>
@@ -52,7 +54,7 @@
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="גינה:"/>
             <CheckBox x:Name="gardenCheckBox" VerticalAlignment="Center" Grid.Row="7" Margin="3" IsChecked="{Binding Garden, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סוג היחידה:"/>
-            <ComboBox x:Name="hostingTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3"   Height="Auto" HorizontalAlignment="Center"  Grid.Column="1" Foreground="#DDFFFFFF">
+            <ComboBox x:Name="hostingTypeComboBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3"   Height="Auto" HorizontalAlignment="Center"  Grid.Column="1" Foreground="#DDFFFFFF" SelectionChanged="hostingTypeComboBox_SelectionChanged">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>
@@ -71,9 +73,40 @@
             <TextBox x:Name="subAreaTextBlock" VerticalAlignment="Center" Text="{Binding SubArea}" Grid.Row="4" Margin="3" HorizontalAlignment="Stretch" Grid.Column="1" Foreground="#DDFFFFFF"/>
             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סך העמלה:"/>
             <TextBlock x:Name="sumComissionTextBlock" VerticalAlignment="Center" Text="{Binding SumComission}" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
-            <Button Content="אישור" Grid.Row="12" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource myButton}" Height="30" Margin="0,0"  VerticalAlignment="Center" Width="75" Click="Button_Click"/>
+            <Button Content="אישור" Grid.Row="13" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource myButton}" Height="30" Margin="0,0"  VerticalAlignment="Center" Width="75" Click="Confirm_Click"/>
+            <Button x:Name="viewCalender"  Content="{materialDesign:PackIcon Kind=CalendarMonth, Size=25}" HorizontalAlignment="Center" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignFloatingActionMiniButton}"  VerticalAlignment="Center" Grid.Row="12"  IsEnabled="True"
+        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+        CommandTarget="{Binding ElementName=calenderV}"/>
+            <materialDesign:DialogHost Name="calenderV" HorizontalAlignment="Left" VerticalAlignment="Center" IsOpen="False"
+                        materialDesign:DialogHost.DialogOpenedCallback="CalendarDialogOpenedEventHandler">
+                <materialDesign:DialogHost.DialogContent>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition
+            Height="Auto" />
+                            <RowDefinition
+            Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Calendar
+          x:Name="Calendar"
+          Margin="-1 -4 -1 0" />
+                        <StackPanel
+          Grid.Row="1"
+          Margin="8"
+          HorizontalAlignment="Right"
+          Orientation="Horizontal">
+                            <Button
+            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+            CommandParameter="1"
+            Style="{DynamicResource MaterialDesignFlatButton}">
+                                OK
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:DialogHost.DialogContent>
+            </materialDesign:DialogHost>
         </Grid>
-        
+
 
     </Grid>
 </Page>

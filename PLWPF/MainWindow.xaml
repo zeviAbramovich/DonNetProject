@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:Recommended="clr-namespace:MaterialDesignColors.Recommended;assembly=MaterialDesignColors" xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.MainWindow"
@@ -13,6 +14,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
         Title="MainWindow" Height="638" Width="800" WindowStyle="SingleBorderWindow" >
+  
     <Window.Resources>
         
         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
@@ -20,7 +22,16 @@
             <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>
         </Style>
         <CollectionViewSource x:Key="slideWipeViewSource" d:DesignSource="{d:DesignInstance {x:Type materialDesign:SlideWipe}, CreateList=True}"/>
-
+        <ResourceDictionary x:Key="date">
+        <DataTemplate DataType="{x:Type system:DateTime}">
+            <StackPanel Margin="16">
+                <TextBlock>England win the World Cup:</TextBlock>
+                <TextBlock Margin="0 8 0 0" Text="{Binding }" />
+                <TextBlock Margin="0 8 0 0" >You will never see that again.</TextBlock>
+                <Button  Margin="0 8 0 0" IsDefault="True" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignFlatButton}">AWESOME</Button>
+            </StackPanel>
+        </DataTemplate>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid >
         <Frame ContentRendered="zevi_ContentRendered" x:Name="Frame"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="0,0,0.2,-0.2"/>
