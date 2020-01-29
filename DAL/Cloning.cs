@@ -33,7 +33,7 @@ namespace DAL
                 //target.DiaryDto = original.DiaryDto;
             }
             else
-                target.Diary = (bool[,])original.Diary.Clone();
+            target.Diary = (bool[,])original.Diary.Clone();
             target.HostingUnitKey = original.HostingUnitKey;
             target.HostingUnitName = original.HostingUnitName;
             target.Adults = original.Adults;
@@ -46,25 +46,36 @@ namespace DAL
             target.Garden = original.Garden;
             target.ChildrensAttractions = original.ChildrensAttractions;
             target.SumComission = original.SumComission;
-            target.Owner = new Host
-            {
-                HostId = original.Owner.HostId,
-                Password=original.Owner.Password,
-                CollectionClearance = original.Owner.CollectionClearance,
-                FamilyName = original.Owner.FamilyName,
-                MailAddress = original.Owner.MailAddress,
-                PhoneNumber = original.Owner.PhoneNumber,
-                PrivateName = original.Owner.PrivateName,
-                HostBankAccount = new BankAccount
-                {
-                    BankAccountNumber = original.Owner.HostBankAccount.BankAccountNumber,
-                    BankName = original.Owner.HostBankAccount.BankName,
-                    BankNumber = original.Owner.HostBankAccount.BankNumber,
-                    BranchAddress = original.Owner.HostBankAccount.BranchAddress,
-                    BranchCity = original.Owner.HostBankAccount.BranchCity,
-                    BranchNumber = original.Owner.HostBankAccount.BranchNumber
-                }
-            };
+            //no need to clone in one methode.
+            if(original.Owner!=null)
+                target.Owner = original.Owner.Clone();
+            //try
+            //{
+            //    target.Owner = new Host
+            //    {
+            //        HostId = original.Owner.HostId,
+            //        Password = original.Owner.Password,
+            //        CollectionClearance = original.Owner.CollectionClearance,
+            //        FamilyName = original.Owner.FamilyName,
+            //        MailAddress = original.Owner.MailAddress,
+            //        PhoneNumber = original.Owner.PhoneNumber,
+            //        PrivateName = original.Owner.PrivateName,
+            //        HostBankAccount = new BankAccount
+            //        {
+            //            BankAccountNumber = original.Owner.HostBankAccount.BankAccountNumber,
+            //            BankName = original.Owner.HostBankAccount.BankName,
+            //            BankNumber = original.Owner.HostBankAccount.BankNumber,
+            //            BranchAddress = original.Owner.HostBankAccount.BranchAddress,
+            //            BranchCity = original.Owner.HostBankAccount.BranchCity,
+            //            BranchNumber = original.Owner.HostBankAccount.BranchNumber
+            //        }
+            //    };
+            //}
+            //catch (Exception a)
+            //{
+
+            //    throw new CannotAddException("clone",a);
+            //}
             return target;
         }
 
@@ -90,6 +101,31 @@ namespace DAL
                 Status = original.Status,
                 SubArea = original.SubArea
             };
+            return target;
+        }
+        public static Host Clone(this Host original)
+        {
+            Host target = new Host();
+            target.HostId = original.HostId;
+            target.Password = original.Password;
+            target.CollectionClearance = original.CollectionClearance;
+            target.FamilyName = original.FamilyName;
+            target.MailAddress = original.MailAddress;
+            target.PhoneNumber = original.PhoneNumber;
+            target.PrivateName = original.PrivateName;
+            if(original.HostBankAccount!=null)
+                target.HostBankAccount = original.HostBankAccount.Clone();
+            return target;
+        }
+        public static BankAccount Clone(this BankAccount original)
+        {
+            BankAccount target = new BankAccount();
+            target.BankAccountNumber = original.BankAccountNumber;
+            target.BankName = original.BankName;
+            target.BankNumber = original.BankNumber;
+            target.BranchAddress = original.BranchAddress;
+            target.BranchCity = original.BranchCity;
+            target.BranchNumber = original.BranchNumber;
             return target;
         }
     }

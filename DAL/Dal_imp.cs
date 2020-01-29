@@ -18,7 +18,8 @@ namespace DAL
         {
             if (unit.HostingUnitKey == 0)//must be new unit
             {
-                HostingUnit hostingUnit = unit.Clone();//על פי נספח 1
+                HostingUnit hostingUnit = new HostingUnit();
+                //HostingUnit hostingUnit = unit.Clone();//על פי נספח 1
                 hostingUnit.HostingUnitKey = ++Configuration.serialHostingUnit;
                 hostingUnit.Diary = new bool[12, 31];
                 DataSource.hostingUnitList.Add(hostingUnit);
@@ -98,18 +99,26 @@ namespace DAL
 
         public bool UpdateHostingUnit(HostingUnit updateUnit)
         {
-            HostingUnit hosting = new HostingUnit();
             try
             {
-                hosting = GetHostingUnit(updateUnit.HostingUnitKey);
+                HostingUnit hosting = new HostingUnit();
+                //try
+                //{
+                //    hosting = GetHostingUnit(updateUnit.HostingUnitKey);
+                //}
+                //catch (MissingMemberException me)
+                //{
+                //    throw new CannotUpdateException("Hosting Unit number " + updateUnit.HostingUnitKey + " not found", me);
+                //}
+                //hosting = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == updateUnit.HostingUnitKey);//hosting is the originally unit
+                DataSource.hostingUnitList.Remove(DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == updateUnit.HostingUnitKey));//delete the originally
+                DataSource.hostingUnitList.Add(updateUnit);//add the originally
             }
             catch (MissingMemberException me)
             {
+
                 throw new CannotUpdateException("Hosting Unit number " + updateUnit.HostingUnitKey + " not found", me);
             }
-            hosting = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == updateUnit.HostingUnitKey);//hosting is the originally unit
-            DataSource.hostingUnitList.Remove(hosting);//delete the originally
-            DataSource.hostingUnitList.Add(updateUnit);//add the originally
             return true;
         }
 
@@ -264,10 +273,13 @@ namespace DAL
 
         public Host GetHost(long key)
         {
+            HostingUnit unit = new HostingUnit();
             Host host = new Host();
+
             try
             {
-                host = DataSource.hosts.FirstOrDefault(x => x.HostId == key);
+                unit = DataSource.hostingUnitList.Find(x => x.Owner.HostId == key);
+                host = unit.Owner;
             }
             catch (ArgumentNullException)
             {

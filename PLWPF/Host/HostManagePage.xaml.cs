@@ -42,7 +42,7 @@ namespace PLWPF
             this.NavigationService.Navigate(new MainMenu());
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Exist_Units(object sender, RoutedEventArgs e)
         {
             view.NavigationService.Navigate(new UnitsPage(currentId));
         }
