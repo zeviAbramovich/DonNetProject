@@ -19,7 +19,7 @@
 
 
     <Grid>
-        <Grid x:Name="grid1" HorizontalAlignment="Center"  VerticalAlignment="Center">
+        <Grid x:Name="grid1" HorizontalAlignment="Center"  VerticalAlignment="Center" FlowDirection="RightToLeft">
             <Grid.ColumnDefinitions> 
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -32,25 +32,25 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="33"/>
             </Grid.RowDefinitions>
-            <Label Content="commision:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBlock x:Name="commisionTextBlock" Grid.Column="1"  HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Commision}" VerticalAlignment="Center" Foreground="#DDF3EAEA"/>
-            <Label Content="Create Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBlock x:Name="createDateTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding CreateDate}" VerticalAlignment="Center"/>
-            <Label Content="Guest Request Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <TextBlock x:Name="guestRequestKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" Text="{Binding GuestRequestKey}" VerticalAlignment="Center"/>
-            <Label Content="Hosting Unit Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <TextBlock x:Name="hostingUnitKeyTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" Text="{Binding HostingUnitKey}" VerticalAlignment="Center"/>
-            <Label Content="Order Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-            <TextBlock x:Name="orderDateTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" Text="{Binding OrderDate}" VerticalAlignment="Center"/>
-            <Label Content="Order Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-            <Label x:Name="orderKeyLabel" Content="{Binding OrderKey}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-            <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+            <Label Content="עמלה:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="commisionTextBlock" Grid.Column="1"  Foreground="#DDFFFFFF"  HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Commision}" VerticalAlignment="Center" />
+            <Label Content="תאריך יצירת הזמנה:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBlock x:Name="createDateTextBlock" Grid.Column="1"  Foreground="#DDFFFFFF" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding CreateDate}" VerticalAlignment="Center"/>
+            <Label Content="מספר בקשה:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBlock x:Name="guestRequestKeyTextBlock" Grid.Column="1"  Foreground="#DDFFFFFF" HorizontalAlignment="Left" Margin="3" Grid.Row="2" Text="{Binding GuestRequestKey}" VerticalAlignment="Center"/>
+            <Label Content="מספר יחידה:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBlock x:Name="hostingUnitKeyTextBlock" Grid.Column="1"  Foreground="#DDFFFFFF" HorizontalAlignment="Left" Margin="3" Grid.Row="3" Text="{Binding HostingUnitKey}" VerticalAlignment="Center"/>
+            <Label Content="תאריך שליחת המייל:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBlock x:Name="orderDateTextBlock" Grid.Column="1"  Foreground="#DDFFFFFF" HorizontalAlignment="Left" Margin="3" Grid.Row="4" Text="{Binding OrderDate}" VerticalAlignment="Center"/>
+            <Label Content="מספר הזמנה:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <Label x:Name="orderKeyLabel" Content="{Binding OrderKey}" Foreground="#DDFFFFFF" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <Label Content="סטטוס:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
             <ComboBox x:Name="statusComboBox" Grid.Column="1"  HorizontalAlignment="Left" Height="Auto"  SelectedItem="{Binding Status}"
-                      Margin="3" Grid.Row="6" VerticalAlignment="Center" Width="120"  Foreground="#DDFFFFFF">
+                       Grid.Row="6" VerticalAlignment="Center" Width="120"  Foreground="#DDFFFFFF">
             </ComboBox>
-            <Button x:Name="confirmation" Content="אישור" Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource myButton}" Height="20" Width="90" Margin="56,5.4,55.6,4.6" Click="confirmation_Click" />
+            <Button x:Name="confirmation" Content="אישור" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0" Style="{StaticResource myButton}" Height="30" Width="75"  Click="confirmation_Click" />
         </Grid>
 
     </Grid>

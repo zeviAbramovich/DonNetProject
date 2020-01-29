@@ -37,6 +37,7 @@ namespace PLWPF
             currentId = id;
             orders=BL.FactoryMethode.GetBL().GetAllHostOrders(currentId);
             orderListView.ItemsSource = orders;
+            
         }
 
         private void orderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

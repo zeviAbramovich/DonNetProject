@@ -25,6 +25,7 @@ namespace BE
         public bool Garden { get; set; }
         public bool ChildrensAttractions { get; set; }
         public double SumComission { get; set; }
+        public List<DateTime> bookDates = new List<DateTime>();
         [XmlIgnore]
         public bool[,] Diary { get; set; }
         [XmlArray("Diary")]

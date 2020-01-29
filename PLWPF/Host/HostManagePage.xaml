@@ -19,7 +19,9 @@
             <ColumnDefinition Width="25*" />
             <ColumnDefinition Width="63*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="_buttons" Style="{StaticResource buttonStack}" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" Height="Auto">
+       
+        <StackPanel x:Name="_buttons" Style="{StaticResource buttonStack}" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" Height="Auto" >
+            <TextBlock x:Name="privateName" VerticalAlignment="Top" Height="Auto"  FlowDirection="RightToLeft" FontWeight="Bold" FontSize="28" Foreground="#FFFDFDFD"/>
             <Button  Content="הזמנות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" Click="Exist_Orders" />
             <Button Content="יחידות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" Click="Button_Click_1" />
             <Button Content="חזרה"  Height="30" Style="{StaticResource myButton}" HorizontalAlignment="Center"   Width="75"  Click="Button_Click"/>

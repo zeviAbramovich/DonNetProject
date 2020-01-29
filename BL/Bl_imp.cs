@@ -33,6 +33,7 @@ namespace BL
             return true;
         }
 
+
         /// <summary>
         /// מקבל בקשה ויחידה, ובודק האם הזמן המצוין בבקשה פנוי ביחידה
         /// </summary>
@@ -285,7 +286,10 @@ namespace BL
                 orderUpdate.Commision = Configuration.commision * SumDays(request.EntryDate, request.ReleaseDate);
                 request.Status = StatusGuest.ClosesBySite;//מעדכן בקשה נסגרה כי הלקוח רצה
                 for (DateTime date = request.EntryDate; date < request.ReleaseDate; date = date.AddDays(1))
-                    unit.Diary[date.Month, date.Day] = true;//מעדכן את המטריצה בימים שהלקוח רצה              
+                {
+                    unit.Diary[date.Month, date.Day] = true;//מעדכן את המטריצה בימים שהלקוח רצה 
+                    unit.bookDates.Add(date);
+                }
                 UpdateHostingUnit(unit);
                 UpdateRequest(request);
                 dal.UpdateOrder(orderUpdate);

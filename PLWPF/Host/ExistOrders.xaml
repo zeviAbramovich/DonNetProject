@@ -13,14 +13,11 @@
         <CollectionViewSource  x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
     </Page.Resources>
 
-    <Grid DataContext="{StaticResource orderViewSource}" Cursor="None" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,97,0,303" FlowDirection="RightToLeft">
-        <ListView x:Name="orderListView" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"    SelectionMode="Single"  Cursor="Hand" IsTextSearchCaseSensitive="True"   SelectionChanged="orderListView_SelectionChanged" >
+    <Grid DataContext="{StaticResource orderViewSource}"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,97,0,303" FlowDirection="RightToLeft">
+        <ListView x:Name="orderListView" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignListView}" BorderBrush="Beige" Width="Auto"    SelectionMode="Single"  Cursor="Hand" IsTextSearchCaseSensitive="True" SelectionChanged="orderListView_SelectionChanged" >
             <ListView.FocusVisualStyle>
                 <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}"/>
             </ListView.FocusVisualStyle>
-            <ListView.Effect>
-                <DropShadowEffect RenderingBias="Quality"/>
-            </ListView.Effect>
             <ListView.View>
                 <GridView>
                     <GridViewColumn x:Name="orderKeyColumn" Header="מספר הזמנה"  Width="Auto">

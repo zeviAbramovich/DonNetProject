@@ -35,6 +35,7 @@ namespace PLWPF.Host
             currentId = key;
             List<HostingUnit> units = BL.FactoryMethode.GetBL().GetAllHostUnits(currentId);
             hostingUnitListView.ItemsSource = units;
+            hostingUnitListView.HorizontalContentAlignment = HorizontalAlignment.Center;
             
         }
 
