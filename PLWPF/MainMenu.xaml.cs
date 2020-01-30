@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BE;
 using BL;
+using PLWPF.Guest;
 
 namespace PLWPF
 {
@@ -30,10 +31,8 @@ namespace PLWPF
 
         private void Host_Button(object sender, RoutedEventArgs e)
         {
-            Page host = new HostControlMenu();
-            view.Refresh();
-            view.Navigate(host);
-           
+            view.Navigate(new HostControlMenu());
+
             //Grid.SetColumn(host, 1);
         }
 

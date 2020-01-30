@@ -23,7 +23,7 @@
 
             <ColumnDefinition Width="289*"/>
         </Grid.ColumnDefinitions>
-        <Frame Grid.ColumnSpan="2" x:Name="full_screen" HorizontalAlignment="Stretch"  />
+        <Frame Grid.ColumnSpan="2" x:Name="full_screen" />
         <StackPanel  HorizontalAlignment="Center" Height="Auto"  VerticalAlignment="Center" >
             <Button x:Name="myButton" BorderBrush="Beige" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מארח"  Margin="15,15,14.2,15" Click="Host_Button"  />
@@ -32,7 +32,7 @@
             <Button BorderBrush="Beige" Style="{StaticResource myButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מנהל מערכת" Margin="11,15,18.2,15" />
         </StackPanel>
-        <Frame x:Name="view" HorizontalAlignment="Stretch" Margin="1,0,0,0" Grid.Column="1" />
+        <Frame x:Name="view"  Margin="1,0,0,0" Grid.Column="1" />
 
     </Grid>
 </Page>

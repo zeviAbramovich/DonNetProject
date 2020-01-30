@@ -34,7 +34,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid >
-        <Frame ContentRendered="zevi_ContentRendered" x:Name="Frame"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="0,0,0.2,-0.2"/>
+        <Frame ContentRendered="zevi_ContentRendered" x:Name="Frame"   Margin="0,0,0.2,-0.2"/>
     </Grid>
 
 

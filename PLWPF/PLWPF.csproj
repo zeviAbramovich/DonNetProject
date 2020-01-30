@@ -82,6 +82,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Guest\AddGuestRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Host\ExistOrders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,7 +110,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GuestControlMenu.xaml">
+    <Page Include="Guest\GuestControlMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -126,6 +130,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Guest\AddGuestRequest.xaml.cs">
+      <DependentUpon>AddGuestRequest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Host\ExistOrders.xaml.cs">
       <DependentUpon>ExistOrders.xaml</DependentUpon>
     </Compile>
@@ -144,7 +151,7 @@
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GuestControlMenu.xaml.cs">
+    <Compile Include="Guest\GuestControlMenu.xaml.cs">
       <DependentUpon>GuestControlMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Host\HostControlMenu.xaml.cs">

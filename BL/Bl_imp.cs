@@ -120,7 +120,9 @@ namespace BL
                     GuestRequestKey = guest.GuestRequestKey,
                     HostingUnitKey = item.HostingUnitKey,
                     CreateDate = DateTime.Now,
-                    Status = StatusOrder.NotYetApproved
+                    Status = StatusOrder.NotYetApproved,
+                    OrderKey = ++Configuration.serialOrder,
+                    OrderDate = new DateTime()
                 };
                 count++;
                 AddOrder(order);
@@ -180,7 +182,7 @@ namespace BL
         public bool AddRequest(GuestRequest request)
         {
             if (request.EntryDate >= request.ReleaseDate || request.EntryDate < DateTime.Now)
-                throw new CannotAddException("the entry date is after the relasing date");
+                throw new CannotAddException("the entry date is after the relasing date / or your entry date is befor today");
             request.Status = StatusGuest.Open;
             try
             {

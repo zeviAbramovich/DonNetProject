@@ -23,6 +23,9 @@
                 <Setter Property="Height" Value="500"/>
             </Style>
             <Color x:Key="myLabecolor">#DDFFFFFF</Color>
+            <Style x:Key="myTextBox" TargetType="TextBox">
+                <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

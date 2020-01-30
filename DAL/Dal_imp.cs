@@ -63,6 +63,8 @@ namespace DAL
             {
                 GuestRequest guestRequest = guest.Clone();
                 guestRequest.GuestRequestKey = ++Configuration.serialGuestRequest;
+                guestRequest.RegistrationDate = DateTime.Now;
+                guestRequest.Status = StatusGuest.Open;
                 DataSource.guestRequests.Add(guestRequest);
                 return true;
             }

@@ -40,7 +40,7 @@
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="מבוגרים:"/>
             <TextBox x:Name="adultsTextBlock" VerticalAlignment="Center" Text="{Binding Adults}" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="אזור:"/>
-            <ComboBox x:Name="areaComboBox" Width="120"    VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Center"  Grid.Column="1"  Foreground="#DDFFFFFF" IsSynchronizedWithCurrentItem="True" SelectionChanged="areaComboBox_SelectionChanged">
+            <ComboBox x:Name="areaComboBox" Width="120"    VerticalAlignment="Center" Grid.Row="3" Margin="3"  Height="Auto" HorizontalAlignment="Center"  Grid.Column="1"  Foreground="#DDFFFFFF" IsSynchronizedWithCurrentItem="True" SelectionChanged="AreaComboBox_SelectionChanged">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>

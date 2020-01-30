@@ -14,21 +14,17 @@
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
     </Page.Resources>
 
-    <Grid DataContext="{StaticResource orderViewSource}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" >
+    <Grid DataContext="{StaticResource orderViewSource}"  >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25*" />
             <ColumnDefinition Width="63*"/>
         </Grid.ColumnDefinitions>
-       
-        <StackPanel x:Name="_buttons" Style="{StaticResource buttonStack}" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" Height="Auto" >
+        <StackPanel x:Name="_buttons" Style="{StaticResource buttonStack}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="Auto" >
             <TextBlock x:Name="privateName" VerticalAlignment="Top" Height="Auto"  FlowDirection="RightToLeft" FontWeight="Bold" FontSize="28" Foreground="#FFFDFDFD"/>
             <Button  Content="הזמנות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" Click="Exist_Orders" />
             <Button Content="יחידות קיימות" Style="{StaticResource myButton}" VerticalAlignment="Center" Click="Exist_Units" />
             <Button Content="חזרה"  Height="30" Style="{StaticResource myButton}" HorizontalAlignment="Center"   Width="75"  Click="Button_Click"/>
         </StackPanel>
         <Frame x:Name="view" Style="{StaticResource myFrame}" Grid.Column="1" Source="{Binding}"/>
-
-
-
     </Grid>
 </Page>

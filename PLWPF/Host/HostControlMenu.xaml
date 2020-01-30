@@ -14,7 +14,7 @@
     </Page.Resources>
 
 
-    <Grid x:Name="tb_User_Password" VerticalAlignment="Stretch" HorizontalAlignment="Center" DataContext="{StaticResource hostViewSource}" Width="400" Height="600">
+    <Grid x:Name="tb_User_Password" HorizontalAlignment="Center" DataContext="{StaticResource hostViewSource}" Width="400" Height="600">
 
         <!--<Label FontSize="16" VerticalAlignment="Center" Grid.Row="0" Margin="3,8,16,8" HorizontalAlignment="Center" Content=":תעודת זהות" Grid.Column="1" Height="32" Width="110" Grid.ColumnSpan="2"/>
         <TextBox x:Name="hostIdTextBox" Width="120" materialDesign:HintAssist.Hint="תעודת זהות"  VerticalAlignment="Center" Text="{Binding HostId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3,8,0,16" Height="24" HorizontalAlignment="Left" Grid.Column="0"/>

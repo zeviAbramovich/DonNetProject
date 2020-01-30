@@ -63,7 +63,7 @@ namespace PLWPF.Host
         }
 
 
-        private void areaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AreaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             newUnit.Area = (BE.Area)Enum.Parse(typeof(BE.Area), areaComboBox.SelectedItem.ToString());
         }
