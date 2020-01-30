@@ -105,6 +105,7 @@ namespace PLWPF.Host
             try
             {
                 BL.FactoryMethode.GetBL().DeleteHostingUnit(newUnit.HostingUnitKey);
+                this.NavigationService.Navigate(new UnitsPage(UnitsPage.currentId));
             }
             catch (CannotDeleteException cde)
             {
