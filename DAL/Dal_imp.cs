@@ -77,6 +77,12 @@ namespace DAL
             return true;
         }
 
+        public bool AddHost(Host host)
+        {
+            DataSource.hosts.Add(host);
+            return true;
+        }
+
         public bool DeleteHostingUnit(long key)
         {
             HostingUnit unit = new HostingUnit();
@@ -235,6 +241,14 @@ namespace DAL
             return orders;
         }
 
+        public List<Host> GetAllHosts()
+        {
+            List<Host> hosts = new List<Host>();
+            foreach (var item in DataSource.hosts)
+                hosts.Add(item.Clone());
+            return hosts;
+        }
+
         public HostingUnit GetHostingUnit(long key)
         {
             HostingUnit tempUnit = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == key);
@@ -265,11 +279,11 @@ namespace DAL
         public Host GetHost(long key)
         {
             Host host = new Host();
-            HostingUnit unit = new HostingUnit();
+            
             try
             {
-                unit = DataSource.hostingUnitList.FirstOrDefault(x => x.Owner.HostId == key);
-                host = unit.Owner;
+                host = DataSource.hosts.FirstOrDefault(x => x.HostId == key).Clone();
+                
             }
             catch (ArgumentNullException)
             {
@@ -278,6 +292,8 @@ namespace DAL
             }
             return host;
         }
+
+  
 
         #endregion
     }

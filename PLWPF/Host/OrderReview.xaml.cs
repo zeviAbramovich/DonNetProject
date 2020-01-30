@@ -22,6 +22,7 @@ namespace PLWPF.Host
     public partial class OrderReview : Page
     {
         Order viewOrder = new Order();
+        Order old = new Order();
         public OrderReview()
         {
             InitializeComponent();
@@ -33,17 +34,17 @@ namespace PLWPF.Host
             viewOrder = BL.FactoryMethode.GetBL().GetOrder(order.OrderKey);
             grid1.DataContext = viewOrder;
             statusComboBox.ItemsSource = Enum.GetValues(typeof(BE.StatusOrder));
-            statusComboBox.Text = order.Status.ToString();
+            //statusComboBox.Text = order.Status.ToString();
+            old = order;
             
         }
         private void confirmation_Click(object sender, RoutedEventArgs e)
         {
-            if ((StatusOrder)statusComboBox.SelectedItem == StatusOrder.MailSent&& viewOrder.Status != StatusOrder.MailSent)
+            if ((StatusOrder)statusComboBox.SelectedItem == StatusOrder.MailSent&&old.Status!=StatusOrder.MailSent)
             {
                
                 viewOrder.Status = (BE.StatusOrder)Enum.Parse(typeof(BE.StatusOrder), statusComboBox.SelectedItem.ToString());
-                viewOrder.OrderDate = DateTime.Now;
-
+                old.Status = StatusOrder.MailSent;
                 try
                 {
                     BL.FactoryMethode.GetBL().UpdateOrder(viewOrder);
@@ -80,15 +81,22 @@ namespace PLWPF.Host
                 try
                 {
                     BL.FactoryMethode.GetBL().UpdateOrder(viewOrder);
-                    MessageBox.Show("not");
+                    MessageBox.Show("עודכן בהצלחה!!!");
                 }
                 catch (CannotUpdateException me)
                 {
                     MessageBox.Show(me.Message);
+                    statusComboBox.SelectedItem = old.Status;
+
                 }
                 if ((StatusOrder)statusComboBox.SelectedItem == StatusOrder.CustomerResponsiveness)
                     statusComboBox.IsEnabled = false;
             }
         }
+
+        //private void statusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    confirmation.IsEnabled = true;
+        //}
     }
 }

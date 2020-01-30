@@ -21,6 +21,7 @@ namespace DAL
         bool AddOrder(Order order);
         bool UpdateOrder(Order order);
 
+        bool AddHost(Host host);
         bool UpdateHost(Host host);
 
         HostingUnit GetHostingUnit(long key);
@@ -32,6 +33,7 @@ namespace DAL
         List<GuestRequest> GetAllGuestRequest();
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
+        List<Host> GetAllHosts();
         
     }
 }

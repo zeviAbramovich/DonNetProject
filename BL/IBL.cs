@@ -28,6 +28,7 @@ namespace BL
         bool AddOrder(Order order);
         bool UpdateOrder(Order order);
 
+        bool AddHost(Host host);
         bool UpdateHost(Host host);
 
         HostingUnit GetUnit(long key);
@@ -41,7 +42,7 @@ namespace BL
         List<Branche> GetAllBranches();
         List<Order> GetAllHostOrders(long key);
         List<HostingUnit> GetAllHostUnits(long key);
-       
+        List<Host> GetAllHosts();     
 
         IEnumerable<IGrouping<Area, GuestRequest>> GetAllGuestRequestByArea(IEnumerable<GuestRequest> guestRequests);
         IEnumerable<IGrouping<int, GuestRequest>> GetAllGuestRequestByNumRelax(IEnumerable<GuestRequest> guestRequests);

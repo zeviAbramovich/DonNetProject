@@ -100,6 +100,16 @@ namespace PLWPF.Host
             SetBlackOutDates();
         }
 
-     
+        private void deleteUnit_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BL.FactoryMethode.GetBL().DeleteHostingUnit(newUnit.HostingUnitKey);
+            }
+            catch (CannotDeleteException cde)
+            {
+                MessageBox.Show(cde.Message);
+            }
+        }
     }
 }

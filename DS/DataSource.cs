@@ -81,7 +81,28 @@ namespace DS
                  GuestRequestKey=10220000, PrivateName = "zevush", MailAddress="zevi3190@gmail.com", Status= StatusGuest.Open, EntryDate=DateTime.Parse("11/11/2019"), ReleaseDate=DateTime.Parse("20/11/2019")
             } 
         };
-        public static List<Host> hosts = new List<Host> { };
+        public static List<Host> hosts = new List<Host> 
+        {
+            new Host()
+                     {
+                        HostId = 1,
+                        Password="1",
+                        PrivateName = "Zeev",
+                        FamilyName = "Abra",
+                        MailAddress = "zevi3190@gmail.com",
+                        PhoneNumber = 0502418419,
+                        CollectionClearance = true,
+                        HostBankAccount = new BankAccount()
+                        {
+                            BranchNumber = 111,
+                            BranchCity = "Bney brak",
+                            BranchAddress = "Rabi akiva",
+                            BankName = "Hapoalim",
+                            BankNumber = 10,
+                            BankAccountNumber = 235800
+                        }
+                     }
+        };
     }
 }
 

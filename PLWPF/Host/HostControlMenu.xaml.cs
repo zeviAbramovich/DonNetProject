@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BE;
 using BL;
+using PLWPF.Host;
 
 namespace PLWPF
 {
@@ -47,10 +48,10 @@ namespace PLWPF
                 MessageBox.Show("ERROR! you must insert ID and Password");
                 return;
             }
-            HostingUnit a = new HostingUnit();
-            List<HostingUnit> list = BL.FactoryMethode.GetBL().GetAllHostingUnit();
-            a=list.Find(x=>x.Owner.HostId==id);
-            if (a == null || a.Owner.Password != passwordTextBox.Password)
+         
+            List<BE.Host> list = BL.FactoryMethode.GetBL().GetAllHosts();
+           BE.Host host= list.Find(x=>x.HostId==id);
+            if (host == null ||host.Password != passwordTextBox.Password)
             {
                 MessageBox.Show("Wrong ID or Password");
                 hostIdTextBox.Clear();
@@ -62,6 +63,11 @@ namespace PLWPF
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.GetParent<Page>(this).NavigationService.Navigate(new MainMenu());
+        }
+
+        private void NewUser_click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new SignUpHost());
         }
     }
 }

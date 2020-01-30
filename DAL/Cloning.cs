@@ -47,36 +47,8 @@ namespace DAL
             target.Garden = original.Garden;
             target.ChildrensAttractions = original.ChildrensAttractions;
             target.SumComission = original.SumComission;
-            //no need to clone in one methode.
             if(original.Owner!=null)
                 target.Owner = original.Owner.Clone();
-            //try
-            //{
-            //    target.Owner = new Host
-            //    {
-            //        HostId = original.Owner.HostId,
-            //        Password = original.Owner.Password,
-            //        CollectionClearance = original.Owner.CollectionClearance,
-            //        FamilyName = original.Owner.FamilyName,
-            //        MailAddress = original.Owner.MailAddress,
-            //        PhoneNumber = original.Owner.PhoneNumber,
-            //        PrivateName = original.Owner.PrivateName,
-            //        HostBankAccount = new BankAccount
-            //        {
-            //            BankAccountNumber = original.Owner.HostBankAccount.BankAccountNumber,
-            //            BankName = original.Owner.HostBankAccount.BankName,
-            //            BankNumber = original.Owner.HostBankAccount.BankNumber,
-            //            BranchAddress = original.Owner.HostBankAccount.BranchAddress,
-            //            BranchCity = original.Owner.HostBankAccount.BranchCity,
-            //            BranchNumber = original.Owner.HostBankAccount.BranchNumber
-            //        }
-            //    };
-            //}
-            //catch (Exception a)
-            //{
-
-            //    throw new CannotAddException("clone",a);
-            //}
             return target;
         }
 

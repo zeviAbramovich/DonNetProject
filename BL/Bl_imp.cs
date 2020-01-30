@@ -212,6 +212,19 @@ namespace BL
             }
             return true;
         }
+
+        public bool AddHost(Host host)
+        {
+            var v = from item in GetAllHosts()
+                    where item.HostId == host.HostId
+                    select item;
+            if (v.Any())
+                throw new CannotAddException("already exist ");
+            dal.AddHost(host);
+            return true;
+
+        }
+
         /// <summary>
         /// מעדכן פרטי מארח בכל היחידות
         /// </summary>
@@ -266,6 +279,10 @@ namespace BL
             //if the original order has its status closed (no matter what the reason) i don't want to change the order          
             if (order.Status == StatusOrder.CustomerUnresponsiveness || order.Status == StatusOrder.CustomerResponsiveness || order.Status == StatusOrder.RequestChanged)
                 throw new CannotUpdateException("the Order number:" + order.OrderKey + " is closed");
+
+            if (orderUpdate.Status == StatusOrder.NotYetApproved)
+                throw new CannotUpdateException("order " + order.OrderKey + " already in progress...");
+
             //if the change I made is because the customer closed because he didn't want to, or because this order was closed because the request was changed
             if (orderUpdate.Status == StatusOrder.CustomerUnresponsiveness || orderUpdate.Status == StatusOrder.RequestChanged)
             {
@@ -277,7 +294,8 @@ namespace BL
             if (orderUpdate.Status == StatusOrder.MailSent)
             {
                 orderUpdate.Status = StatusOrder.MailSent;
-                dal.UpdateOrder(orderUpdate);         
+                orderUpdate.OrderDate = DateTime.Now;
+                dal.UpdateOrder(orderUpdate);
                 return true;
             }
             //if the change I made is that the customer has closed the deal because he wants to
@@ -398,7 +416,7 @@ namespace BL
         public Host GetHost(long key)
         {
             Host host = new Host();
-         try
+            try
             {
                 host = dal.GetHost(key);
             }
@@ -450,12 +468,12 @@ namespace BL
         /// </summary>
         /// <param name="hostkey"></param>
         /// <returns>list<order></returns>
-       public List<Order> GetAllHostOrders(long hostkey)
+        public List<Order> GetAllHostOrders(long hostkey)
         {
             List<Order> orders = new List<Order>();
             var v = from itemOrder in GetAllOrders()
-                    from itemUnit in GetAllHostingUnit()                   
-                    where itemUnit.Owner.HostId==hostkey
+                    from itemUnit in GetAllHostingUnit()
+                    where itemUnit.Owner.HostId == hostkey
                     where itemOrder.HostingUnitKey == itemUnit.HostingUnitKey
                     select itemOrder;
             foreach (var item in v)
@@ -480,6 +498,12 @@ namespace BL
                 units.Add(item);
             }
             return units;
+        }
+
+        public List<Host> GetAllHosts()
+        {
+            List<Host> hosts = dal.GetAllHosts();
+            return hosts;
         }
         #endregion
 
@@ -521,7 +545,7 @@ namespace BL
                 orders.Add(item);
             return orders;
         }
-    
+
 
         public int SumDays(DateTime dateTime)
         {

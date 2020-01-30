@@ -90,6 +90,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Host\SignUpHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Host\UnitReview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,6 +131,9 @@
     </Compile>
     <Compile Include="Host\OrderReview.xaml.cs">
       <DependentUpon>OrderReview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Host\SignUpHost.xaml.cs">
+      <DependentUpon>SignUpHost.xaml</DependentUpon>
     </Compile>
     <Compile Include="Host\UnitReview.xaml.cs">
       <DependentUpon>UnitReview.xaml</DependentUpon>

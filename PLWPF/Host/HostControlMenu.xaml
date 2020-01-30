@@ -98,7 +98,7 @@
                     </Grid>
                 </materialDesign:Flipper.BackContent>
             </materialDesign:Flipper>
-            <Button Content="משתמש חדש" Grid.Row="1"  Style="{StaticResource myButton}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="75,5.8,75,2.8" />
+            <Button Content="משתמש חדש" Grid.Row="1"  Style="{StaticResource myButton}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="75,5.8,75,2.8" Click="NewUser_click" />
 
             <Button
     Style="{StaticResource myButton}"

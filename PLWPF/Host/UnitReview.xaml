@@ -73,7 +73,8 @@
             <TextBox x:Name="subAreaTextBlock" VerticalAlignment="Center" Text="{Binding SubArea}" Grid.Row="4" Margin="3" HorizontalAlignment="Stretch" Grid.Column="1" Foreground="#DDFFFFFF"/>
             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סך העמלה:"/>
             <TextBlock x:Name="sumComissionTextBlock" VerticalAlignment="Center" Text="{Binding SumComission}" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="#DDFFFFFF"/>
-            <Button Content="אישור" Grid.Row="13" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource myButton}" Height="30" Margin="0,0"  VerticalAlignment="Center" Width="75" Click="Confirm_Click"/>
+            <Button Content="אישור" Grid.Row="13" Grid.Column="0"  HorizontalAlignment="Center" Style="{StaticResource myButton}" Height="30" Margin="0,0"  VerticalAlignment="Center" Width="75" Click="Confirm_Click"/>
+            <Button x:Name="deleteUnit" Content="{materialDesign:PackIcon Kind=TrashCanOutline, Size=20}" Grid.Column="1" Grid.Row="13" Style="{StaticResource myButton}" Height="30" Width="75" Margin="0,0" Click="deleteUnit_Click" />
             <Button x:Name="viewCalender"  Content="{materialDesign:PackIcon Kind=CalendarMonth, Size=25}" HorizontalAlignment="Center" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignFloatingActionMiniButton}"  VerticalAlignment="Center" Grid.Row="12"  IsEnabled="True"
         Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
         CommandTarget="{Binding ElementName=calenderV}"/>
@@ -99,14 +100,12 @@
             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
             CommandParameter="1"
             Style="{DynamicResource MaterialDesignFlatButton}">
-                                OK
+                                סגור
                             </Button>
                         </StackPanel>
                     </Grid>
                 </materialDesign:DialogHost.DialogContent>
             </materialDesign:DialogHost>
         </Grid>
-
-
     </Grid>
 </Page>
