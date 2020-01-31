@@ -47,11 +47,12 @@ namespace PLWPF.Guest
 
         private void confirm_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
                 BL.FactoryMethode.GetBL().AddRequest(request);
                 MessageBox.Show("נוסף בהצלחה!!");
-                BL.FactoryMethode.GetBL().CreateOrder(request);
+                
             }
             catch (CannotAddException cae)
             {
@@ -63,6 +64,11 @@ namespace PLWPF.Guest
         private void mailAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             bool result = Utilities.Tools.ValidateMail(mailAddressTextBox.Text);
+        }
+
+        private void entryDateDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            releaseDateDatePicker.DisplayDateStart = entryDateDatePicker.SelectedDate;
         }
     }
 }

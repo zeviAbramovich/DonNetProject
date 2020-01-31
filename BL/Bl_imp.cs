@@ -187,6 +187,7 @@ namespace BL
             try
             {
                 dal.AddRequest(request);
+                CreateOrder(request);
             }
             catch (CannotAddException cae)
             {
