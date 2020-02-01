@@ -45,6 +45,7 @@ namespace PLWPF.Guest
             
         }
 
+
         private void confirm_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -62,7 +63,19 @@ namespace PLWPF.Guest
 
         private void mailAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            
             bool result = Utilities.Tools.ValidateMail(mailAddressTextBox.Text);
+        }
+
+        private void mailAddressTextBox_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (Utilities.Tools.ValidateMail(mailAddressTextBox.Text.Trim()) == false)
+            {
+                e.Handled = true;
+                mailAddressTextBox.BorderBrush.SetValue(e.Device, Colors.Red);
+                MessageBox.Show("E-Mail expected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                mailAddressTextBox.Focus();
+            }
         }
     }
 }
