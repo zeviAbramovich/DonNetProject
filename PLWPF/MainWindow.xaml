@@ -13,7 +13,7 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="638" Width="800" WindowStyle="SingleBorderWindow" >
+        Title="MainWindow" Height="650" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" >
   
     <Window.Resources>
         
