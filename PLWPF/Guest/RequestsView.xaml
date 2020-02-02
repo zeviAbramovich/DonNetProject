@@ -1,0 +1,74 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PLWPF.Guest"
+      xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.Guest.RequestsView"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RequestsView">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid DataContext="{StaticResource guestRequestViewSource}">
+
+        <ListView x:Name="guestRequestListView" SelectionMode="Single" HorizontalAlignment="Center"   ItemsSource="{Binding}" FlowDirection="RightToLeft">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="areaColumn" Width="auto" Header="Area">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="6,-1,-6,-1" Text="{Binding Area}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="entryDateColumn" Width="auto" Header="Entry Date">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-6,-1" Text="{Binding EntryDate}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="familyNameColumn" Width="auto" Header="Family Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-6,-1" Text="{Binding FamilyName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="hostingTypeColumn" Width="auto" Header="Hosting Type">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-6,-1" Text="{Binding HostingType}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="releaseDateColumn" Width="80" Header="Release Date">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker Margin="-6,-1" SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="subAreaColumn" Width="80" Header="Sub Area">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Margin="-6,-1" Text="{Binding SubArea, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+    </Grid>
+</Page>

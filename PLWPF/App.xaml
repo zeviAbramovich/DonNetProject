@@ -2,11 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:PLWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+
         <ResourceDictionary>
+
             <Style x:Key="myButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
                 <Setter Property="BorderBrush" Value="Beige" />
                 <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>
@@ -27,7 +29,7 @@
                 <Setter Property="Foreground" Value="#FFFFFFFF"/>
             </Style>
             <ResourceDictionary.MergedDictionaries>
-
+                <ResourceDictionary Source="pack://application:,,,/ShowMeTheXAML.AvalonEdit;component/Themes/xamldisplayer.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />

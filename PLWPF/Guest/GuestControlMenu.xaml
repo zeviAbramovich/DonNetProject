@@ -25,7 +25,7 @@
             <Button Grid.Row="0" Style="{StaticResource myButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
     ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="הוסף בקשת אירוח" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Click="AddRequest_button" />
             <Button Grid.Row="1"  Style="{StaticResource myButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
-            ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="עדכן בקשת אירוח" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="עדכן בקשת אירוח" HorizontalAlignment="Center" VerticalAlignment="Center" Click="UpdateRequest_Click" />
             <Button x:Name="back" Content="חזרה" Style="{StaticResource myButton}" Height="40" Width="80" Click="back_Click"/>
         </StackPanel>
         <Frame x:Name="view" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

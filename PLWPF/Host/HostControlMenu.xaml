@@ -22,15 +22,16 @@
         <PasswordBox x:Name="passwordTextBox" Width="120" materialDesign:HintAssist.Hint="Password" materialDesign:TextFieldAssist.HasClearButton="True" materialDesign:HintAssist.HelperText="At least 8 characters" VerticalAlignment="Center"  Grid.Row="1" Margin="6,15,17,5" Height="22" HorizontalAlignment="Center" Grid.Column="0"/>-->
 
 
-        <StackPanel VerticalAlignment="Center">
-            <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Width="170" BorderThickness="0" >
+        <StackPanel VerticalAlignment="Center" Width="250">
+            <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Width="220" BorderThickness="0" >
+               
                 <materialDesign:Flipper.FrontContent>
                     <Button
                      VerticalAlignment="Top"
       Style="{StaticResource myButton}"
                     
       Command="{x:Static materialDesign:Flipper.FlipCommand}"
-     Margin="8" Width="150" >
+     Margin="8" Width="200" >
                         משתמש קיים
                     </Button>
                 </materialDesign:Flipper.FrontContent>
@@ -42,7 +43,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <materialDesign:ColorZone
-        Mode="Accent"
+        Mode="Dark"
         Padding="6">
                             <StackPanel
           Orientation="Horizontal">
@@ -65,7 +66,7 @@
         Grid.Row="1"
         HorizontalAlignment="Center"
         VerticalAlignment="Top"
-        Width="150">
+        Width="200">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
@@ -98,11 +99,11 @@
                     </Grid>
                 </materialDesign:Flipper.BackContent>
             </materialDesign:Flipper>
-            <Button Content="משתמש חדש" Grid.Row="1"  Style="{StaticResource myButton}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="75,5.8,75,2.8" Click="NewUser_click" />
+            <Button Content="משתמש חדש" Grid.Row="1" Width="200"  Style="{StaticResource myButton}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2"  Click="NewUser_click" />
 
             <Button
     Style="{StaticResource myButton}"
-    ToolTip="MaterialDesignFlatButton" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="2" Click="Back_Click" Margin="75,5.2,75,3">
+    ToolTip="MaterialDesignFlatButton" Grid.ColumnSpan="2" Height="40" HorizontalAlignment="Center" Grid.Row="2" Click="Back_Click" >
                 Back
             </Button>
                    </StackPanel>

@@ -121,7 +121,7 @@ namespace BL
                     HostingUnitKey = item.HostingUnitKey,
                     CreateDate = DateTime.Now,
                     Status = StatusOrder.NotYetApproved,
-                    OrderKey = ++Configuration.serialOrder,
+
                     OrderDate = new DateTime()
                 };
                 count++;
@@ -168,6 +168,7 @@ namespace BL
         {
             if (order.Status != StatusOrder.NotYetApproved)
                 throw new CannotAddException("have problem with the status");
+
             try
             {
                 dal.AddOrder(order);
@@ -183,6 +184,8 @@ namespace BL
         {
             if (request.EntryDate >= request.ReleaseDate || request.EntryDate < DateTime.Now)
                 throw new CannotAddException("the entry date is after the relasing date / or your entry date is befor today");
+            //insert serial number here becouse we create new orders and we need key number for the guest request.
+            request.GuestRequestKey = ++Configuration.serialGuestRequest;
             request.Status = StatusGuest.Open;
             try
             {
@@ -457,13 +460,10 @@ namespace BL
 
         public List<GuestRequest> GuestRequestCondition(delegateRequest requestCondition)
         {
-            List<GuestRequest> guestRequests = new List<GuestRequest>();
-            foreach (var item in dal.GetAllGuestRequest())
-            {
-                if (requestCondition(item))
-                    guestRequests.Add(item);
-            }
-            return guestRequests;
+            var v = from item in dal.GetAllGuestRequest()
+                    where requestCondition(item)
+                    select item;
+            return v.ToList();
         }
 
         /// <summary>

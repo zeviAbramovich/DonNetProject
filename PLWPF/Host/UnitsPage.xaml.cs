@@ -37,6 +37,7 @@ namespace PLWPF.Host
             hostingUnitListView.ItemsSource = units;
             hostingUnitListView.HorizontalContentAlignment = HorizontalAlignment.Center;
             
+
         }
 
         private void hostingUnitListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

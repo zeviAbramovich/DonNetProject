@@ -77,7 +77,7 @@
             <Button x:Name="deleteUnit" Content="{materialDesign:PackIcon Kind=TrashCanOutline, Size=20}" Grid.Column="1" Grid.Row="13" Style="{StaticResource myButton}" Height="30" Width="75" Margin="0,0" Click="deleteUnit_Click" />
             <Button x:Name="viewCalender"  Content="{materialDesign:PackIcon Kind=CalendarMonth, Size=25}" HorizontalAlignment="Center" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignFloatingActionMiniButton}"  VerticalAlignment="Center" Grid.Row="12"  IsEnabled="True"
         Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-        CommandTarget="{Binding ElementName=calenderV}"/>
+        CommandTarget="{Binding ElementName=calenderV}" />
             <materialDesign:DialogHost Name="calenderV" HorizontalAlignment="Left" VerticalAlignment="Center" IsOpen="False"
                         materialDesign:DialogHost.DialogOpenedCallback="CalendarDialogOpenedEventHandler">
                 <materialDesign:DialogHost.DialogContent>
@@ -89,6 +89,7 @@
             Height="Auto" />
                         </Grid.RowDefinitions>
                         <Calendar
+                            SelectionMode="SingleRange" 
           x:Name="Calendar"
           Margin="-1 -4 -1 0" />
                         <StackPanel

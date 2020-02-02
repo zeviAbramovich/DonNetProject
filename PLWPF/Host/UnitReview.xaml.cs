@@ -55,6 +55,7 @@ namespace PLWPF.Host
             hostingTypeComboBox.ItemsSource = Enum.GetValues(typeof(BE.HostingType));
             hostingTypeComboBox.Text = newUnit.HostingType.ToString();
             SetBlackOutDates();
+            
         }
 
         private void hostingTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -112,5 +113,10 @@ namespace PLWPF.Host
                 MessageBox.Show(cde.Message);
             }
         }
+
+        //private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    newUnit.bookDates.Add(Calendar.SelectedDates.);
+        //}
     }
 }
