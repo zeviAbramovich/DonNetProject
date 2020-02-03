@@ -125,7 +125,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Mail Address:"/>
-            <TextBox x:Name="mailAddressTextBox" Width="120" VerticalAlignment="Center" PreviewLostKeyboardFocus="mailAddressTextBox_PreviewLostKeyboardFocus"  Text="{Binding MailAddress, Mode=OneWayToSource, NotifyOnValidationError=True, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="mailAddressTextBox_TextChanged" Foreground="White"/>
+            <TextBox x:Name="mailAddressTextBox" Width="120" VerticalAlignment="Center"   Text="{Binding MailAddress, Mode=OneWayToSource, NotifyOnValidationError=True, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="mailAddressTextBox_TextChanged" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
             <ComboBox x:Name="poolComboBox" Width="120" VerticalAlignment="Center" Grid.Row="11" Margin="3" SelectedItem="{Binding Pool}" ItemsSource="{Binding}" Height="Auto" HorizontalAlignment="Left"  Grid.Column="1" Foreground="White">
                 <ComboBox.ItemsPanel>
