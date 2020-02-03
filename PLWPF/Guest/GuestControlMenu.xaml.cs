@@ -40,5 +40,10 @@ namespace PLWPF.Guest
         {
             this.NavigationService.Navigate(new MainMenu());
         }
+
+        private void UpdateRequest_Click(object sender, RoutedEventArgs e)
+        {
+            view.Navigate(new UpdateRequests());
+        }
     }
 }

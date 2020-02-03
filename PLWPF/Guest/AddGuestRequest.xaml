@@ -15,29 +15,7 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.Resources>
-            <Style x:Key="CustomTextBoxTextStyle" TargetType="TextBox">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TextBox}">
-                            <Border x:Name="bg" BorderBrush="#FF825E5E" BorderThickness="1">
-                                <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
 
-                                <Trigger Property="Validation.HasError" Value="True">
-                                    <Trigger.Setters>
-                                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}"/>
-                                        <Setter Property="BorderThickness" TargetName="bg" Value="2"/>
-                                        <Setter Property="BorderBrush" TargetName="bg" Value="Red"/>
-                                    </Trigger.Setters>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </Grid.Resources>
         <Grid x:Name="grid1" VerticalAlignment="Top"  HorizontalAlignment="Center" DataContext="{StaticResource guestRequestViewSource}" FlowDirection="RightToLeft">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -62,7 +40,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Adults:"/>
-            <ComboBox x:Name="adultsComboBox" Width="120" VerticalAlignment="Center" Grid.Row="6" Margin="3" SelectedValue="{Binding Adults}"  Height="Auto" HorizontalAlignment="Left"  Grid.Column="1" Foreground="White">
+            <ComboBox x:Name="adultsComboBox" Width="120" PreviewKeyDown="mailAddressTextBox_PreviewKeyDown" VerticalAlignment="Center" Grid.Row="6" Margin="3" SelectedValue="{Binding Adults}"  Height="Auto" HorizontalAlignment="Left" SelectionChanged="adultsComboBox_SelectionChanged"  Grid.Column="1" Foreground="White">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>
@@ -97,9 +75,9 @@
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סיסמא:"/>
             <TextBox x:Name="passwordTextBox" Grid.Row="3" Width="120" VerticalAlignment="Center" Text="{Binding Password, Mode=OneWayToSource, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:"/>
-            <DatePicker x:Name="entryDateDatePicker" SelectedDateChanged="entryDateDatePicker_SelectedDateChanged" VerticalAlignment="Bottom" Width="100" materialDesign:HintAssist.Hint="בחר תאריך" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  SelectedDate="{Binding EntryDate, Mode=OneWayToSource, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3.2,0,0,2.8" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
+            <DatePicker x:Name="entryDateDatePicker" SelectedDateChanged="entryDateDatePicker_SelectedDateChanged" VerticalAlignment="Center" Width="100" materialDesign:HintAssist.Hint="בחר תאריך" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  SelectedDate="{Binding EntryDate, Mode=OneWayToSource, StringFormat=dd/MM/yyyy}" Grid.Row="4"  HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Family Name:"/>
-            <TextBox x:Name="familyNameTextBox" Foreground="#FFFFFFFF" Width="120" VerticalAlignment="Center" Text="{Binding FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <TextBox x:Name="familyNameTextBox" Foreground="#FFFFFFFF" Width="120" PreviewKeyDown="mailAddressTextBox_PreviewKeyDown" VerticalAlignment="Center" Text="{Binding FamilyName, Mode=TwoWay, NotifyOnValidationError=False, ValidatesOnExceptions=False}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="13" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Garden:"/>
             <ComboBox x:Name="gardenComboBox" Width="120" VerticalAlignment="Center" SelectedItem="{Binding Garden}" Grid.Row="13" Margin="3"  Height="Auto" HorizontalAlignment="Left"  Grid.Column="1" Foreground="White">
                 <ComboBox.ItemsPanel>
@@ -125,7 +103,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Mail Address:"/>
-            <TextBox x:Name="mailAddressTextBox" Width="120" VerticalAlignment="Center"   Text="{Binding MailAddress, Mode=OneWayToSource, NotifyOnValidationError=True, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="mailAddressTextBox_TextChanged" Foreground="White"/>
+            <TextBox x:Name="mailAddressTextBox" PreviewKeyDown="mailAddressTextBox_PreviewKeyDown"  Width="120" VerticalAlignment="Center" Text="{Binding MailAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" TextChanged="mailAddressTextBox_TextChanged" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Pool:"/>
             <ComboBox x:Name="poolComboBox" Width="120" VerticalAlignment="Center" Grid.Row="11" Margin="3" SelectedItem="{Binding Pool}" ItemsSource="{Binding}" Height="Auto" HorizontalAlignment="Left"  Grid.Column="1" Foreground="White">
                 <ComboBox.ItemsPanel>
@@ -135,9 +113,9 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Private Name:"/>
-            <TextBox x:Name="privateNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
+            <TextBox x:Name="privateNameTextBox" Width="120" PreviewKeyDown="mailAddressTextBox_PreviewKeyDown"  VerticalAlignment="Center" Text="{Binding PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Release Date:"/>
-            <DatePicker x:Name="releaseDateDatePicker" Width="100" materialDesign:HintAssist.Hint="בחר תאריך" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Center" SelectedDate="{Binding ReleaseDate, Mode=OneWayToSource, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
+            <DatePicker x:Name="releaseDateDatePicker" Width="100" materialDesign:HintAssist.Hint="בחר תאריך" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Center" SelectedDate="{Binding ReleaseDate, Mode=OneWayToSource, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"  HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Sub Area:"/>
             <TextBox x:Name="subAreaTextBox" Width="120" VerticalAlignment="Center" Text="{Binding SubArea, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="9" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Button x:Name="confirm" Style="{StaticResource myButton}" Width="75" Height="30" Margin="0,0" Grid.Row="15" Grid.ColumnSpan="2" Content="אישור" Click="confirm_Click"/>

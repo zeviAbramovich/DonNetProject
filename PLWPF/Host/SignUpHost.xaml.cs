@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignColors.ColorManipulation;
 using BE;
 
 namespace PLWPF.Host
@@ -34,15 +35,17 @@ namespace PLWPF.Host
             try
             {
                 BL.FactoryMethode.GetBL().AddHost(host);
-
+                MessageBox.Show("נרשמת בהצלחה!!");
             }
             catch (CannotAddException cae)
             {
                 MessageBox.Show(cae.Message);
             }
-            MessageBox.Show("נרשמת בהצלחה!!");
+            
             this.NavigationService.Navigate(new HostControlMenu());
             
         }
+
+        
     }
 }

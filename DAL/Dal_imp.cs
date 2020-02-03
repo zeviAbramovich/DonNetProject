@@ -59,12 +59,15 @@ namespace DAL
 
         public bool AddRequest(GuestRequest guest)
         {
-            if (guest.GuestRequestKey == 0)//must be new request
+            var v = from item in GetAllGuestRequest()
+                    where item.GuestRequestKey == guest.GuestRequestKey
+                    select item;
+            if (!v.Any())//must be new request
             {
                 GuestRequest guestRequest = guest.Clone();
-                guestRequest.GuestRequestKey = ++Configuration.serialGuestRequest;
+                //guestRequest.GuestRequestKey = ++Configuration.serialGuestRequest;
                 guestRequest.RegistrationDate = DateTime.Now;
-                guestRequest.Status = StatusGuest.Open;
+                //guestRequest.Status = StatusGuest.Open;
                 DataSource.guestRequests.Add(guestRequest);
                 return true;
             }
