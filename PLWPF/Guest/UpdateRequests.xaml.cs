@@ -58,6 +58,7 @@ namespace PLWPF.Guest
                 System.Windows.Forms.MessageBox.Show("mail sent");
                 codeTextBox.IsEnabled = true;
                 send.Visibility=Visibility.Collapsed;
+                Confirm.Visibility = Visibility.Visible;
                 count = 0;
             }
 
@@ -75,7 +76,7 @@ namespace PLWPF.Guest
             }
             else
             {
-                MainWindow.GetParent<Page>(this).NavigationService.Navigate(new RequestsView());
+                MainWindow.GetParent<Page>(this).NavigationService.Navigate(new RequestsView(guestRequests));
             }
         }
     }

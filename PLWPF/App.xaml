@@ -9,6 +9,13 @@
 
         <ResourceDictionary>
 
+
+
+            <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
+                <Setter Property="IsEditable" Value="True" />
+            </Style>
+
+
             <Style x:Key="myButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
                 <Setter Property="BorderBrush" Value="Beige" />
                 <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>

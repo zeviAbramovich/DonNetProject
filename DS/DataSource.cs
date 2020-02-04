@@ -78,7 +78,7 @@ namespace DS
         {
             new GuestRequest
             {
-                 GuestRequestKey=10220000, PrivateName = "zevush", MailAddress="zevi3190@gmail.com", Status= StatusGuest.Open, EntryDate=DateTime.Parse("11/11/2019"), ReleaseDate=DateTime.Parse("20/11/2019")
+                 GuestRequestKey=10220000, PrivateName = "zevush", MailAddress="binim1010@gmail.com", Status= StatusGuest.Open, EntryDate=DateTime.Parse("11/11/2019"), ReleaseDate=DateTime.Parse("20/11/2019")
             } 
         };
         public static List<Host> hosts = new List<Host> 

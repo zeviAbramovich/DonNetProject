@@ -3,72 +3,93 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:PLWPF.Guest"
       xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.Guest.RequestsView"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="900"
       Title="RequestsView">
 
     <Page.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
+        
     </Page.Resources>
 
     <Grid DataContext="{StaticResource guestRequestViewSource}">
 
-        <ListView x:Name="guestRequestListView" SelectionMode="Single" HorizontalAlignment="Center"   ItemsSource="{Binding}" FlowDirection="RightToLeft">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn x:Name="areaColumn" Width="auto" Header="Area">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="6,-1,-6,-1" Text="{Binding Area}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="entryDateColumn" Width="auto" Header="Entry Date">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1" Text="{Binding EntryDate}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="familyNameColumn" Width="auto" Header="Family Name">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1" Text="{Binding FamilyName}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="hostingTypeColumn" Width="auto" Header="Hosting Type">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1" Text="{Binding HostingType}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="releaseDateColumn" Width="80" Header="Release Date">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker Margin="-6,-1" SelectedDate="{Binding ReleaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="subAreaColumn" Width="80" Header="Sub Area">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding SubArea, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-            <ListView.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+        <DataGrid  CanUserSortColumns="True"
+     CanUserAddRows="False"
+         AutoGenerateColumns="False"
+     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+         materialDesign:DataGridAssist.ColumnHeaderPadding="8" x:Name="guestRequestListView" SelectionMode="Single" HorizontalAlignment="Stretch"   ItemsSource="{Binding}" FlowDirection="RightToLeft" Foreground="#DDFFFFFF" BorderBrush="#89000000">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="guestRequestKeyColumn"   Binding="{ Binding  GuestRequestKey}" Width="Auto" Header="מספר בקשה" IsReadOnly="True" CanUserSort="True"  FrameworkElement.FlowDirection="RightToLeft">
+                </DataGridTextColumn>
+                <materialDesign:DataGridComboBoxColumn x:Name="hostingTypeColumn" SelectedValueBinding="{Binding HostingType}" ItemsSourceBinding="{Binding BE.HostingType}" IsEditable="True" Width="auto" Header="סוג האירוח" FrameworkElement.FlowDirection="RightToLeft"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="areaColumn" Width="auto" SelectedValueBinding="{Binding Area}" ItemsSourceBinding="{Binding BE.Area}" IsEditable="True"  Header="אזור" FrameworkElement.FlowDirection="RightToLeft">
 
+                </materialDesign:DataGridComboBoxColumn>
+                <DataGridTextColumn x:Name="adultsColumn" Width="Auto" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" Binding="{Binding Adults}" Header="מבוגרים" FrameworkElement.FlowDirection="RightToLeft"/>
+                <DataGridTextColumn x:Name="childrenColumn" Width="Auto" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" Binding="{Binding Children}" Header="ילדים" FrameworkElement.FlowDirection="RightToLeft"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="poolCB" Width="Auto" SelectedItemBinding="{Binding Pool}" Header="בריכה"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="jacuzziCB" Width="Auto" SelectedItemBinding="{Binding Jacuzzi}" Header="ג'קוזי"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="gardenCB" Width="Auto" SelectedItemBinding="{Binding Garden}" Header="גינה"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="childrensAttCB" Width="Auto" SelectedItemBinding="{Binding ChildrensAttractions}" Header="אטרקציות"/>
+                <DataGridTextColumn x:Name="subAreaColumn" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" Binding="{Binding SubArea, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="80" Header="Sub Area" FrameworkElement.FlowDirection="RightToLeft">
+                </DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="viewCalender"  Content="{materialDesign:PackIcon Kind=CalendarMonth, Size=25}" HorizontalAlignment="Center" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignFloatingActionMiniButton}"  VerticalAlignment="Center" Grid.Row="12"  IsEnabled="True"
+        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+        CommandTarget="{Binding ElementName=calenderV}" />
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <materialDesign:DialogHost Name="calenderV" HorizontalAlignment="Left" VerticalAlignment="Center" IsOpen="False"
+                       >
+            <materialDesign:DialogHost.DialogContent>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+            Height="Auto" />
+                        <RowDefinition
+            Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Calendar
+                      SelectedDate="{Binding EntryDate}" SelectionMode="SingleRange" 
+          x:Name="Calendar"
+          Margin="-1 -4 -1 0" />
+                    <StackPanel
+          Grid.Row="1"
+          Margin="8"
+          HorizontalAlignment="Right"
+          Orientation="Horizontal">
+                        <Button x:Name="clean" 
+                                Click="CloseCalendar_Click" 
+                                Style="{DynamicResource MaterialDesignFlatButton}">
+                            נקה
+                        </Button>
+                        <Button
+                           
+            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+            CommandParameter="0"
+            Style="{DynamicResource MaterialDesignFlatButton}">
+                            ביטול
+                        </Button>
+                        <Button Click="Confirm_Click"
+            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+            CommandParameter="1"
+            Style="{DynamicResource MaterialDesignFlatButton}">
+                            אישור
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
+    
 </Page>
