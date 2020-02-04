@@ -13,31 +13,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BE;
-using Utilities;
 
 namespace PLWPF.Guest
 {
     /// <summary>
-    /// Interaction logic for AddGuestRequest.xaml
+    /// Interaction logic for UpdateRequestView.xaml
     /// </summary>
-    public partial class AddGuestRequest : Page
+    public partial class UpdateRequestView : Page
     {
         GuestRequest request = new GuestRequest();
-        public AddGuestRequest()
+        public UpdateRequestView(GuestRequest guestRequest)
         {
             InitializeComponent();
-            entryDateDatePicker.SelectedDate = DateTime.Now;
-            releaseDateDatePicker.SelectedDate = DateTime.Now.AddDays(1);
+            request = guestRequest;
             grid1.DataContext = request;
             for (int i = 0; i < 20; i++)
             {
                 adultsComboBox.Items.Add(i);
                 childrenComboBox.Items.Add(i);
             }
-
+            
             entryDateDatePicker.DisplayDateStart = DateTime.Now.AddMonths(-1);
             entryDateDatePicker.DisplayDateEnd = DateTime.Now.AddMonths(11);
-            releaseDateDatePicker.DisplayDateStart = request.EntryDate.AddDays(1);
+            releaseDateDatePicker.DisplayDateStart = request.EntryDate.AddDays(2);
             releaseDateDatePicker.DisplayDateEnd = DateTime.Now.AddMonths(+11);
             areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Area));
             gardenComboBox.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
@@ -45,34 +43,28 @@ namespace PLWPF.Guest
             poolComboBox.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
             jacuzziComboBox.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
             hostingTypeComboBox.ItemsSource = Enum.GetValues(typeof(BE.HostingType));
-
         }
-
 
         private void confirm_Click(object sender, RoutedEventArgs e)
         {
-
+            List<GuestRequest> requests = new List<GuestRequest>();
             try
             {
-                BL.FactoryMethode.GetBL().AddRequest(request);
-                MessageBox.Show("נוסף בהצלחה!!");
+                BL.FactoryMethode.GetBL().UpdateRequest(request);
+                MessageBox.Show("עודכן בהצלחה!!");
+                requests = BL.FactoryMethode.GetBL().GuestRequestCondition(x => x.MailAddress == request.MailAddress);
+                this.NavigationService.Navigate(new RequestsView(requests));
 
             }
-            catch (CannotAddException cae)
+            catch (CannotUpdateException cue)
             {
-
-                MessageBox.Show(cae.Message);
+                MessageBox.Show(cue.Message);
             }
         }
-
-        
-
         private void entryDateDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             releaseDateDatePicker.DisplayDateStart = entryDateDatePicker.SelectedDate;
         }
-
-
 
         private void mailAddressTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -119,3 +111,4 @@ namespace PLWPF.Guest
         }
     }
 }
+

@@ -21,7 +21,7 @@
      CanUserAddRows="False"
          AutoGenerateColumns="False"
      materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-         materialDesign:DataGridAssist.ColumnHeaderPadding="8" x:Name="guestRequestListView" SelectionMode="Single" HorizontalAlignment="Stretch"   ItemsSource="{Binding}" FlowDirection="RightToLeft" Foreground="#DDFFFFFF" BorderBrush="#89000000">
+         materialDesign:DataGridAssist.ColumnHeaderPadding="8" x:Name="guestRequestListView" SelectionMode="Single" HorizontalAlignment="Stretch"   ItemsSource="{Binding}" FlowDirection="RightToLeft" Foreground="#DDFFFFFF" BorderBrush="#89000000" SelectionChanged="guestRequestListView_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="guestRequestKeyColumn"   Binding="{ Binding  GuestRequestKey}" Width="Auto" Header="מספר בקשה" IsReadOnly="True" CanUserSort="True"  FrameworkElement.FlowDirection="RightToLeft">
                 </DataGridTextColumn>

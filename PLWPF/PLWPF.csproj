@@ -96,6 +96,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Guest\UpdateRequestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="myResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -156,6 +160,9 @@
     </Compile>
     <Compile Include="Guest\UpdateRequests.xaml.cs">
       <DependentUpon>UpdateRequests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Guest\UpdateRequestView.xaml.cs">
+      <DependentUpon>UpdateRequestView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Host\ExistOrders.xaml.cs">
       <DependentUpon>ExistOrders.xaml</DependentUpon>

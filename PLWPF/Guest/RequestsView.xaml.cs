@@ -22,6 +22,7 @@ namespace PLWPF.Guest
     public partial class RequestsView : Page
     {
         List<GuestRequest> guestRequests = new List<GuestRequest>();
+        GuestRequest guest = new GuestRequest();
         public RequestsView()
         {
             InitializeComponent();
@@ -58,11 +59,17 @@ namespace PLWPF.Guest
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            //TODO not working
-            GuestRequest guest = guestRequestListView.SelectedCells as GuestRequest;
+            //TODO not work
+            guest = guestRequestListView.SelectedCells as GuestRequest;
             guest.EntryDate = Calendar.SelectedDates.First();
             guest.ReleaseDate = Calendar.SelectedDates.Last();
             SetBlackOutDates();
+        }
+
+        private void guestRequestListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            this.NavigationService.Navigate(new UpdateRequestView(guestRequestListView.SelectedItem as GuestRequest));
         }
     }
 }
