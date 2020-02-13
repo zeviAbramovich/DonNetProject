@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-//using BE;
+using BE;
 
 namespace DAL
 {
@@ -17,13 +17,13 @@ namespace DAL
         {
             if (unit.HostingUnitKey == 0)//must be new unit
             {
-                HostingUnit hostingUnit = unit.Clone();//על פי נספח 1     
-                XElement xElement;
-                xElement = XElement.Load("serialHostingUnit");
-                BE.
-                int temp = int.Parse(XEl)
+                HostingUnit hostingUnit = unit.Clone();//על פי נספח 1   
+
+                int temp = int.Parse(DS.DataSourceXML.Configuration.Element("serialHostingUnit").Value);
+                hostingUnit.HostingUnitKey = ++temp;
+                DS.DataSourceXML.Configuration.Element("serialHostingUnit").Value = temp.ToString();
                 hostingUnit.Diary = new bool[12, 31];
-                DS.DataSource.hostingUnitList.Add(hostingUnit);
+                DS.DataSourceXML.HostingUnits.Add(hostingUnit.)
                 if (!DS.DataSource.hosts.Any(x => x.HostId != unit.Owner.HostId))
                     DS.DataSource.hosts.Add(unit.Owner);
                 return true;

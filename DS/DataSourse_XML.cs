@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
+
 namespace DS
 {
     public static class DataSourceXML
@@ -15,18 +16,23 @@ namespace DS
         private static string solutionDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName;
 
         private static string filePath = System.IO.Path.Combine(solutionDirectory, "DS", "DataXML");
+        private static string filePath1 = System.IO.Path.Combine(solutionDirectory, "BE");
 
 
         private static XElement orderRoot = null;
         private static XElement guestRequestRoot = null;
         private static XElement hostRoot = null;
         private static XElement hostingUnitRoot = null;
+        private static XElement configurationRoot = null;
 
 
         private static string orderPath = Path.Combine(filePath, "OrderXml.xml");
         private static string guestRequestPath = Path.Combine(filePath, "GuestRequestXml.xml");
         private static string hostPath = Path.Combine(filePath, "HostXml.xml");
         private static string hostingUnitPath = Path.Combine(filePath, "HostingUnitXml.xml");
+        private static string configurationPath = Path.Combine(filePath1, "Configuration.xml");
+
+
 
         static DataSourceXML()
         {
@@ -64,6 +70,13 @@ namespace DS
 
             }
             guestRequestRoot = LoadData(guestRequestPath);
+           
+            if (!File.Exists(configurationPath))
+            {
+                CreateFile("Configuration", configurationPath);
+
+            }
+            configurationRoot = LoadData(configurationPath);
 
         }
         private static void CreateFile(string typename, string path)
@@ -90,6 +103,11 @@ namespace DS
         public static void SaveGuestRequests()
         {
             guestRequestRoot.Save(guestRequestPath);
+        }
+        
+        public static void SaveConfiguration()
+        {
+            configurationRoot.Save(configurationPath);
         }
 
         public static XElement Orders
@@ -125,6 +143,14 @@ namespace DS
             {
                 guestRequestRoot = LoadData(guestRequestPath);
                 return guestRequestRoot;
+            }
+        }
+        public static XElement Configuration
+        {
+            get
+            {
+                configurationRoot = LoadData(configurationPath);
+                return configurationRoot;
             }
         }
 
