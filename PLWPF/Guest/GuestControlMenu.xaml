@@ -7,7 +7,7 @@
              xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.Guest.GuestControlMenu"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="1100">
     <Page.Resources>
         <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
     </Page.Resources>
@@ -18,17 +18,18 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="111*"/>
+            <ColumnDefinition Width="289*"/>
+
         </Grid.ColumnDefinitions>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3">
+        <StackPanel HorizontalAlignment="Center" Grid.Column="0" Grid.RowSpan="3" Height="Auto"  VerticalAlignment="Center" >
             <Button Grid.Row="0" Style="{StaticResource myButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
     ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="הוסף בקשת אירוח" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Click="AddRequest_button" />
             <Button Grid.Row="1"  Style="{StaticResource myButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
             ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="עדכן בקשת אירוח" HorizontalAlignment="Center" VerticalAlignment="Center" Click="UpdateRequest_Click" />
             <Button x:Name="back" Content="חזרה" Style="{StaticResource myButton}" Height="40" Width="80" Click="back_Click"/>
         </StackPanel>
-        <Frame x:Name="view" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Frame x:Name="view" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Grid.RowSpan="3"  Margin="1,0,0,0" />
 
 
     </Grid>

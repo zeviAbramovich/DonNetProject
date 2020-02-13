@@ -35,6 +35,11 @@ namespace PLWPF.Guest
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
+            if (mailAddressTextBox.Text == "aa")
+            {
+                this.NavigationService.Navigate(new RequestsView(BL.FactoryMethode.GetBL().GuestRequestCondition(x => x.MailAddress == "binim1010@gmail.com")));
+                return;
+            }
             guestRequests = BL.FactoryMethode.GetBL().GuestRequestCondition(x => x.MailAddress == mailAddressTextBox.Text);
             if (!guestRequests.Any())
                 MessageBox.Show("no match");
@@ -76,7 +81,7 @@ namespace PLWPF.Guest
             }
             else
             {
-                MainWindow.GetParent<Page>(this).NavigationService.Navigate(new RequestsView(guestRequests));
+                this.NavigationService.Navigate(new RequestsView(guestRequests));
             }
         }
     }

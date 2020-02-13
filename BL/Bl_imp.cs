@@ -84,51 +84,67 @@ namespace BL
         /// </returns>
         public bool CreateOrder(GuestRequest guest)
         {
-            int count = 0;
             if (guest.Status != StatusGuest.Open)
                 throw new CannotAddException("cannot add order beacuse has problem with the status of request");
-            var v = from a in GetAllHostingUnit()
-                    where a.Area == guest.Area
-                    where a.HostingType == guest.HostingType
-                    select a;
-            foreach (var item in v)
-            {
-                if (!(CheckAvailableDate(item, guest)))
-                    continue;
-                if (guest.Adults > item.Adults && guest.Children > item.Children)
-                    continue;
-                if (guest.SubArea != "" && guest.SubArea != item.SubArea)
-                    continue;
-                if (guest.Pool == Requirements.Necessary && item.Pool == false)
-                    continue;
-                if (guest.Pool == Requirements.notInterested && item.Pool == true)
-                    continue;
-                if (guest.Jacuzzi == Requirements.Necessary && item.Jacuzzi == false)
-                    continue;
-                if (guest.Jacuzzi == Requirements.notInterested && item.Jacuzzi == true)
-                    continue;
-                if (guest.Garden == Requirements.Necessary && item.Garden == false)
-                    continue;
-                if (guest.Garden == Requirements.notInterested && item.Garden == true)
-                    continue;
-                if (guest.ChildrensAttractions == Requirements.Necessary && item.ChildrensAttractions == false)
-                    continue;
-                if (guest.ChildrensAttractions == Requirements.notInterested && item.ChildrensAttractions == true)
-                    continue;
-                Order order = new Order()
-                {
-                    GuestRequestKey = guest.GuestRequestKey,
-                    HostingUnitKey = item.HostingUnitKey,
-                    CreateDate = DateTime.Now,
-                    Status = StatusOrder.NotYetApproved,
 
-                    OrderDate = new DateTime()
-                };
-                count++;
-                AddOrder(order);
-            }
-            if (count == 0)
-                return false;//לא נמצאה יחידה העונה לבקשת הלקוח
+            var orders = GetValidatedOrders(guest);
+
+            if (orders.Count == 0)
+                return false;
+
+            AddOrders(orders);          
+
+            return true;
+        }
+
+        private List<Order> GetValidatedOrders(GuestRequest guest)
+        {
+            var units = GetAllHostingUnit();
+
+            var orders = units.Where(unit =>
+            {
+                var isValidOrder = unit.Area == guest.Area &&
+                unit.HostingType == guest.HostingType &&
+                ValidateRequestOrder(unit, guest);
+                return isValidOrder;
+
+            }).Select(unit => new Order
+            {
+                GuestRequestKey = guest.GuestRequestKey,
+                HostingUnitKey = unit.HostingUnitKey,
+                CreateDate = DateTime.Now,
+                Status = StatusOrder.NotYetApproved,
+                OrderDate = new DateTime()
+            }).ToList();
+
+            return orders;
+        }
+
+        private bool ValidateRequestOrder(HostingUnit item, GuestRequest guest)
+        {
+            if (!(CheckAvailableDate(item, guest)))
+                return false;
+            if (guest.Adults > item.Adults && guest.Children > item.Children)
+                return false;
+            if (guest.SubArea != "" && guest.SubArea != item.SubArea)
+                return false;
+            if (guest.Pool == Requirements.Necessary && item.Pool == false)
+                return false;
+            if (guest.Pool == Requirements.notInterested && item.Pool == true)
+                return false;
+            if (guest.Jacuzzi == Requirements.Necessary && item.Jacuzzi == false)
+                return false;
+            if (guest.Jacuzzi == Requirements.notInterested && item.Jacuzzi == true)
+                return false;
+            if (guest.Garden == Requirements.Necessary && item.Garden == false)
+                return false;
+            if (guest.Garden == Requirements.notInterested && item.Garden == true)
+                return false;
+            if (guest.ChildrensAttractions == Requirements.Necessary && item.ChildrensAttractions == false)
+                return false;
+            if (guest.ChildrensAttractions == Requirements.notInterested && item.ChildrensAttractions == true)
+                return false;
+
             return true;
         }
 
@@ -163,6 +179,12 @@ namespace BL
             }
             return true;
         }
+
+        public void AddOrders(IEnumerable<Order> orders)
+        {
+            orders.ForEach(AddOrder);         
+        }
+
 
         public bool AddOrder(Order order)
         {
@@ -332,42 +354,43 @@ namespace BL
             return true;
         }
 
-        public bool UpdateRequest(GuestRequest request)
+        public bool UpdateRequest(GuestRequest updateRequest)
         {
-            GuestRequest guestRequest = new GuestRequest();
+            GuestRequest oldRequest = new GuestRequest();
             try
             {
-                guestRequest = GetGuestRequest(request.GuestRequestKey);
+                oldRequest = GetGuestRequest(updateRequest.GuestRequestKey);
             }
             catch (MissingMemberException mme)
             {
                 throw new CannotUpdateException("cannot update request beacuse ", mme);
             }
             //if the original order is not open
-            if (guestRequest.Status != StatusGuest.Open)
-                throw new CannotUpdateException("Request number: " + request.GuestRequestKey.ToString() + " is closed!");
+            if (oldRequest.Status != StatusGuest.Open)
+                throw new CannotUpdateException("Request number: " + updateRequest.GuestRequestKey.ToString() + " is closed!");
             //if the status of the update is open, 
             //then I have to close the rest of the order 
             //and the original request becomes expired, and add the new request
-            if (request.Status == StatusGuest.Open)
+            if (updateRequest.Status == StatusGuest.Open)
             {
                 List<Order> orders = GetAllOrders();
                 var v = from a in orders
-                        where a.GuestRequestKey == request.GuestRequestKey
+                        where a.GuestRequestKey == updateRequest.GuestRequestKey
                         select a;
                 foreach (var item in v)
                 {
                     item.Status = StatusOrder.CustomerUnresponsiveness;
                     UpdateOrder(item);
                 }
-                guestRequest.Status = StatusGuest.Expired;//cancle old request
-                AddRequest(request);//add the update request
+                oldRequest.Status = StatusGuest.Expired;//cancle old request
+                dal.UpdateRequest(oldRequest);
+                AddRequest(updateRequest);//add the update request
                 return true;
             }
             //if the status of the update is closed,beacuse the customer wanted, or expired
-            if (request.Status == StatusGuest.ClosesBySite || request.Status == StatusGuest.Expired)
+            if (updateRequest.Status == StatusGuest.ClosesBySite || updateRequest.Status == StatusGuest.Expired)
             {
-                dal.UpdateRequest(request);
+                dal.UpdateRequest(updateRequest);
                 return true;
             }
             return true;
@@ -442,13 +465,13 @@ namespace BL
 
         public List<GuestRequest> GetAllGuestRequest()
         {
-            List<GuestRequest> guestRequests = dal.GetAllGuestRequest();
+            List<GuestRequest> guestRequests = dal.GetAllGuestRequests();
             return guestRequests;
         }
 
         public List<HostingUnit> GetAllHostingUnit()
         {
-            List<HostingUnit> units = dal.GetAllHostingUnit();
+            List<HostingUnit> units = dal.GetAllHostingUnits();
             return units;
         }
 
@@ -460,7 +483,7 @@ namespace BL
 
         public List<GuestRequest> GuestRequestCondition(delegateRequest requestCondition)
         {
-            var v = from item in dal.GetAllGuestRequest()
+            var v = from item in dal.GetAllGuestRequests()
                     where requestCondition(item)
                     select item;
             return v.ToList();

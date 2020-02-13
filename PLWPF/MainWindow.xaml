@@ -13,8 +13,9 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" >
-  
+        Title="MainWindow" Height="650" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" 
+   >
+
     <Window.Resources>
         
         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
@@ -22,15 +23,10 @@
             <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>
         </Style>
         <CollectionViewSource x:Key="slideWipeViewSource" d:DesignSource="{d:DesignInstance {x:Type materialDesign:SlideWipe}, CreateList=True}"/>
-        <ResourceDictionary x:Key="date">
-        <DataTemplate DataType="{x:Type system:DateTime}">
-            <StackPanel Margin="16">
-                <TextBlock>England win the World Cup:</TextBlock>
-                <TextBlock Margin="0 8 0 0" Text="{Binding }" />
-                <TextBlock Margin="0 8 0 0" >You will never see that again.</TextBlock>
-                <Button  Margin="0 8 0 0" IsDefault="True" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignFlatButton}">AWESOME</Button>
-            </StackPanel>
-        </DataTemplate>
+        <ResourceDictionary x:Key="da">
+            <DataTemplate DataType="{x:Type system:DateTime}">
+                <DatePicker SelectedDateFormat="Short"/>
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <Grid >

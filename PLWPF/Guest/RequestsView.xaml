@@ -11,7 +11,7 @@
       Title="RequestsView">
 
     <Page.Resources>
-        <CollectionViewSource x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
+        <CollectionViewSource   x:Key="guestRequestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:GuestRequest}, CreateList=True}"/>
         
     </Page.Resources>
 
@@ -21,75 +21,24 @@
      CanUserAddRows="False"
          AutoGenerateColumns="False"
      materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-         materialDesign:DataGridAssist.ColumnHeaderPadding="8" x:Name="guestRequestListView" SelectionMode="Single" HorizontalAlignment="Stretch"   ItemsSource="{Binding}" FlowDirection="RightToLeft" Foreground="#DDFFFFFF" BorderBrush="#89000000" SelectionChanged="guestRequestListView_SelectionChanged">
+         materialDesign:DataGridAssist.ColumnHeaderPadding="8" x:Name="guestRequestListView" SelectionMode="Single" HorizontalAlignment="Stretch"   ItemsSource="{Binding}" FlowDirection="RightToLeft" Foreground="#DDFFFFFF" BorderBrush="#89000000" MouseLeftButtonDown="guestRequestListView_MouseLeftButtonDown">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="guestRequestKeyColumn"   Binding="{ Binding  GuestRequestKey}" Width="Auto" Header="מספר בקשה" IsReadOnly="True" CanUserSort="True"  FrameworkElement.FlowDirection="RightToLeft">
                 </DataGridTextColumn>
-                <materialDesign:DataGridComboBoxColumn x:Name="hostingTypeColumn" SelectedValueBinding="{Binding HostingType}" ItemsSourceBinding="{Binding BE.HostingType}" IsEditable="True" Width="auto" Header="סוג האירוח" FrameworkElement.FlowDirection="RightToLeft"/>
-                <materialDesign:DataGridComboBoxColumn x:Name="areaColumn" Width="auto" SelectedValueBinding="{Binding Area}" ItemsSourceBinding="{Binding BE.Area}" IsEditable="True"  Header="אזור" FrameworkElement.FlowDirection="RightToLeft">
+                <materialDesign:DataGridComboBoxColumn x:Name="hostingTypeColumn" TextBinding="{Binding HostingType}" IsEditable="True" Width="auto" Header="סוג האירוח" FrameworkElement.FlowDirection="RightToLeft"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="areaColumn" Width="auto" TextBinding="{Binding Area}"  IsEditable="True"  Header="אזור" FrameworkElement.FlowDirection="RightToLeft">
 
                 </materialDesign:DataGridComboBoxColumn>
                 <DataGridTextColumn x:Name="adultsColumn" Width="Auto" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" Binding="{Binding Adults}" Header="מבוגרים" FrameworkElement.FlowDirection="RightToLeft"/>
                 <DataGridTextColumn x:Name="childrenColumn" Width="Auto" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" Binding="{Binding Children}" Header="ילדים" FrameworkElement.FlowDirection="RightToLeft"/>
-                <materialDesign:DataGridComboBoxColumn x:Name="poolCB" Width="Auto" SelectedItemBinding="{Binding Pool}" Header="בריכה"/>
-                <materialDesign:DataGridComboBoxColumn x:Name="jacuzziCB" Width="Auto" SelectedItemBinding="{Binding Jacuzzi}" Header="ג'קוזי"/>
-                <materialDesign:DataGridComboBoxColumn x:Name="gardenCB" Width="Auto" SelectedItemBinding="{Binding Garden}" Header="גינה"/>
-                <materialDesign:DataGridComboBoxColumn x:Name="childrensAttCB" Width="Auto" SelectedItemBinding="{Binding ChildrensAttractions}" Header="אטרקציות"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="poolCB" Width="Auto" TextBinding="{Binding Pool}" Header="בריכה"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="jacuzziCB" Width="Auto" TextBinding="{Binding Jacuzzi}" Header="ג'קוזי"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="gardenCB" Width="Auto" TextBinding="{Binding Garden}" Header="גינה"/>
+                <materialDesign:DataGridComboBoxColumn x:Name="childrensAttCB" Width="Auto" TextBinding="{Binding ChildrensAttractions}" Header="אטרקציות"/>
                 <DataGridTextColumn x:Name="subAreaColumn" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" Binding="{Binding SubArea, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="80" Header="Sub Area" FrameworkElement.FlowDirection="RightToLeft">
                 </DataGridTextColumn>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="viewCalender"  Content="{materialDesign:PackIcon Kind=CalendarMonth, Size=25}" HorizontalAlignment="Center" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignFloatingActionMiniButton}"  VerticalAlignment="Center" Grid.Row="12"  IsEnabled="True"
-        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-        CommandTarget="{Binding ElementName=calenderV}" />
-
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <materialDesign:DialogHost Name="calenderV" HorizontalAlignment="Left" VerticalAlignment="Center" IsOpen="False"
-                       >
-            <materialDesign:DialogHost.DialogContent>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-            Height="Auto" />
-                        <RowDefinition
-            Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Calendar
-                      SelectedDate="{Binding EntryDate}" SelectionMode="SingleRange" 
-          x:Name="Calendar"
-          Margin="-1 -4 -1 0" />
-                    <StackPanel
-          Grid.Row="1"
-          Margin="8"
-          HorizontalAlignment="Right"
-          Orientation="Horizontal">
-                        <Button x:Name="clean" 
-                                Click="CloseCalendar_Click" 
-                                Style="{DynamicResource MaterialDesignFlatButton}">
-                            נקה
-                        </Button>
-                        <Button
-                           
-            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-            CommandParameter="0"
-            Style="{DynamicResource MaterialDesignFlatButton}">
-                            ביטול
-                        </Button>
-                        <Button Click="Confirm_Click"
-            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-            CommandParameter="1"
-            Style="{DynamicResource MaterialDesignFlatButton}">
-                            אישור
-                        </Button>
-                    </StackPanel>
-                </Grid>
-            </materialDesign:DialogHost.DialogContent>
-        </materialDesign:DialogHost>
     </Grid>
     
 </Page>

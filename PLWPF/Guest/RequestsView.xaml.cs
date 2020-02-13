@@ -30,46 +30,28 @@ namespace PLWPF.Guest
         public RequestsView(List<GuestRequest> requests)
         {
             InitializeComponent();
-            guestRequestListView.ItemsSource = requests;
             guestRequests = requests;
+            guestRequestListView.ItemsSource = guestRequests;
+            
             areaColumn.ItemsSource = Enum.GetValues(typeof(BE.Area));
             gardenCB.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
             childrensAttCB.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
             poolCB.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
             jacuzziCB.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
             hostingTypeColumn.ItemsSource = Enum.GetValues(typeof(BE.HostingType));
-            SetBlackOutDates();
+            
         }
 
+        //private void guestRequestListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    GuestRequest g = guestRequestListView.SelectedItem as GuestRequest;
+        //    this.NavigationService.Navigate(new UpdateRequestView(g));
+        //}
 
-        private void SetBlackOutDates()
+        private void guestRequestListView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            foreach (var item in guestRequests)
-            {
-                Calendar.BlackoutDates.Add(new CalendarDateRange(item.EntryDate, item.ReleaseDate));
-               
-            }
-
-        }
-
-        private void CloseCalendar_Click(object sender, RoutedEventArgs e)
-        {
-            Calendar.BlackoutDates.Clear();
-        }
-
-        private void Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO not work
-            guest = guestRequestListView.SelectedCells as GuestRequest;
-            guest.EntryDate = Calendar.SelectedDates.First();
-            guest.ReleaseDate = Calendar.SelectedDates.Last();
-            SetBlackOutDates();
-        }
-
-        private void guestRequestListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            this.NavigationService.Navigate(new UpdateRequestView(guestRequestListView.SelectedItem as GuestRequest));
+            GuestRequest g = (GuestRequest)guestRequestListView.SelectedItem;
+            this.NavigationService.Navigate(new UpdateRequestView(g));
         }
     }
 }

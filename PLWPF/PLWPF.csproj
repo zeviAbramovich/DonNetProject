@@ -164,6 +164,7 @@
     <Compile Include="Guest\UpdateRequestView.xaml.cs">
       <DependentUpon>UpdateRequestView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Host\Converter.cs" />
     <Compile Include="Host\ExistOrders.xaml.cs">
       <DependentUpon>ExistOrders.xaml</DependentUpon>
     </Compile>

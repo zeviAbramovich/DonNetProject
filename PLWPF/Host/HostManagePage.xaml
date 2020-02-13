@@ -16,8 +16,8 @@
 
     <Grid DataContext="{StaticResource orderViewSource}"  >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*" />
-            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="111*" />
+            <ColumnDefinition Width="289*"/>
         </Grid.ColumnDefinitions>
         <StackPanel x:Name="_buttons" Style="{StaticResource buttonStack}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="Auto" >
             <TextBlock x:Name="privateName" VerticalAlignment="Top" Height="Auto"  FlowDirection="RightToLeft" FontWeight="Bold" FontSize="28" Foreground="#FFFDFDFD"/>

@@ -11,6 +11,7 @@ namespace DAL
 {
     public interface IDal
     {
+        
         bool AddRequest(GuestRequest request);
         bool UpdateRequest(GuestRequest request);
 
@@ -29,8 +30,8 @@ namespace DAL
         GuestRequest GetGuestRequest(long key);
         Host GetHost(long key);
 
-        List<HostingUnit> GetAllHostingUnit();
-        List<GuestRequest> GetAllGuestRequest();
+        List<HostingUnit> GetAllHostingUnits();
+        List<GuestRequest> GetAllGuestRequests();
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
         List<Host> GetAllHosts();

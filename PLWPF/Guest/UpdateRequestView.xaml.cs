@@ -35,7 +35,7 @@ namespace PLWPF.Guest
             
             entryDateDatePicker.DisplayDateStart = DateTime.Now.AddMonths(-1);
             entryDateDatePicker.DisplayDateEnd = DateTime.Now.AddMonths(11);
-            releaseDateDatePicker.DisplayDateStart = request.EntryDate.AddDays(2);
+            
             releaseDateDatePicker.DisplayDateEnd = DateTime.Now.AddMonths(+11);
             areaComboBox.ItemsSource = Enum.GetValues(typeof(BE.Area));
             gardenComboBox.ItemsSource = Enum.GetValues(typeof(BE.Requirements));
@@ -60,6 +60,11 @@ namespace PLWPF.Guest
             {
                 MessageBox.Show(cue.Message);
             }
+           catch(CannotAddException cae)
+            {
+                MessageBox.Show(cae.Message);
+            }
+            
         }
         private void entryDateDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {

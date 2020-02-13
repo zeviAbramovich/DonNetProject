@@ -17,7 +17,7 @@
 
     <Grid>
 
-        <Grid x:Name="grid1" VerticalAlignment="Center"  HorizontalAlignment="Center" DataContext="{StaticResource hostViewSource}" FlowDirection="RightToLeft">
+        <Grid x:Name="grid1" VerticalAlignment="Center"  HorizontalAlignment="Center" DataContext="{StaticResource hostViewSource}" FlowDirection="RightToLeft" Margin="249,20,291,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -52,14 +52,14 @@
             <TextBox x:Name="phoneNumberTextBox" Width="120" materialDesign:HintAssist.Hint="מספר נייד" VerticalAlignment="Center" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Password:"/>
             <TextBox x:Name="passwordTextBox" Width="120" materialDesign:HintAssist.Hint="בחר סיסמא" VerticalAlignment="Center" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
-            <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Bank Account Number:"/>
+            <Label VerticalAlignment="Center" Grid.Row="6" Margin="3,4.8,0,1.2" HorizontalAlignment="Left" Grid.Column="0" Content="Bank Account Number:"/>
             <TextBox x:Name="bankAccountNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostBankAccount.BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Bank Name:"/>
             <TextBox x:Name="bankNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostBankAccount.BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Bank Number:"/>
             <TextBox x:Name="bankNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostBankAccount.BankNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Branch Number:"/>
-            <TextBox x:Name="branchNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostBankAccount.BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="9" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
+            <ComboBox x:Name="branchNumberComboBox" SelectionChanged="comboBoxBanks_SelectionChanged" Width="120" VerticalAlignment="Center"   Grid.Row="9" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="10" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Branch Address:"/>
             <TextBox x:Name="branchAddressTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostBankAccount.BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="11" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Branch City:"/>

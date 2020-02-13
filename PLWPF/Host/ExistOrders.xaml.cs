@@ -23,7 +23,7 @@ namespace PLWPF
     /// </summary>
     public partial class ExistOrders : Page
     {
-        public long currentId { get; set; }
+        public static long currentId { get; set; }
         List<Order> orders = new List<Order>();
         public ExistOrders()
         {

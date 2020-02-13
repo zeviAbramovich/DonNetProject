@@ -38,7 +38,7 @@ namespace PLWPF
 
         private void Guest_Click(object sender, RoutedEventArgs e)
         {
-            
+
             //Page guest = new GuestControlMenu();
             //full_screen.Refresh();
             //full_screen.Navigate(guest);

@@ -21,9 +21,9 @@ namespace DAL
                 HostingUnit hostingUnit = unit.Clone();//על פי נספח 1
                 hostingUnit.HostingUnitKey = ++Configuration.serialHostingUnit;
                 hostingUnit.Diary = new bool[12, 31];
-                DataSource.hostingUnitList.Add(hostingUnit);
-                if (!DataSource.hosts.Any(x => x.HostId != unit.Owner.HostId))
-                    DataSource.hosts.Add(unit.Owner);
+                DS.DataSource.hostingUnitList.Add(hostingUnit);
+                if (!DS.DataSource.hosts.Any(x => x.HostId != unit.Owner.HostId))
+                    DS.DataSource.hosts.Add(unit.Owner);
                 return true;
             }
             try//The key is not 0, so I'm posting an update 
@@ -43,7 +43,7 @@ namespace DAL
             {
                 Order order1 = order.Clone();
                 order1.OrderKey = ++Configuration.serialOrder;
-                DataSource.orders.Add(order1);
+                DS.DataSource.orders.Add(order1);
                 return true;
             }
             try//The key is not 0, so I'm posting an update 
@@ -59,7 +59,7 @@ namespace DAL
 
         public bool AddRequest(GuestRequest guest)
         {
-            var v = from item in GetAllGuestRequest()
+            var v = from item in GetAllGuestRequests()
                     where item.GuestRequestKey == guest.GuestRequestKey
                     select item;
             if (!v.Any())//must be new request
@@ -68,7 +68,7 @@ namespace DAL
                 //guestRequest.GuestRequestKey = ++Configuration.serialGuestRequest;
                 guestRequest.RegistrationDate = DateTime.Now;
                 //guestRequest.Status = StatusGuest.Open;
-                DataSource.guestRequests.Add(guestRequest);
+                DS.DataSource.guestRequests.Add(guestRequest);
                 return true;
             }
             try
@@ -84,21 +84,21 @@ namespace DAL
 
         public bool AddHost(Host host)
         {
-            DataSource.hosts.Add(host);
+            DS.DataSource.hosts.Add(host);
             return true;
         }
 
         public bool DeleteHostingUnit(long key)
         {
             HostingUnit unit = new HostingUnit();
-            var v = from item in DataSource.hostingUnitList
+            var v = from item in DS.DataSource.hostingUnitList
                     where item.HostingUnitKey == key//catch the unit I want to delete
                     select item;
             foreach (HostingUnit item in v)
                 unit = item;//unit is originally unit
             try
             {
-                DataSource.hostingUnitList.Remove(unit);    
+                DS.DataSource.hostingUnitList.Remove(unit);    
                 return true;
             }
             catch (MissingMemberException ms)
@@ -118,27 +118,27 @@ namespace DAL
             {
                 throw new CannotUpdateException("Hosting Unit number " + updateUnit.HostingUnitKey + " not found", me);
             }
-            hosting = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == updateUnit.HostingUnitKey);//hosting is the originally unit
-            DataSource.hostingUnitList.Remove(hosting);//delete the originally
-            DataSource.hostingUnitList.Add(updateUnit);//add the originally
+            hosting = DS.DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == updateUnit.HostingUnitKey);//hosting is the originally unit
+            DS.DataSource.hostingUnitList.Remove(hosting);//delete the originally
+            DS.DataSource.hostingUnitList.Add(updateUnit);//add the originally
             return true;
         }
 
         public bool UpdateOrder(Order updateOrder)
         {
-            Order originalOrder = DataSource.orders.FirstOrDefault(c => c.OrderKey == updateOrder.OrderKey);
+            Order originalOrder = DS.DataSource.orders.FirstOrDefault(c => c.OrderKey == updateOrder.OrderKey);
             if (originalOrder == null)
                 throw new CannotUpdateException("Cannot update! order number " + updateOrder.OrderKey.ToString() + "not exsist");
             originalOrder.Status = updateOrder.Status;
             originalOrder.Commision = updateOrder.Commision;
-            HostingUnit unit = DataSource.hostingUnitList.Find(x => x.HostingUnitKey == updateOrder.HostingUnitKey);
+            HostingUnit unit = DS.DataSource.hostingUnitList.Find(x => x.HostingUnitKey == updateOrder.HostingUnitKey);
             unit.SumComission += updateOrder.Commision;
             return true;
         }
 
         public bool UpdateRequest(GuestRequest updateRequest)
         {
-            GuestRequest OriginalRequest = DataSource.guestRequests.Find(g => g.GuestRequestKey == updateRequest.GuestRequestKey);
+            GuestRequest OriginalRequest = DS.DataSource.guestRequests.Find(g => g.GuestRequestKey == updateRequest.GuestRequestKey);
             if (OriginalRequest == null)
                 throw new CannotUpdateException("There is no RequestKey " + updateRequest.GuestRequestKey.ToString());
             //if my status change is open, then I close the old request and add the new one
@@ -159,10 +159,10 @@ namespace DAL
 
         public bool UpdateHost(Host host)
         {
-            Host hostOriginal = DataSource.hosts.FirstOrDefault(x => x.HostId == host.HostId);
-            DataSource.hosts.Remove(hostOriginal);
-            DataSource.hosts.Add(host);
-            var v = from item in DataSource.hostingUnitList
+            Host hostOriginal = DS.DataSource.hosts.FirstOrDefault(x => x.HostId == host.HostId);
+            DS.DataSource.hosts.Remove(hostOriginal);
+            DS.DataSource.hosts.Add(host);
+            var v = from item in DS.DataSource.hostingUnitList
                     where item.Owner.HostId == host.HostId
                     select item;
             foreach (HostingUnit item in v)
@@ -221,19 +221,27 @@ namespace DAL
 
             return branches;
         }
-
-        public List<GuestRequest> GetAllGuestRequest()
+        /// <summary>
+        /// get only the not expired requests
+        /// </summary>
+        /// <returns>
+        /// List<GuestRequest>
+        /// </returns>
+        public List<GuestRequest> GetAllGuestRequests()
         {
             List<GuestRequest> guestRequests = new List<GuestRequest>();
-            foreach (var item in DataSource.guestRequests)
+            var v = from item in DS.DataSource.guestRequests
+                    where item.Status != StatusGuest.Expired
+                    select item;
+            foreach (var item in v)
                 guestRequests.Add(item.Clone());
             return guestRequests;
         }
 
-        public List<HostingUnit> GetAllHostingUnit()
+        public List<HostingUnit> GetAllHostingUnits()
         {
             List<HostingUnit> hostingUnits = new List<HostingUnit>();
-            foreach (var item in DataSource.hostingUnitList)
+            foreach (var item in DS.DataSource.hostingUnitList)
                 hostingUnits.Add(item.Clone());
             return hostingUnits;
         }
@@ -241,7 +249,7 @@ namespace DAL
         public List<Order> GetAllOrders()
         {
             List<Order> orders = new List<Order>();
-            foreach (var item in DataSource.orders)
+            foreach (var item in DS.DataSource.orders)
                 orders.Add(item.Clone());
             return orders;
         }
@@ -249,14 +257,14 @@ namespace DAL
         public List<Host> GetAllHosts()
         {
             List<Host> hosts = new List<Host>();
-            foreach (var item in DataSource.hosts)
+            foreach (var item in DS.DataSource.hosts)
                 hosts.Add(item.Clone());
             return hosts;
         }
 
         public HostingUnit GetHostingUnit(long key)
         {
-            HostingUnit tempUnit = DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == key);
+            HostingUnit tempUnit = DS.DataSource.hostingUnitList.FirstOrDefault(x => x.HostingUnitKey == key);
             if (tempUnit == null)
                 throw new MissingMemberException("did not find unit");
             HostingUnit unit = tempUnit.Clone();
@@ -265,7 +273,7 @@ namespace DAL
 
         public Order GetOrder(long key)
         {
-            Order tempOrder = DataSource.orders.FirstOrDefault(x => x.OrderKey == key);
+            Order tempOrder = DS.DataSource.orders.FirstOrDefault(x => x.OrderKey == key);
             if (tempOrder == null)
                 throw new MissingMemberException("did not find order");
             Order order = tempOrder.Clone();
@@ -274,7 +282,7 @@ namespace DAL
 
         public GuestRequest GetGuestRequest(long key)
         {
-            GuestRequest tempRequest = DataSource.guestRequests.FirstOrDefault(x => x.GuestRequestKey == key);//check if exist
+            GuestRequest tempRequest = DS.DataSource.guestRequests.FirstOrDefault(x => x.GuestRequestKey == key);//check if exist
             if (tempRequest == null)
                 throw new MissingMemberException("did not find guest request",this.GetType().ToString());
             GuestRequest guest = tempRequest.Clone();
@@ -287,7 +295,7 @@ namespace DAL
             
             try
             {
-                host = DataSource.hosts.FirstOrDefault(x => x.HostId == key).Clone();
+                host = DS.DataSource.hosts.FirstOrDefault(x => x.HostId == key).Clone();
                 
             }
             catch (ArgumentNullException)

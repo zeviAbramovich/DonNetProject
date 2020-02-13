@@ -14,7 +14,8 @@
             <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
                 <Setter Property="IsEditable" Value="True" />
             </Style>
-
+               
+            
 
             <Style x:Key="myButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
                 <Setter Property="BorderBrush" Value="Beige" />
@@ -45,5 +46,6 @@
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="BlueGrey" SecondaryColor="LightBlue"></materialDesign:BundledTheme>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
     </Application.Resources>
 </Application>
