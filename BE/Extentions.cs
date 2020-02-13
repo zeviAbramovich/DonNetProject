@@ -23,8 +23,6 @@ namespace BE
                                   );
         }
 
-       
-
         public static void SaveToXML<T>(T source, string path)
         {
             FileStream file = new FileStream(path, FileMode.Create);

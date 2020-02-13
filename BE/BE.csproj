@@ -73,5 +73,8 @@
     <None Include="Properties\DataSources\Order.datasource" />
     <None Include="Properties\DataSources\Utilities.Tools.datasource" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuratin_XML.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

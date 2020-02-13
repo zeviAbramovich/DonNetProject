@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace DataSource
+namespace DS
 {
     public static class DataSourceXML
     {
         //private static string currentDirectory = Directory.GetCurrentDirectory();
         private static string solutionDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName;
 
-        private static string filePath = System.IO.Path.Combine(solutionDirectory, "DataSource", "DataXML");
+        private static string filePath = System.IO.Path.Combine(solutionDirectory, "DS", "DataXML");
 
 
         private static XElement orderRoot = null;
@@ -27,8 +27,6 @@ namespace DataSource
         private static string guestRequestPath = Path.Combine(filePath, "GuestRequestXml.xml");
         private static string hostPath = Path.Combine(filePath, "HostXml.xml");
         private static string hostingUnitPath = Path.Combine(filePath, "HostingUnitXml.xml");
-
-
 
         static DataSourceXML()
         {

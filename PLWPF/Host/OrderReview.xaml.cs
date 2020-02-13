@@ -44,8 +44,7 @@ namespace PLWPF.Host
           //  statusComboBox.SelectedValuePath = "Value";
             //statusComboBox.Text = order.Status.ToString();
             old = order;
-            confirmation.IsEnabled = false;
-            
+            confirmation.IsEnabled = false;    
         }
 
         private void Mail_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
