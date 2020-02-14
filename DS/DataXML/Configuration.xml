@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration >
+  <serialHostingUnit>
+    10000000
+  </serialHostingUnit>
+  <serialGuestRequest>
+    10000000
+  </serialGuestRequest>
+  <serialOrder>
+    10000000
+  </serialOrder>
+  <commision>
+    10
+  </commision>
+  <timeForThreads>
+    30
+  </timeForThreads>
+</Configuration>

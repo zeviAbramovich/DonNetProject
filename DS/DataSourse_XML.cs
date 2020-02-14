@@ -15,9 +15,8 @@ namespace DS
         //private static string currentDirectory = Directory.GetCurrentDirectory();
         private static string solutionDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName;
 
-        private static string filePath = System.IO.Path.Combine(solutionDirectory, "DS", "DataXML");
-        private static string filePath1 = System.IO.Path.Combine(solutionDirectory, "BE");
-
+        private static string filePath =Path.Combine(solutionDirectory, "DS", "DataXML");
+       
 
         private static XElement orderRoot = null;
         private static XElement guestRequestRoot = null;
@@ -30,7 +29,7 @@ namespace DS
         private static string guestRequestPath = Path.Combine(filePath, "GuestRequestXml.xml");
         private static string hostPath = Path.Combine(filePath, "HostXml.xml");
         private static string hostingUnitPath = Path.Combine(filePath, "HostingUnitXml.xml");
-        private static string configurationPath = Path.Combine(filePath1, "Configuration.xml");
+        private static string configurationPath = Path.Combine(filePath, "Configuration.xml");
 
 
 
@@ -145,6 +144,7 @@ namespace DS
                 return guestRequestRoot;
             }
         }
+
         public static XElement Configuration
         {
             get

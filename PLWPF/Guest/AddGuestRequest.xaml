@@ -72,8 +72,6 @@
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
             </ComboBox>
-            <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="סיסמא:"/>
-            <TextBox x:Name="passwordTextBox" Grid.Row="3" Width="120" VerticalAlignment="Center" Text="{Binding Password, Mode=OneWayToSource, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Entry Date:"/>
             <DatePicker x:Name="entryDateDatePicker" SelectedDateChanged="entryDateDatePicker_SelectedDateChanged" VerticalAlignment="Center" Width="100" materialDesign:HintAssist.Hint="בחר תאריך" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  SelectedDate="{Binding EntryDate, Mode=TwoWay, StringFormat=dd/MM/yyyy}" Grid.Row="4"  HorizontalAlignment="Left" Grid.Column="1" Foreground="White"/>
             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Family Name:"/>

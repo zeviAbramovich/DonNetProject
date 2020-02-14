@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HostingUnits>
+  <HostingUnit>
+    <HostingUnitKey>10000001</HostingUnitKey>
+    <Owner>
+      <Host>
+        <HostId>1</HostId>
+        <Password>1</Password>
+        <Name>
+          <PrivateName>Zeev</PrivateName>
+          <FamilyName>Abra</FamilyName>
+        </Name>
+        <PhoneNumber>502418419</PhoneNumber>
+        <MailAddress>zevi3190@gmail.com</MailAddress>
+        <HostBankAccount>
+          <BankAccount>
+            <BankNumber>10</BankNumber>
+            <BankName>Hapoalim</BankName>
+            <BranchNumber>111</BranchNumber>
+            <BranchAddress>Rabi akiva</BranchAddress>
+            <BranchCity>Bney brak</BranchCity>
+            <BankAccountNumber>235800</BankAccountNumber>
+          </BankAccount>
+        </HostBankAccount>
+        <CollectionClearance>True</CollectionClearance>
+      </Host>
+    </Owner>
+    <HostingUnitName>dfge</HostingUnitName>
+    <Area>Jerusalem</Area>
+    <HostingType>Hotel</HostingType>
+    <Adults>5</Adults>
+    <Children>0</Children>
+    <Pool>False</Pool>
+    <Jacuzzi>True</Jacuzzi>
+    <Garden>True</Garden>
+    <ChildrensAttractions>False</ChildrensAttractions>
+    <SumComission>0</SumComission>
+    <bookDates>System.Collections.Generic.List`1[System.DateTime]</bookDates>
+    <DiariDto>System.Boolean[]</DiariDto>
+  </HostingUnit>
+</HostingUnits>
