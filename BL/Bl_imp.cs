@@ -204,6 +204,7 @@ namespace BL
 
         public bool AddRequest(GuestRequest request)
         {
+         
             if (request.EntryDate >= request.ReleaseDate || request.EntryDate < DateTime.Now)
                 throw new CannotAddException("the entry date is after the relasing date / or your entry date is befor today");
             //insert serial number here becouse we create new orders and we need key number for the guest request.

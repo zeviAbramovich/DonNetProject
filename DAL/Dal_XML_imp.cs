@@ -11,6 +11,10 @@ namespace DAL
 {
     class Dal_XML_imp : IDal
     {
+        public Dal_XML_imp()
+        {
+            Configuration.serialGuestRequest = long.Parse(DS.DataSourceXML.Configuration.Element("serialGuestRequest").Value);
+        }
         #region Add Delete And Update
 
         public bool AddHostingUnit(HostingUnit unit)
@@ -19,13 +23,17 @@ namespace DAL
             {
                 HostingUnit hostingUnit = unit.Clone();//על פי נספח 1   
 
-                int temp = int.Parse(DS.DataSourceXML.Configuration.Element("serialHostingUnit").Value);
+                int temp = int.Parse(DS.DataSourceXML.Configuration.Element("serialHostingUnit").Value);//serial number load
                 hostingUnit.HostingUnitKey = ++temp;
                 DS.DataSourceXML.Configuration.Element("serialHostingUnit").Value = temp.ToString();
                 hostingUnit.Diary = new bool[12, 31];
-                DS.DataSourceXML.HostingUnits.Add(hostingUnit.)
-                if (!DS.DataSource.hosts.Any(x => x.HostId != unit.Owner.HostId))
-                    DS.DataSource.hosts.Add(unit.Owner);
+                DS.DataSourceXML.HostingUnits.Add(hostingUnit.ToXML());
+                var a = from item in DS.DataSourceXML.Hosts.Elements()
+                        where int.Parse(item.Element("HostId").Value) == hostingUnit.Owner.HostId
+                        select item;
+                if(!a.Any())
+                    DS.DataSourceXML.Hosts.Add(hostingUnit.Owner.ToXML());
+                DS.DataSourceXML.SaveHostingUnits();
                 return true;
             }
             try//The key is not 0, so I'm posting an update 
@@ -44,8 +52,10 @@ namespace DAL
             if (order.OrderKey == 0)//must be new order
             {
                 Order order1 = order.Clone();
-                order1.OrderKey = ++Configuration.serialOrder;
-                DS.DataSource.orders.Add(order1);
+                int temp = int.Parse(DS.DataSourceXML.Configuration.Element("serialOrder").Value);//serial number load
+                order1.OrderKey = ++temp;
+                DS.DataSourceXML.Configuration.Element("serialOrder").Value = temp.ToString();
+                DS.DataSourceXML.Orders.Add(order1.ToXML());
                 return true;
             }
             try//The key is not 0, so I'm posting an update 
@@ -69,8 +79,8 @@ namespace DAL
                 GuestRequest guestRequest = guest.Clone();
                 //guestRequest.GuestRequestKey = ++Configuration.serialGuestRequest;
                 guestRequest.RegistrationDate = DateTime.Now;
-                //guestRequest.Status = StatusGuest.Open;
-                DS.DataSource.guestRequests.Add(guestRequest);
+                DS.DataSourceXML.Configuration.Element("serialGuestRequest").Value = guestRequest.GuestRequestKey.ToString();
+                DS.DataSourceXML.GuestRequests.Add(guestRequest.ToXML());
                 return true;
             }
             try
@@ -86,26 +96,28 @@ namespace DAL
 
         public bool AddHost(Host host)
         {
-            DS.DataSource.hosts.Add(host);
+            DS.DataSourceXML.Hosts.Add(host.ToXML());
             return true;
         }
 
         public bool DeleteHostingUnit(long key)
         {
             HostingUnit unit = new HostingUnit();
-            var v = from item in DS.DataSource.hostingUnitList
-                    where item.HostingUnitKey == key//catch the unit I want to delete
+            var v = from item in DS.DataSourceXML.HostingUnits.Elements()
+                    where long.Parse(item.Element("HostingUnitKey").Value) == key//catch the unit I want to delete
                     select item;
-            foreach (HostingUnit item in v)
-                unit = item;//unit is originally unit
-            try
+            if (v.Any())
             {
-                DS.DataSource.hostingUnitList.Remove(unit);
-                return true;
-            }
-            catch (MissingMemberException ms)
-            {
-                throw new MissingMemberException("No match key", ms);
+                try
+                {
+                    XElement a = v.FirstOrDefault();
+                    DS.DataSourceXML.HostingUnits.Element(a.Name).RemoveAll();//TODO
+                    return true;
+                }
+                catch (MissingMemberException ms)
+                {
+                    throw new MissingMemberException("No match key", ms);
+                } 
             }
         }
 
@@ -250,18 +262,14 @@ namespace DAL
 
         public List<Order> GetAllOrders()
         {
-            List<Order> orders = new List<Order>();
-            foreach (var item in DS.DataSource.orders)
-                orders.Add(item.Clone());
-            return orders;
+            return (from o in DS.DataSourceXML.Orders.Elements("Order")
+                    select o.ToString().ToObject<Order>()).ToList();
         }
 
         public List<Host> GetAllHosts()
         {
-            List<Host> hosts = new List<Host>();
-            foreach (var item in DS.DataSource.hosts)
-                hosts.Add(item.Clone());
-            return hosts;
+            return (from o in DS.DataSourceXML.Hosts.Elements("Host")
+                    select o.ToString().ToObject<Host>()).ToList();
         }
 
         public HostingUnit GetHostingUnit(long key)
