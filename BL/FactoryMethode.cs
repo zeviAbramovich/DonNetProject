@@ -8,10 +8,15 @@ namespace BL
 {
     public static class FactoryMethode
     {
+        public static IBL BL = null;
         public static IBL GetBL()
         {
-            IBL BLimp = new Bl_imp();
-            return BLimp;
+            if (BL==null)
+            {
+                IBL BLimp = new Bl_imp();
+                return BLimp;
+            }
+            return BL;
         }
     }
 }

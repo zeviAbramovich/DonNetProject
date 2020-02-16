@@ -8,10 +8,16 @@ namespace DAL
 {
    public static class FactoryMethode
     {
+        public static IDal DalImp= null;
         public static IDal GetDal()
         {
-           IDal DalImp = new Dal_XML_imp();
-            return DalImp;
-        }                                 
+            if (DalImp == null)
+            {
+                DalImp = new Dal_imp();
+                return DalImp;
+            }
+            else
+                return DalImp;
+        }                             
     }
 }

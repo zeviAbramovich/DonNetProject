@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using BE;
 using DS;
 
@@ -306,9 +307,27 @@ namespace DAL
             return host;
         }
 
-  
+
 
         #endregion
+        public void CreateFile(string typename, string path)
+        {
+            XElement root = new XElement(typename);
+            root.Save(path);
+        }
+        public XElement LoadData(string path)
+        {
+            XElement root;
+            try
+            {
+                root = XElement.Load(path);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+            return root;
+        }
     }
 }
 

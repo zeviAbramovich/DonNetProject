@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using BE;
 using DAL;
 using DS;
@@ -35,6 +36,7 @@ namespace DAL
         List<Order> GetAllOrders();
         List<Branche> GetAllBranches();
         List<Host> GetAllHosts();
-        
+        void CreateFile(string typename, string path);
+        XElement LoadData(string path);
     }
 }

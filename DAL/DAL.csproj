@@ -58,5 +58,11 @@
       <Name>DS</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="config.xml" />
+    <Content Include="GuestRequest.xml" />
+    <Content Include="Host.xml" />
+    <Content Include="XMLFile1.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
