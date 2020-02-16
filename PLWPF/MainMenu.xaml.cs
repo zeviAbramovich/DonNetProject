@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BE;
 using BL;
+using PLWPF.Admin;
 using PLWPF.Guest;
 
 namespace PLWPF
@@ -44,6 +45,11 @@ namespace PLWPF
             //full_screen.Navigate(guest);
             NavigationService service = NavigationService.GetNavigationService(this);
             service.Navigate(new GuestControlMenu());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            view.Navigate(new AdminSignIn());
         }
     }
 }

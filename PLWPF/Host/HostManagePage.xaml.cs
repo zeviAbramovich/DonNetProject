@@ -21,7 +21,7 @@ namespace PLWPF
     /// </summary>
     public partial class HostManagePage : Page
     {
-        public long currentId { get; set; }
+        public static long currentId { get; set; }
         public static BE.Host host = new BE.Host();
         public HostManagePage()
         {
