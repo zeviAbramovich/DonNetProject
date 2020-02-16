@@ -1,0 +1,94 @@
+﻿<Page x:Class="PLWPF.Admin.AdminSignIn"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+      xmlns:local="clr-namespace:PLWPF.Admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminSignIn">
+
+    <Grid>
+        <StackPanel Style="{StaticResource buttonStack}" HorizontalAlignment="Center" Width="Auto" VerticalAlignment="Center" Height="250" >
+            <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Width="220" BorderThickness="0" >
+
+                <materialDesign:Flipper.FrontContent>
+                    <Button
+                     VerticalAlignment="Top"
+      Style="{StaticResource myButton}"
+                    
+      Command="{x:Static materialDesign:Flipper.FlipCommand}"
+     Margin="8" Width="200" >
+                        כניסת מנהל
+                    </Button>
+                </materialDesign:Flipper.FrontContent>
+                <materialDesign:Flipper.BackContent>
+                    <Grid
+     Height="200" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone
+        Mode="Dark"
+        Padding="6">
+                            <StackPanel
+          Orientation="Horizontal">
+                                <Button
+            Style="{StaticResource MaterialDesignToolForegroundButton}"
+            Command="{x:Static materialDesign:Flipper.FlipCommand}"
+            HorizontalAlignment="Left">
+                                    <materialDesign:PackIcon
+              Kind="ArrowLeft"
+              HorizontalAlignment="Right" />
+                                </Button>
+                                <TextBlock
+            
+            VerticalAlignment="Center">
+          כניסת מנהל
+                                </TextBlock>
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+                        <Grid
+        Grid.Row="1"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Top"
+        Width="200">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBox x:Name="admindTextBox"
+          materialDesign:HintAssist.Hint="מספר מנהל"
+          materialDesign:HintAssist.IsFloating="True"
+          >
+
+                            </TextBox>
+                            <PasswordBox x:Name="passwordTextBox"
+          Grid.Row="1"
+          materialDesign:HintAssist.Hint="סיסמה"
+          materialDesign:HintAssist.IsFloating="True"
+          >
+
+                            </PasswordBox>
+                            <StackPanel
+          Grid.Row="2"
+          Orientation="Horizontal"
+         
+          HorizontalAlignment="Stretch">
+
+                                <Button Content="התחברות" HorizontalAlignment="Stretch" Style="{StaticResource myButton}" Height="30"   VerticalAlignment="Center"  Click="Button_Click" />
+                            </StackPanel>
+
+                        </Grid>
+                    </Grid>
+                </materialDesign:Flipper.BackContent>
+            </materialDesign:Flipper>
+        </StackPanel>
+
+    </Grid>
+</Page>

@@ -29,7 +29,7 @@
             <Button  Style="{StaticResource myButton}" Width="150" Height="100"  materialDesign:ButtonAssist.CornerRadius="25"
                 ToolTip="לחץ להוספה/ניהול הבקשות שלך" Content="אורח"  Margin="13,15,16.2,15" Click="Guest_Click"   />
             <Button BorderBrush="Beige" Style="{StaticResource myButton}" Width="150" Height="100" materialDesign:ButtonAssist.CornerRadius="25"
-                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מנהל מערכת" Margin="11,15,18.2,15" />
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Content="מנהל מערכת" Margin="11,15,18.2,15" Click="Button_Click" />
         </StackPanel>
         <Frame x:Name="view"  Margin="1,0,0,0" Grid.Column="1" />
 

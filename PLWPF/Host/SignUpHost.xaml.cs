@@ -65,14 +65,7 @@ namespace PLWPF.Host
             }
         }
 
-        private void comboBoxBanks_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (branchNumberComboBox.ItemsSource != null)
-            {
-                host.HostBankAccount.BranchNumber = Int32.Parse(branchNumberComboBox.SelectedItem.ToString());
-
-            }
-        }
+       
 
         private void confirmSignUp_Click(object sender, RoutedEventArgs e)
         {
@@ -90,6 +83,9 @@ namespace PLWPF.Host
 
         }
 
-
+        private void branchNumberComboBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            bg.RunWorkerAsync(@"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml");
+        }
     }
 }
