@@ -27,7 +27,7 @@ namespace PLWPF.Admin
             numOfOrders.Value = BL.FactoryMethode.GetBL().GetAllOrders().Count;
             NumOfRequest.Value = BL.FactoryMethode.GetBL().GetAllGuestRequest().Count;
 
-            List<BE.Host> hosts = BL.FactoryMethode.GetBL().GetAllHosts().OrderByDescending(x => x.numOfUnits).ToList();
+            //List<BE.Host> hosts = BL.FactoryMethode.GetBL().GetAllHosts().OrderByDescending(x => x.numOfUnits).ToList();
            // highestUnits.Value = hosts.FirstOrDefault().numOfUnits;
            //var a = BL.FactoryMethode.GetBL().GetAllHostByNumHostingUnit(BL.FactoryMethode.GetBL().GetAllHosts());
            // highestUnits.Value = a.FirstOrDefault().Key;

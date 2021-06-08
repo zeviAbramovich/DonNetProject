@@ -32,7 +32,7 @@ namespace PLWPF.Host
     {
 
         BackgroundWorker bg = new BackgroundWorker();
-        HttpWebRequest httpRequest;
+        //HttpWebRequest httpRequest;
         public BE.Host host = new BE.Host();
         XElement branchesXML;
         string branchesPath = @"boi.xml";
