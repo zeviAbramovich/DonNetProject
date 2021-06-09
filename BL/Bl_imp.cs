@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using BE;
 using DAL;
 
-
 namespace BL
 {
     class Bl_imp : IBL
@@ -92,7 +91,7 @@ namespace BL
             if (orders.Count == 0)
                 return false;
 
-            AddOrders(orders);          
+            AddOrders(orders);
 
             return true;
         }
@@ -182,7 +181,7 @@ namespace BL
 
         public void AddOrders(IEnumerable<Order> orders)
         {
-            orders.ForEach(AddOrder);         
+            orders.ForEach(AddOrder);
         }
 
 
@@ -204,7 +203,7 @@ namespace BL
 
         public bool AddRequest(GuestRequest request)
         {
-         
+
             if (request.EntryDate >= request.ReleaseDate || request.EntryDate < DateTime.Now)
                 throw new CannotAddException("the entry date is after the relasing date / or your entry date is befor today");
             //insert serial number here becouse we create new orders and we need key number for the guest request.

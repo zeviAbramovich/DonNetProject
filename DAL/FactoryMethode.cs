@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-   public static class FactoryMethode
+    public static class FactoryMethode
     {
-        public static IDal DalImp= null;
+        public static IDal DalImp = null;
         public static IDal GetDal()
         {
             if (DalImp == null)
@@ -18,6 +18,6 @@ namespace DAL
             }
             else
                 return DalImp;
-        }                             
+        }
     }
 }

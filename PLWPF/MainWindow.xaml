@@ -13,11 +13,10 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" 
-   >
+        Title="MainWindow" Height="650" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow">
 
     <Window.Resources>
-        
+
         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
             <Setter Property="BorderBrush" Value="Beige" />
             <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25"/>

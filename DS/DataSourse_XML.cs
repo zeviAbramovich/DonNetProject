@@ -16,7 +16,7 @@
 //        private static string solutionDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName;
 
 //        private static string filePath =Path.Combine(solutionDirectory, "DS", "DataXML");
-       
+
 
 //        private static XElement orderRoot = null;
 //        private static XElement guestRequestRoot = null;
@@ -69,7 +69,7 @@
 
 //            }
 //            guestRequestRoot = LoadData(guestRequestPath);
-           
+
 //            if (!File.Exists(configurationPath))
 //            {
 //                CreateFile("Configuration", configurationPath);
@@ -103,7 +103,7 @@
 //        {
 //            guestRequestRoot.Save(guestRequestPath);
 //        }
-        
+
 //        public static void SaveConfiguration()
 //        {
 //            configurationRoot.Save(configurationPath);

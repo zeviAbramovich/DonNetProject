@@ -6,7 +6,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-
 namespace Utilities
 {
     public static class Tools
@@ -79,4 +78,3 @@ namespace Utilities
 
     }
 }
-
